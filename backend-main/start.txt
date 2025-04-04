@@ -1,0 +1,6 @@
+1) vs code Terminal : Npm install
+
+2)Run all.sql in mysql
+
+3) vs code Terminal : npm start
+

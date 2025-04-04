@@ -1,0 +1,40 @@
+.registration-container {
+    max-width: 500px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.input-field {
+    margin-bottom: 15px;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+}
+
+.submit-button,
+.back-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.submit-button {
+    background-color: #007BFF;
+    color: white;
+}
+
+.back-button {
+    background-color: #6C757D;
+    color: white;
+}
