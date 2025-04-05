@@ -70,7 +70,7 @@ const specificPolice = async (req, res) => {
 
 const assignPolice = async (req, res) => {
     const data = req.body;
-    db.query(`UPDATE police SET occupied = ? , complaint_id = ? WHERE police_id = ?`, [data.occupied, data.complaint_id,data.police_id], (error, results) => {
+    db.query(`UPDATE police SET occupied = 1 , complaint_id = ? WHERE police_id = ?`, [ data.complaint_id,data.police_id], (error, results) => {
             if (error) {
                 res.json({ message: "Error assigning police", error });
             } else if (results.affectedRows === 0) {
@@ -82,12 +82,44 @@ const assignPolice = async (req, res) => {
     );
 };
 
+const unassignPolice = async (req, res) => {
+    const data = req.body;
+    db.query(`UPDATE police SET occupied = 0, complaint_id = NULL WHERE complaint_id = ?`, [ data.complaint_id], (error, results) => {
+            if (error) {
+                res.json({ message: "Error assigning police", error });
+            } else if (results.affectedRows === 0) {
+                res.json({ message: "No ticket found with the given complaint ID" });
+            } else {
+                res.json(results);
+            }
+        }
+    );
+};
+
+const getUserById = async (req, res) => {
+    const id = req.params.id;
+    db.query(`SELECT * FROM police WHERE police_id = ?`, [id], (error, results) => {
+            if (error) {
+                res.json({ message: "Error assigning police", error });
+            } else if (results.affectedRows === 0) {
+                res.json({ message: "No ticket found with the given complaint ID" });
+            } else {
+                res.json(results);
+            }
+        }
+    );
+};
+
+
+
 module.exports = {
     policeRegister,
     policeLogin,
     getTeamInfo,
     specificPolice,
-    assignPolice
+    assignPolice,
+    unassignPolice,
+    getUserById
 };
 
 
