@@ -3,5 +3,3 @@
 2)Run all.sql in mysql
 
 3) vs code Terminal : npm start
-
-4) oafa
