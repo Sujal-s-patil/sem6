@@ -66,10 +66,26 @@ const ticketStatus = async (req, res) => {
     );
 };
 
+const addComment = async (req, res) => {
+    const { comment, complaint_id } = req.body;
+    db.query(`UPDATE ticket SET comment = ? WHERE complaint_id = ?`,[comment, complaint_id],(error, results) => {
+            if (error) {
+                res.json({ message: "Error adding comment", error });
+            } else if (results.affectedRows === 0) {
+                res.json({ message: "No ticket found with the given complaint ID" });
+            } else {
+                res.json({ message: "Comment added successfully", results });
+            }
+        }
+    );
+};
+
+
 module.exports = {
     ticketRecords,
     createTicket,
     specificTicket,
     lastComplaintId,
-    ticketStatus
+    ticketStatus,
+    addComment
 }

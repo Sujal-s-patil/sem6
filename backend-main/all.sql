@@ -1,29 +1,28 @@
 create database sem_5_project;
-
 use sem_5_project;
 
-CREATE TABLE
-    criminal_records (
-        criminal_id INT PRIMARY KEY AUTO_INCREMENT,
-        photo varchar(255) DEFAULT NULL,
-        name VARCHAR(100) NOT NULL,
-        aadhar_card BIGINT DEFAULT null,
-        address TEXT DEFAULT NULL,
-        city VARCHAR(50),
-        state VARCHAR(50),
-        date_of_birth DATE,
-        jail_address TEXT DEFAULT NULL,
-        jail_city varchar(50),
-        jail_state VARCHAR(50),
-        phone_no bigint DEFAULT NULL,
-        crime VARCHAR(255) NOT NULL,
-        date_of_arrest DATE NOT NULL,
-        sentence_duration INT, -- in months
-        status VARCHAR(50), -- e.g., 'Incarcerated', 'Released', 'Probation'
-        description TEXT DEFAULT NULL,
-        gender VARCHAR(10) DEFAULT 'Male' -- Male or Female
-    );
-
+CREATE TABLE criminal_records (
+    criminal_id INT PRIMARY KEY AUTO_INCREMENT,
+    photo varchar(255) DEFAULT NULL,
+    name VARCHAR(100) NOT NULL,
+    aadhar_card BIGINT DEFAULT null,
+    address TEXT DEFAULT NULL,
+    city VARCHAR(50),
+    state VARCHAR(50),
+    date_of_birth DATE,
+    jail_address TEXT DEFAULT NULL,
+    jail_city varchar(50),
+    jail_state VARCHAR(50),
+    phone_no bigint DEFAULT NULL,
+    crime VARCHAR(255) NOT NULL,
+    date_of_arrest DATE NOT NULL,
+    sentence_duration INT,
+    -- in months
+    status VARCHAR(50),
+    -- e.g., 'Incarcerated', 'Released', 'Probation'
+    description TEXT DEFAULT NULL,
+    gender VARCHAR(10) DEFAULT 'Male' -- Male or Female
+);
 CREATE TABLE police (
     police_id VARCHAR(50) PRIMARY KEY,
     photo VARCHAR(255) DEFAULT NULL,
@@ -39,45 +38,41 @@ CREATE TABLE police (
     post VARCHAR(255),
     speciality VARCHAR(255) DEFAULT NULL,
     description TEXT DEFAULT NULL,
-    gender VARCHAR(10) DEFAULT 'Male', -- Male or Female
+    gender VARCHAR(10) DEFAULT 'Male',
+    -- Male or Female
     occupied BOOLEAN DEFAULT FALSE,
     complaint_id INT DEFAULT NULL
 );
-    
+CREATE TABLE public (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    photo varchar(255),
+    aadharcardno BIGINT,
+    password varchar(255),
+    email varchar(255) default NULL,
+    phoneno BIGINT,
+    fullName VARCHAR(255),
+    address VARCHAR(255),
+    city VARCHAR(50),
+    state VARCHAR(50)
+);
+CREATE TABLE ticket (
+    complaint_id INT AUTO_INCREMENT PRIMARY KEY,
+    complainant_name VARCHAR(100) NOT NULL,
+    public_id int,
+    FOREIGN KEY (public_id) REFERENCES public (id),
+    crime_type VARCHAR(50) NOT NULL,
+    crime_description TEXT NOT NULL,
+    crime_location VARCHAR(255),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    crime_date DATE NOT NULL,
+    status VARCHAR(50) DEFAULT 'Pending',
+    date_filed TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    comment TEXT DEFAULT NULL
+);
 
-CREATE TABLE
-    public (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        photo varchar(255),
-        aadharcardno BIGINT,
-        password varchar(255),
-        email varchar(255) default NULL,
-        phoneno BIGINT,
-        fullName VARCHAR(255),
-        address VARCHAR(255),
-        city VARCHAR(50),
-        state VARCHAR(50)
-    );
-
-CREATE TABLE
-    ticket (
-        complaint_id INT AUTO_INCREMENT PRIMARY KEY,
-        complainant_name VARCHAR(100) NOT NULL,
-        public_id int,
-        FOREIGN KEY (public_id) REFERENCES public (id),
-        crime_type VARCHAR(50) NOT NULL,
-        crime_description TEXT NOT NULL,
-        crime_location VARCHAR(255),
-        city VARCHAR(50),
-        state VARCHAR(50),
-        crime_date DATE NOT NULL,
-        status VARCHAR(50) DEFAULT 'Pending',
-        date_filed TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    );
-
-INSERT INTO
-    criminal_records (
+INSERT INTO criminal_records (
         photo,
         name,
         aadhar_card,
@@ -96,8 +91,7 @@ INSERT INTO
         description,
         gender
     )
-VALUES
-    (
+VALUES (
         'https://randomuser.me/api/portraits/men/4.jpg',
         'Mark Wilson',
         123456789012,
@@ -382,9 +376,7 @@ VALUES
         'Served time for document forgery and fraud',
         'Female'
     );
-
-INSERT INTO
-    police (
+INSERT INTO police (
         police_id,
         photo,
         aadhar_card,
@@ -401,8 +393,7 @@ INSERT INTO
         description,
         gender
     )
-VALUES
-    (
+VALUES (
         'P001',
         'https://randomuser.me/api/portraits/men/1.jpg',
         123456789012,
@@ -657,9 +648,7 @@ VALUES
         'Experienced in public relations and community outreach',
         'Female'
     );
-
-INSERT INTO
-    public (
+INSERT INTO public (
         photo,
         aadharcardno,
         password,
@@ -670,8 +659,7 @@ INSERT INTO
         city,
         state
     )
-VALUES
-    (
+VALUES (
         'photo1.jpg',
         123456789012,
         '$2b$10$BCAc9CQdTwEIJ/WX1GTTKehzRZLz.DcAns6f17xWFUKv.IBCeZ63i',
@@ -814,9 +802,7 @@ VALUES
         'Minneapolis',
         'MN'
     );
-
-INSERT INTO
-    ticket (
+INSERT INTO ticket (
         complainant_name,
         public_id,
         crime_type,
@@ -827,8 +813,7 @@ INSERT INTO
         crime_date,
         status
     )
-VALUES
-    (
+VALUES (
         'John Doe',
         1,
         'Theft',
