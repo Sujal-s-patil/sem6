@@ -66,15 +66,17 @@ Follow these simple steps to set up CRMS on your system:
 
 1. Install the required software listed above.
 2. Open a terminal in your desired directory.
-3. Clone the repository from GitHub: ``` git clone https://github.com/Sujal-s-patil/sem6.git ```
-4. Navigate into each folder using: ``` cd .\path\ ```
-5. Install necessary npm packages: ``` npm install ```
-6. Start the backend server: ``` cd .\backend-main\ ```
-``` node index ```
-7. Start the police frontend server: ``` cd .\frontend-police-main\ ```
-``` npm start ```
-8. Start the public frontend server: ``` cd .\frontend-public-main\```
-``` npm start ```
+3. Clone the repository from GitHub: ` git clone https://github.com/Sujal-s-patil/sem6.git `
+4. Open ` MySql Installer → Add → Application → Workbench → Install `
+5. Open MySQL Workbench, set up a connection, and execute (` ⚡︎ `) the SQL script located at: ` \backend-main\all.sql `
+4. Navigate into each folder using: ` cd .\path\ `
+5. Install necessary npm packages: ` npm install `
+6. Start the backend server: ` cd .\backend-main\ `
+` node index `
+7. Start the police frontend server: ` cd .\frontend-police-main\ `
+` npm start `
+8. Start the public frontend server: ` cd .\frontend-public-main\ `
+` npm start `
 
 
 Now your CRMS is up and running!
