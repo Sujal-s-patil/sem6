@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false); // Track sidebar state (collapsed or expanded)
+  const [collapsed, setCollapsed] = useState(true); // Sidebar starts collapsed
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item (Police or Criminals)
   const [policeTeam, setPoliceTeam] = useState([]); // Dynamic police data
   const [criminals, setCriminals] = useState([]); // Dynamic criminal data
-  const [isModalOpen, setIsModalOpen] = useState(false); // Track modal visibility
   const [searchQuery, setSearchQuery] = useState(""); // Track search input
   const [selectedPerson, setSelectedPerson] = useState(null); // Track selected person for full details
 
@@ -88,10 +87,7 @@ const Sidebar = () => {
         </h2>
         {selectedItem === "Police" ? (
           <>
-            <p>
-              <strong>Police ID:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.police_id}</span>
-            </p>
+            <p><strong>Police ID:</strong> {selectedPerson.police_id}</p>
             <p><strong>Aadhar Card:</strong> {selectedPerson.aadhar_card}</p>
             <p><strong>Phone Number:</strong> {selectedPerson.phone_no}</p>
             <p><strong>Email:</strong> {selectedPerson.email}</p>
@@ -99,14 +95,8 @@ const Sidebar = () => {
             <p><strong>City:</strong> {selectedPerson.city}</p>
             <p><strong>State:</strong> {selectedPerson.state}</p>
             <p><strong>Blood Group:</strong> {selectedPerson.blood_group}</p>
-            <p>
-              <strong>Post:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.post}</span>
-            </p>
-            <p>
-              <strong>Speciality:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.speciality}</span>
-            </p>
+            <p><strong>Post:</strong> {selectedPerson.post}</p>
+            <p><strong>Speciality:</strong> {selectedPerson.speciality}</p>
             <p><strong>Description:</strong> {selectedPerson.description}</p>
             <p><strong>Gender:</strong> {selectedPerson.gender}</p>
           </>
@@ -115,10 +105,7 @@ const Sidebar = () => {
             <p><strong>Name:</strong> {selectedPerson.name}</p>
             <p><strong>Gender:</strong> {selectedPerson.gender}</p>
             <p><strong>Aadhar Card:</strong> {selectedPerson.aadhar_card}</p>
-            <p>
-              <strong>Address:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.address}</span>
-            </p>
+            <p><strong>Address:</strong> {selectedPerson.address}</p>
             <p><strong>City:</strong> {selectedPerson.city}</p>
             <p><strong>State:</strong> {selectedPerson.state}</p>
             <p><strong>Date of Birth:</strong> {new Date(selectedPerson.date_of_birth).toISOString().split("T")[0]}</p>
@@ -126,23 +113,11 @@ const Sidebar = () => {
             <p><strong>Jail City:</strong> {selectedPerson.jail_city}</p>
             <p><strong>Jail State:</strong> {selectedPerson.jail_state}</p>
             <p><strong>Phone Number:</strong> {selectedPerson.phone_no}</p>
-            <p>
-              <strong>Crime:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.crime}</span>
-            </p>
+            <p><strong>Crime:</strong> {selectedPerson.crime}</p>
             <p><strong>Date of Arrest:</strong> {new Date(selectedPerson.date_of_arrest).toISOString().split("T")[0]}</p>
-            <p>
-              <strong>Sentence Duration:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.sentence_duration} months</span>
-            </p>
-            <p>
-              <strong>Status:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.status}</span>
-            </p>
-            <p>
-              <strong>Description:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.description}</span>
-            </p>
+            <p><strong>Sentence Duration:</strong> {selectedPerson.sentence_duration} months</p>
+            <p><strong>Status:</strong> {selectedPerson.status}</p>
+            <p><strong>Description:</strong> {selectedPerson.description}</p>
           </>
         )}
       </div>
@@ -183,34 +158,20 @@ const Sidebar = () => {
           </h1>
         )}
 
-        <div
+        <button
+          onClick={() => setCollapsed(!collapsed)}
           style={{
-            display: "flex",
-            flexDirection: "column", // Align items vertically
-            justifyContent: "center", // Center vertically
-            alignItems: "center", // Center horizontally
-            height: "100%", // Ensure the container takes full height
-            gap: "16px", // Add spacing between the button and other elements
+            background: "none",
+            border: "none",
+            color: "white",
+            cursor: "pointer",
+            fontSize: "20px",
+            width: "40px",
+            height: "40px",
           }}
         >
-          <button
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              background: "none",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              border: "none",
-              color: "white",
-              cursor: "pointer",
-              fontSize: "20px",
-              width: "40px",
-              height: "40px",
-            }}
-          >
-            {collapsed ? "☰" : "✖"}
-          </button>
-        </div>
+          {collapsed ? "☰" : "✖"}
+        </button>
       </div>
       <nav
         style={{
@@ -225,140 +186,60 @@ const Sidebar = () => {
           label="Police"
           collapsed={collapsed}
           onClick={() => {
-            if (collapsed) {
-              setCollapsed(false); // Automatically expand the sidebar if collapsed
-              setTimeout(() => {
-                setSelectedItem("Police");
-                setIsModalOpen(true);
-              }, 500); // Delay opening the modal to match the transition
-            } else {
-              setSelectedItem("Police");
-              setIsModalOpen(true);
-            }
+            setSelectedItem("Police");
+            setSelectedPerson(null); // Reset selected person
           }}
         />
+        {selectedItem === "Police" && (
+          <div>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: "calc(100% - 20px)",
+                padding: "10px",
+                marginBottom: "20px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                backgroundColor: "#333333",
+                color: "white",
+              }}
+            />
+            {selectedPerson ? renderPersonDetails() : renderDetails(policeTeam)}
+          </div>
+        )}
         <SidebarItem
           icon="🦹‍♂️"
           label="Criminals"
           collapsed={collapsed}
           onClick={() => {
-            if (collapsed) {
-              setCollapsed(false); // Automatically expand the sidebar if collapsed
-              setTimeout(() => {
-                setSelectedItem("Criminals");
-                setIsModalOpen(true);
-              }, 500); // Delay opening the modal to match the transition
-            } else {
-              setSelectedItem("Criminals");
-              setIsModalOpen(true);
-            }
+            setSelectedItem("Criminals");
+            setSelectedPerson(null); // Reset selected person
           }}
         />
+        {selectedItem === "Criminals" && (
+          <div>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: "calc(100% - 20px)",
+                padding: "10px",
+                marginBottom: "20px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                backgroundColor: "#333333",
+                color: "white",
+              }}
+            />
+            {selectedPerson ? renderPersonDetails() : renderDetails(criminals)}
+          </div>
+        )}
       </nav>
-
-      {isModalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: collapsed ? "40px" : "15%", // Match the sidebar's width
-            height: "100vh",
-            backgroundColor: "#1a1a1a",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            color: "white",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            zIndex: 1000,
-            overflow: "hidden", // Hide the scrollbar
-            padding: collapsed ? "5px" : "20px", // Adjust padding based on collapsed state
-            transition: "width 0.4s", // Smooth transition for width
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-              marginBottom: "20px",
-            }}
-          >
-            <h2 style={{ fontSize: "18px", margin: 0 }}>
-              {selectedItem === "Police" ? "Police Details" : "Criminal Details"}
-            </h2>
-            <div style={{ display: "flex", gap: "10px" }}>
-              {/* Conditional Back Button */}
-              <button
-                onClick={() => {
-                  if (selectedPerson) {
-                    setSelectedPerson(null); // Go back to the list view
-                  } else {
-                    setIsModalOpen(false); // Close the popup
-                  }
-                }}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "white",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                }}
-              >
-                ⬅ {/* Arrow icon for the back button */}
-              </button>
-              {/* Close Button */}
-              <button
-                onClick={() => {
-                  setIsModalOpen(false);
-                  setSelectedPerson(null); // Reset selected person when closing the modal
-                }}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "white",
-                  fontSize: "20px",
-                  cursor: "pointer",
-                }}
-              >
-                ✖
-              </button>
-            </div>
-          </div>
-          <div
-            className="popup-container"
-            style={{
-              width: "100%",
-              height: "calc(100vh - 60px)", // Adjust height to fit within the popup
-              overflowY: "auto", // Enable scrolling
-              paddingRight: "15px", // Add padding to prevent content from being cut off
-            }}
-          >
-            {selectedPerson ? renderPersonDetails() : (
-              <>
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{
-                    width: "calc(100% - 20px)",
-                    padding: "10px",
-                    marginBottom: "20px",
-                    borderRadius: "4px",
-                    border: "1px solid #ccc",
-                    backgroundColor: "#333333",
-                    color: "white",
-                  }}
-                />
-                {renderDetails(selectedItem === "Police" ? policeTeam : criminals)}
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
