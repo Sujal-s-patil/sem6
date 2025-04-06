@@ -59,7 +59,7 @@ const TaskModal = ({ task, onClose }) => {
 
   const handleCommentSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:5555/ticket/comment", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/ticket/comment`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

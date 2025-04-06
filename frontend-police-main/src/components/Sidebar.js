@@ -22,6 +22,7 @@ const Sidebar = () => {
       .catch((error) => console.error("Error fetching criminal records:", error));
   }, []);
 
+<<<<<<< HEAD
   // Collapse sidebar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,6 +43,9 @@ const Sidebar = () => {
     setSelectedItem(null); // Reset the selected item
     setSearchQuery(""); // Clear the search query
   };
+=======
+  const sidebarWidth = collapsed ? "60px" : "300px"; // Dynamically calculate sidebar width
+>>>>>>> 37f7fe9a49f5ffc4b288b878cb6aa4eaca8bf12a
 
   const renderDetails = (data) => {
     const filteredData = data.filter((item) =>
@@ -230,6 +234,37 @@ const Sidebar = () => {
     );
   };
 
+  const renderDetailsSection = () => {
+    if (!selectedItem) return null;
+
+    return (
+      <div style={{ marginTop: "20px" }}>
+        {!selectedPerson ? (
+          <>
+            <input
+              type="text"
+              placeholder={`Search ${selectedItem === "Police" ? "Police" : "Criminals"}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: "calc(100% - 20px)",
+                padding: "10px",
+                marginBottom: "20px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                backgroundColor: "#333333",
+                color: "white",
+              }}
+            />
+            {renderDetails(selectedItem === "Police" ? policeTeam : criminals)}
+          </>
+        ) : (
+          renderPersonDetails()
+        )}
+      </div>
+    );
+  };
+
   return (
     <div
       ref={sidebarRef} // Attach the ref to the sidebar
@@ -253,6 +288,7 @@ const Sidebar = () => {
           height: "40px", // Ensure consistent height for the container
         }}
       >
+<<<<<<< HEAD
         {/* Back Button */}
         {selectedPerson && (
           <button
@@ -305,6 +341,35 @@ const Sidebar = () => {
             {collapsed ? "☰" : "✖"}
           </button>
         )}
+=======
+        {!collapsed && (
+          <h1
+            style={{
+              fontSize: "20px",
+              fontWeight: "bold",
+              color: "white",
+              margin: 0,
+            }}
+          >
+            Dashboard
+          </h1>
+        )}
+
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            background: "none",
+            border: "none",
+            color: "white",
+            cursor: "pointer",
+            fontSize: "20px",
+            width: "40px",
+            height: "40px",
+          }}
+        >
+          {collapsed ? "☰" : "✖"}
+        </button>
+>>>>>>> 37f7fe9a49f5ffc4b288b878cb6aa4eaca8bf12a
       </div>
       <nav
         style={{
@@ -320,6 +385,7 @@ const Sidebar = () => {
           label="Police"
           collapsed={collapsed}
           onClick={() => {
+<<<<<<< HEAD
             if (selectedItem === "Police") {
               // If already selected, reset to main menu
               setSelectedItem(null);
@@ -332,6 +398,10 @@ const Sidebar = () => {
               setSearchQuery(""); // Reset search query when switching sections
               setSelectedPerson(null); // Reset selected person
             }
+=======
+            setSelectedItem("Police");
+            setSelectedPerson(null); // Reset selected person
+>>>>>>> 37f7fe9a49f5ffc4b288b878cb6aa4eaca8bf12a
           }}
         />
 
@@ -467,6 +537,7 @@ const Sidebar = () => {
           label="Criminals"
           collapsed={collapsed}
           onClick={() => {
+<<<<<<< HEAD
             if (selectedItem === "Criminals") {
               // If already selected, reset to main menu
               setSelectedItem(null);
@@ -479,9 +550,14 @@ const Sidebar = () => {
               setSearchQuery(""); // Reset search query when switching sections
               setSelectedPerson(null); // Reset selected person
             }
+=======
+            setSelectedItem("Criminals");
+            setSelectedPerson(null); // Reset selected person
+>>>>>>> 37f7fe9a49f5ffc4b288b878cb6aa4eaca8bf12a
           }}
         />
 
+<<<<<<< HEAD
         {/* Render Criminals details if selected */}
         {selectedItem === "Criminals" && !selectedPerson && (
           <div
@@ -615,6 +691,9 @@ const Sidebar = () => {
           </div>
         )}
       </nav>
+=======
+      {renderDetailsSection()}
+>>>>>>> 37f7fe9a49f5ffc4b288b878cb6aa4eaca8bf12a
     </div>
   );
 };
