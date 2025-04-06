@@ -192,21 +192,43 @@ const Sidebar = () => {
         />
         {selectedItem === "Police" && (
           <div>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                width: "calc(100% - 20px)",
-                padding: "10px",
-                marginBottom: "20px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                backgroundColor: "#333333",
-                color: "white",
-              }}
-            />
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                  backgroundColor: "#333333",
+                  color: "white",
+                }}
+              />
+              <button
+                onClick={() => {
+                  setSelectedItem(null); // Go back to the main page
+                  setSearchQuery(""); // Clear the search query
+                  setSelectedPerson(null); // Reset selected person
+                }}
+                style={{
+                  marginLeft: "10px",
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "none",
+                  backgroundColor: "#555555",
+                  color: "white",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                ← {/* Back arrow icon */}
+              </button>
+            </div>
             {selectedPerson ? renderPersonDetails() : renderDetails(policeTeam)}
           </div>
         )}
@@ -221,21 +243,43 @@ const Sidebar = () => {
         />
         {selectedItem === "Criminals" && (
           <div>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                width: "calc(100% - 20px)",
-                padding: "10px",
-                marginBottom: "20px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                backgroundColor: "#333333",
-                color: "white",
-              }}
-            />
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                  backgroundColor: "#333333",
+                  color: "white",
+                }}
+              />
+              <button
+                onClick={() => {
+                  setSelectedItem(null); // Go back to the main page
+                  setSearchQuery(""); // Clear the search query
+                  setSelectedPerson(null); // Reset selected person
+                }}
+                style={{
+                  marginLeft: "10px",
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "none",
+                  backgroundColor: "#555555",
+                  color: "white",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                ← {/* Back arrow icon */}
+              </button>
+            </div>
             {selectedPerson ? renderPersonDetails() : renderDetails(criminals)}
           </div>
         )}
