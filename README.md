@@ -69,7 +69,7 @@ Follow these simple steps to set up CRMS on your system:
 3. Clone the repository from GitHub: ` git clone https://github.com/Sujal-s-patil/sem6.git `
 4. Open ` MySql Installer → Add → Application → Workbench → Install `
 5. Open MySQL Workbench, set up a connection, and execute (` ⚡︎ `) the SQL script located at: ` \backend-main\all.sql `
-4. Navigate into each folder using: ` cd .\path\ `
+4. Now Open terminal and Navigate into each folder using: ` cd .\path\ `
 5. Install necessary npm packages: ` npm install `
 6. Start the backend server: ` cd .\backend-main\ `
 ` node index `
