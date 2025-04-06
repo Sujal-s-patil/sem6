@@ -1,15 +1,17 @@
-// KanbanBoard.js
 import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from './Sidebar';
-import { TaskCard } from './TaskCard'; // Importing TaskCard
+import { TaskCard } from './TaskCard';
 
 const statuses = ["Pending", "In Progress", "Resolved", "Closed"];
 const statusColors = {
   Pending: "#fef3c7",
-  InProgress: "#bfdbfe",
+  "In Progress": "#bfdbfe",
   Resolved: "#bbf7d0",
   Closed: "#fecaca"
 };
+
+const SIDEBAR_WIDTH = 280;
+const SIDEBAR_HEIGHT = '100vh';
 
 const KanbanBoard = () => {
   const [tasks, setTasks] = useState([]);
@@ -20,15 +22,15 @@ const KanbanBoard = () => {
 
   const fetchTasks = () => {
     fetch(`${process.env.REACT_APP_API_URL}/ticket/get`)
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         const formattedData = data.map(task => ({
           ...task,
           id: task.complaint_id
         }));
         setTasks(formattedData);
       })
-      .catch((error) => console.error("Error fetching tasks:", error));
+      .catch(error => console.error("Error fetching tasks:", error));
   };
 
   const updateTaskOrder = (taskId, newStatus, newIndex) => {
@@ -36,73 +38,81 @@ const KanbanBoard = () => {
       const tasksCopy = [...prevTasks];
       const taskIndex = tasksCopy.findIndex(t => t.id === taskId);
       const task = tasksCopy[taskIndex];
-
-      // Filter tasks in the target status
       const statusTasks = tasksCopy.filter(t => t.status === newStatus);
-
-      // Remove task from original position
       tasksCopy.splice(taskIndex, 1);
-
-      // Calculate insert position in full array
       const insertIndex = tasksCopy.findIndex(t =>
         t.status === newStatus &&
         statusTasks[newIndex]?.id === t.id
       );
-
-      // Update task status
       const updatedTask = { ...task, status: newStatus };
-
-      // Insert at calculated position or at the end
       const finalIndex = insertIndex >= 0 ? insertIndex : tasksCopy.length;
       tasksCopy.splice(finalIndex, 0, updatedTask);
-
       return tasksCopy;
     });
 
-    // Update task status in backend
     fetch(`${process.env.REACT_APP_API_URL}/ticket/status`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        complaint_id: taskId,
-        status: newStatus
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ complaint_id: taskId, status: newStatus })
     })
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
-        console.log("API Response:", data);
-
-        // If the task is moved to "Closed", free assigned officers
         if (newStatus === "Closed") {
           fetch(`${process.env.REACT_APP_API_URL}/police/unassign`, {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              complaint_id: taskId
-            }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ complaint_id: taskId }),
           })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => console.log("Police officers unassigned:", data))
-            .catch(error => console.error("Error unassigning officers:", error));
+            .catch(err => console.error("Error unassigning officers:", err));
         }
       })
-      .catch(error => console.error("Error updating task status:", error));
+      .catch(err => console.error("Error updating task status:", err));
   };
 
+  const columnTaskCounts = statuses.map(status =>
+    tasks.filter(task => task.status === status).length
+  );
+  const maxTaskCount = Math.max(...columnTaskCounts);
+  const estimatedTaskHeight = 80;
+  const sharedMinHeight = maxTaskCount * estimatedTaskHeight;
+
   return (
-    <div style={{ display: 'flex' }}>
-      <Sidebar />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', padding: '16px', flexGrow: 1 }}>
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      {/* Sidebar */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: SIDEBAR_HEIGHT,
+        width: `${SIDEBAR_WIDTH}px`,
+        zIndex: 1000,
+        backgroundColor: '#fff',
+        borderRight: '1px solid #ddd',
+        boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
+        overflowY: 'auto'
+      }}>
+        <Sidebar />
+      </div>
+
+      {/* Kanban container that scrolls if needed */}
+      <div style={{
+        marginLeft: `${SIDEBAR_WIDTH}px`,
+        padding: '16px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '16px',
+        flexGrow: 1,
+        width: `calc(100vw - ${SIDEBAR_WIDTH}px)`
+      }}>
         {statuses.map((status) => (
           <Column
             key={status}
             status={status}
             tasks={tasks.filter(task => task.status === status)}
             onTaskDrop={updateTaskOrder}
+            minHeight={sharedMinHeight}
           />
         ))}
       </div>
@@ -110,22 +120,18 @@ const KanbanBoard = () => {
   );
 };
 
-const Column = ({ status, tasks, onTaskDrop }) => {
+const Column = ({ status, tasks, onTaskDrop, minHeight }) => {
   const columnRef = useRef(null);
   const [dragOverIndex, setDragOverIndex] = useState(-1);
 
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragOverIndex(-1); // Reset drag over index when leaving
+    setDragOverIndex(-1);
   };
-  
+
   const handleDragOver = (e) => {
-    // Only handle drags containing our task data type
-    if (!e.dataTransfer.types.includes('application/json')) {
-      return;
-    }
-    
+    if (!e.dataTransfer.types.includes('application/json')) return;
     e.preventDefault();
     const rect = columnRef.current.getBoundingClientRect();
     const y = e.clientY - rect.top;
@@ -134,18 +140,13 @@ const Column = ({ status, tasks, onTaskDrop }) => {
   };
 
   const handleDrop = (e) => {
-    // Only handle drops with our task data type
-    if (!e.dataTransfer.types.includes('application/json')) {
-      return;
-    }
-
+    if (!e.dataTransfer.types.includes('application/json')) return;
     e.preventDefault();
     try {
       const taskData = JSON.parse(e.dataTransfer.getData("application/json"));
       const rect = columnRef.current.getBoundingClientRect();
       const y = e.clientY - rect.top;
       const dropIndex = Math.min(tasks.length, Math.floor(y / 60));
-
       onTaskDrop(taskData.id, status, dropIndex);
     } catch (error) {
       console.error("Drop error:", error);
@@ -164,7 +165,7 @@ const Column = ({ status, tasks, onTaskDrop }) => {
         backgroundColor: statusColors[status],
         borderRadius: "8px",
         boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-        minHeight: "300px",
+        minHeight: `${minHeight}px`,
         border: "2px solid #ccc",
         position: "relative"
       }}
@@ -180,13 +181,11 @@ const Column = ({ status, tasks, onTaskDrop }) => {
               borderRadius: "2px"
             }} />
           )}
-          <TaskCard
-            task={task}
-            isDraggingOver={dragOverIndex === index}
-          />
+          <TaskCard task={task} isDraggingOver={dragOverIndex === index} />
         </React.Fragment>
       ))}
     </div>
   );
 };
+
 export default KanbanBoard;
