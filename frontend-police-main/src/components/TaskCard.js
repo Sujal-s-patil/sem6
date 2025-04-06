@@ -1,11 +1,14 @@
 // TaskCard.js
 import React, { useState, useEffect } from "react";
 
+
 const TaskModal = ({ task, onClose }) => {
   const [showAssignPopup, setShowAssignPopup] = useState(false);
   const [policeTeam, setPoliceTeam] = useState([]);
   const [selectedOfficers, setSelectedOfficers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     if (showAssignPopup) {
@@ -19,9 +22,7 @@ const TaskModal = ({ task, onClose }) => {
     }
   }, [showAssignPopup]);
 
-  const handleAssignClick = () => {
-    setShowAssignPopup(true);
-  };
+  const handleAssignClick = () => setShowAssignPopup(true);
 
   const handleCloseAssignPopup = () => {
     setShowAssignPopup(false);
@@ -46,20 +47,41 @@ const TaskModal = ({ task, onClose }) => {
         },
         body: JSON.stringify({
           police_id,
-          complaint_id: task.complaint_id
+          complaint_id: task.complaint_id,
         }),
       })
         .then((response) => response.json())
         .then((data) => console.log("Officer assigned:", data))
         .catch((error) => console.error("Error assigning officer:", error));
     });
-
     handleCloseAssignPopup();
   };
 
+  const handleCommentSubmit = async () => {
+    try {
+      const response = await fetch("http://localhost:5555/ticket/comment", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          complaint_id: task.complaint_id,
+          comment: comment,
+        }),
+      });
+      const result = await response.json();
+      console.log("Comment added:", result);
+      setComment("");
+      setShowCommentInput(false);
+    } catch (error) {
+      console.error("Error submitting comment:", error);
+      alert("Failed to submit comment");
+    }
+  };
+
   const filteredPoliceTeam = policeTeam.filter((officer) =>
-    officer.full_name.toLowerCase().includes(searchTerm.toLowerCase())  || 
-  officer.speciality.toLowerCase().includes(searchTerm.toLowerCase())
+    officer.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    officer.speciality.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (!task) return null;
@@ -107,7 +129,52 @@ const TaskModal = ({ task, onClose }) => {
           </p>
         ))}
 
-        <div style={{ flexGrow: 1 }} />
+        {/* Comment Section */}
+        <div style={{ marginTop: "20px" }}>
+          {!showCommentInput ? (
+            <button
+              onClick={() => setShowCommentInput(true)}
+              style={{
+                padding: "8px 16px",
+                backgroundColor: "#6b7280",
+                color: "#fff",
+                borderRadius: "4px",
+                border: "none",
+                cursor: "pointer"
+              }}
+            >
+              Add Comment
+            </button>
+          ) : (
+            <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
+              <input
+                type="text"
+                placeholder="Enter your comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                }}
+              />
+              <button
+                onClick={handleCommentSubmit}
+                style={{
+                  padding: "8px 16px",
+                  backgroundColor: "#10b981",
+                  color: "#fff",
+                  borderRadius: "4px",
+                  border: "none",
+                  cursor: "pointer"
+                }}
+              >
+                Submit
+              </button>
+            </div>
+          )}
+        </div>
 
         <div style={{
           display: 'flex',
@@ -238,13 +305,11 @@ const TaskModal = ({ task, onClose }) => {
               ) : (
                 <p>Loading officers...</p>
               )}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: "8px",
-                }}
-              >
+              <div style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: "8px",
+              }}>
                 <button
                   onClick={handleConfirmAssignment}
                   style={{
@@ -279,6 +344,7 @@ const TaskModal = ({ task, onClose }) => {
     </div>
   );
 };
+
 
 const TaskCard = ({ task, isDraggingOver }) => {
   const [showModal, setShowModal] = useState(false);
