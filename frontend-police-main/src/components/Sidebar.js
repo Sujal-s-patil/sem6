@@ -22,7 +22,26 @@ const Sidebar = () => {
       .catch((error) => console.error("Error fetching criminal records:", error));
   }, []);
 
-  const sidebarWidth = collapsed ? "60px" : "300px"; // Dynamically calculate sidebar width
+  // Collapse sidebar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setCollapsed(true); // Collapse the sidebar
+        setSelectedItem(null); // Reset the selected item
+        setSelectedPerson(null); // Reset the selected person
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleBackClick = () => {
+    setSelectedItem(null); // Reset the selected item
+    setSearchQuery(""); // Clear the search query
+  };
 
   const renderDetails = (data) => {
     const filteredData = data.filter((item) =>
@@ -234,8 +253,10 @@ const Sidebar = () => {
           height: "40px", // Ensure consistent height for the container
         }}
       >
-        {!collapsed && (
-          <h1
+        {/* Back Button */}
+        {selectedPerson && (
+          <button
+            onClick={() => setSelectedPerson(null)} // Go back to the list
             style={{
               background: collapsed ? "none" : "rgb(51, 51, 51)", // Dark gray background when expanded
               border: "none",
@@ -254,20 +275,36 @@ const Sidebar = () => {
           </button>
         )}
 
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          style={{
-            background: "none",
-            border: "none",
-            color: "white",
-            cursor: "pointer",
-            fontSize: "20px",
-            width: "40px",
-            height: "40px",
-          }}
-        >
-          {collapsed ? "☰" : "✖"}
-        </button>
+        {/* Morphing Icon */}
+        {!selectedPerson && (
+          <button
+            onClick={() => {
+              if (collapsed) {
+                setCollapsed(false); // Expand the sidebar
+              } else {
+                setCollapsed(true); // Collapse the sidebar
+                setTimeout(() => {
+                  setSelectedItem(null); // Reset the selected item 0.1s before the sidebar fully collapses
+                }, 100); // Delay of 0.1s
+              }
+            }}
+            style={{
+              background: collapsed ? "none" : "rgb(51, 51, 51)", // Dark gray background when expanded
+              border: "none",
+              color: "white",
+              cursor: "pointer",
+              fontSize: "20px", // Same font size as "☰"
+              width: "40px", // Same width as "☰"
+              height: "40px", // Same height as "☰"
+              borderRadius: "10px", // Squiricircle effect
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {collapsed ? "☰" : "✖"}
+          </button>
+        )}
       </div>
       <nav
         style={{
@@ -283,8 +320,18 @@ const Sidebar = () => {
           label="Police"
           collapsed={collapsed}
           onClick={() => {
-            setSelectedItem("Police");
-            setSelectedPerson(null); // Reset selected person
+            if (selectedItem === "Police") {
+              // If already selected, reset to main menu
+              setSelectedItem(null);
+              setSearchQuery(""); // Reset search query
+              setSelectedPerson(null); // Reset selected person
+            } else {
+              // Otherwise, select Police
+              setCollapsed(false); // Expand the sidebar
+              setSelectedItem("Police");
+              setSearchQuery(""); // Reset search query when switching sections
+              setSelectedPerson(null); // Reset selected person
+            }
           }}
         />
 
@@ -420,13 +467,154 @@ const Sidebar = () => {
           label="Criminals"
           collapsed={collapsed}
           onClick={() => {
-            setSelectedItem("Criminals");
-            setSelectedPerson(null); // Reset selected person
+            if (selectedItem === "Criminals") {
+              // If already selected, reset to main menu
+              setSelectedItem(null);
+              setSearchQuery(""); // Reset search query
+              setSelectedPerson(null); // Reset selected person
+            } else {
+              // Otherwise, select Criminals
+              setCollapsed(false); // Expand the sidebar
+              setSelectedItem("Criminals");
+              setSearchQuery(""); // Reset search query when switching sections
+              setSelectedPerson(null); // Reset selected person
+            }
           }}
         />
-      </nav>
 
-      {renderDetailsSection()}
+        {/* Render Criminals details if selected */}
+        {selectedItem === "Criminals" && !selectedPerson && (
+          <div
+            style={{
+              display: "flex", // Use flexbox for alignment
+              flexDirection: "column", // Stack items vertically
+              justifyContent: "flex-start", // Align items at the top
+              alignItems: "center", // Center horizontally
+              height: "100%", // Take full height of the sidebar
+              width: "100%", // Constrain to the sidebar's width
+              overflowY: "auto", // Allow scrolling if content overflows
+              padding: "10px", // Add padding for spacing
+              boxSizing: "border-box", // Include padding in width/height calculations
+            }}
+          >
+            {/* Search Bar */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "20px",
+                width: "100%", // Constrain to the sidebar's width
+                height: "40px", // Match the height of the buttons
+                boxSizing: "border-box", // Include padding in width calculation
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={(e) => (e.target.style.border = "1px solid pink")} // Highlight border in pink on focus
+                onBlur={(e) => (e.target.style.border = "1px solid #ccc")} // Reset border to default on blur
+                style={{
+                  flex: 1,
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc", // Default border
+                  backgroundColor: "#333333",
+                  color: "white",
+                  marginRight: "10px", // Add spacing between input and button
+                  height: "100%", // Match the height of the container
+                  boxSizing: "border-box", // Include padding in height calculation
+                }}
+              />
+              <button
+                onClick={handleBackClick}
+                style={{
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "none",
+                  backgroundColor: "#555555",
+                  color: "white",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%", // Match the height of the container
+                  width: "40px", // Keep consistent width
+                  boxSizing: "border-box", // Include padding in width calculation
+                }}
+              >
+                ← {/* Back arrow icon */}
+              </button>
+            </div>
+
+            {/* List of Cards for Criminals */}
+            <div
+              style={{
+                width: "100%", // Constrain to the sidebar's width
+                height: "calc(100vh - 200px)", // Adjust height dynamically to fit within the sidebar
+                overflowY: "scroll", // Enable vertical scrolling
+                boxSizing: "border-box", // Include padding in width calculation
+                scrollbarWidth: "none", // Hide scrollbar for Firefox
+              }}
+            >
+              <style>
+                {`
+                  /* Hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}
+              </style>
+              {criminals.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => setSelectedPerson(item)} // Set the selected person on card click
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "#2a2a2a",
+                    color: "white",
+                    padding: "30px", // Keep padding consistent
+                    borderRadius: "8px",
+                    marginBottom: "16px",
+                    cursor: "pointer", // Indicate the card is clickable
+                    height: "110px", // Increased height by 30px
+                    width: "100%", // Constrain to the sidebar's width
+                    boxSizing: "border-box", // Include padding in width calculation
+                  }}
+                >
+                  <img
+                    src={item.photo}
+                    alt={item.full_name || item.name}
+                    style={{
+                      width: "90px", // Slightly larger image
+                      height: "90px", // Match the larger card height
+                      borderRadius: "50%",
+                      marginRight: "16px",
+                    }}
+                  />
+                  {!collapsed && (
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: "16px" }}>{item.full_name || item.name}</h3>
+                      <p style={{ margin: 0, fontSize: "14px" }}>
+                        {item.crime}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Render Person Details if a person is selected */}
+        {selectedPerson && (
+          <div style={{ marginLeft: collapsed ? "0" : "16px" }}>
+            {renderPersonDetails()}
+          </div>
+        )}
+      </nav>
     </div>
   );
 };
