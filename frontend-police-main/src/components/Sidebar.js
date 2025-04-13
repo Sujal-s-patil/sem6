@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false); // Track sidebar state (collapsed or expanded)
+  const [collapsed, setCollapsed] = useState(true); // Sidebar starts collapsed
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item (Police or Criminals)
   const [policeTeam, setPoliceTeam] = useState([]); // Dynamic police data
   const [criminals, setCriminals] = useState([]); // Dynamic criminal data
-  const [isModalOpen, setIsModalOpen] = useState(false); // Track modal visibility
   const [searchQuery, setSearchQuery] = useState(""); // Track search input
   const [selectedPerson, setSelectedPerson] = useState(null); // Track selected person for full details
+  const sidebarRef = useRef(null); // Ref for the sidebar
 
   // Fetch data from APIs
   useEffect(() => {
@@ -22,7 +22,26 @@ const Sidebar = () => {
       .catch((error) => console.error("Error fetching criminal records:", error));
   }, []);
 
-  const sidebarWidth = collapsed ? "60px" : "250px"; // Dynamically calculate sidebar width
+  // Collapse sidebar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setCollapsed(true); // Collapse the sidebar
+        setSelectedItem(null); // Reset the selected item
+        setSelectedPerson(null); // Reset the selected person
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleBackClick = () => {
+    setSelectedItem(null); // Reset the selected item
+    setSearchQuery(""); // Clear the search query
+  };
 
   const renderDetails = (data) => {
     const filteredData = data.filter((item) =>
@@ -30,40 +49,127 @@ const Sidebar = () => {
     );
 
     return (
-      <div style={{ padding: "10px" }}>
-        {filteredData.map((item, index) => (
-          <div
-            key={index}
-            onClick={() => setSelectedPerson(item)} // Set the selected person on card click
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          height: "100%",
+          width: "100%",
+          overflowY: "auto",
+          padding: "10px",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Search Bar */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "20px",
+            width: "100%",
+            height: "40px",
+            boxSizing: "border-box",
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={(e) => (e.target.style.border = "1px solid #ccc")} // Highlight border in default on focus
+            onBlur={(e) => (e.target.style.border = "1px solid #ccc")} // Reset border to default on blur
             style={{
+              flex: 1,
+              padding: "10px",
+              borderRadius: "4px",
+              border: "1px solid red",
+              backgroundColor: "#333333",
+              color: "white",
+              marginRight: "10px",
+              height: "100%",
+              boxSizing: "border-box",
+            }}
+          />
+          <button
+            onClick={handleBackClick}
+            style={{
+              padding: "10px",
+              borderRadius: "4px",
+              border: "none",
+              backgroundColor: "#555555",
+              color: "white",
+              cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "#2a2a2a",
-              color: "white",
-              padding: "16px",
-              borderRadius: "8px",
-              marginBottom: "16px",
-              cursor: "pointer", // Indicate the card is clickable
+              justifyContent: "center",
+              height: "100%",
+              width: "40px",
+              boxSizing: "border-box",
             }}
           >
-            <img
-              src={item.photo}
-              alt={item.full_name || item.name}
+            ←
+          </button>
+        </div>
+
+        {/* List of Cards */}
+        <div
+          style={{
+            width: "100%", // Constrain to the sidebar's width
+            height: "calc(100vh - 200px)", // Adjust height dynamically to fit within the sidebar
+            overflowY: "scroll", // Enable vertical scrolling
+            boxSizing: "border-box", // Include padding in width calculation
+            scrollbarWidth: "none", // Hide scrollbar for Firefox
+          }}
+        >
+          <style>
+            {`
+              /* Hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}
+          </style>
+          {filteredData.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => setSelectedPerson(item)}
               style={{
-                width: "50px",
-                height: "50px",
-                borderRadius: "50%",
-                marginRight: "16px",
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#2a2a2a",
+                color: "white",
+                padding: "30px",
+                borderRadius: "8px",
+                marginBottom: "16px",
+                cursor: "pointer",
+                height: "110px",
+                width: "100%",
+                boxSizing: "border-box",
               }}
-            />
-            <div>
-              <h3 style={{ margin: 0, fontSize: "16px" }}>{item.full_name || item.name}</h3>
-              <p style={{ margin: 0, fontSize: "14px" }}>
-                {selectedItem === "Police" ? item.post : `Crime: ${item.crime}`}
-              </p>
+            >
+              <img
+                src={item.photo}
+                alt={item.full_name || item.name}
+                style={{
+                  width: "90px",
+                  height: "90px",
+                  borderRadius: "50%",
+                  marginRight: "16px",
+                }}
+              />
+              {!collapsed && (
+                <div>
+                  <h3 style={{ margin: 0, fontSize: "16px" }}>{item.full_name || item.name}</h3>
+                  <p style={{ margin: 0, fontSize: "14px" }}>
+                    {selectedItem === "Police" ? item.post : `Crime: ${item.crime}`}
+                  </p>
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     );
   };
@@ -88,10 +194,7 @@ const Sidebar = () => {
         </h2>
         {selectedItem === "Police" ? (
           <>
-            <p>
-              <strong>Police ID:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.police_id}</span>
-            </p>
+            <p><strong>Police ID:</strong> {selectedPerson.police_id}</p>
             <p><strong>Aadhar Card:</strong> {selectedPerson.aadhar_card}</p>
             <p><strong>Phone Number:</strong> {selectedPerson.phone_no}</p>
             <p><strong>Email:</strong> {selectedPerson.email}</p>
@@ -99,26 +202,16 @@ const Sidebar = () => {
             <p><strong>City:</strong> {selectedPerson.city}</p>
             <p><strong>State:</strong> {selectedPerson.state}</p>
             <p><strong>Blood Group:</strong> {selectedPerson.blood_group}</p>
-            <p>
-              <strong>Post:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.post}</span>
-            </p>
-            <p>
-              <strong>Speciality:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.speciality}</span>
-            </p>
+            <p><strong>Post:</strong> {selectedPerson.post}</p>
+            <p><strong>Speciality:</strong> {selectedPerson.speciality}</p>
             <p><strong>Description:</strong> {selectedPerson.description}</p>
             <p><strong>Gender:</strong> {selectedPerson.gender}</p>
           </>
         ) : (
           <>
-            <p><strong>Name:</strong> {selectedPerson.name}</p>
             <p><strong>Gender:</strong> {selectedPerson.gender}</p>
             <p><strong>Aadhar Card:</strong> {selectedPerson.aadhar_card}</p>
-            <p>
-              <strong>Address:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.address}</span>
-            </p>
+            <p><strong>Address:</strong> {selectedPerson.address}</p>
             <p><strong>City:</strong> {selectedPerson.city}</p>
             <p><strong>State:</strong> {selectedPerson.state}</p>
             <p><strong>Date of Birth:</strong> {new Date(selectedPerson.date_of_birth).toISOString().split("T")[0]}</p>
@@ -126,23 +219,11 @@ const Sidebar = () => {
             <p><strong>Jail City:</strong> {selectedPerson.jail_city}</p>
             <p><strong>Jail State:</strong> {selectedPerson.jail_state}</p>
             <p><strong>Phone Number:</strong> {selectedPerson.phone_no}</p>
-            <p>
-              <strong>Crime:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.crime}</span>
-            </p>
+            <p><strong>Crime:</strong> {selectedPerson.crime}</p>
             <p><strong>Date of Arrest:</strong> {new Date(selectedPerson.date_of_arrest).toISOString().split("T")[0]}</p>
-            <p>
-              <strong>Sentence Duration:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.sentence_duration} months</span>
-            </p>
-            <p>
-              <strong>Status:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.status}</span>
-            </p>
-            <p>
-              <strong>Description:</strong>{" "}
-              <span style={{ color: "red" }}>{selectedPerson.description}</span>
-            </p>
+            <p><strong>Sentence Duration:</strong> {selectedPerson.sentence_duration} months</p>
+            <p><strong>Status:</strong> {selectedPerson.status}</p>
+            <p><strong>Description:</strong> {selectedPerson.description}</p>
           </>
         )}
       </div>
@@ -151,66 +232,79 @@ const Sidebar = () => {
 
   return (
     <div
+      ref={sidebarRef}
       style={{
-        height: "100vh",
+        height: "100vh", // Ensure the sidebar fills the viewport height
         backgroundColor: "#1a1a1a",
         color: "white",
         padding: "7px",
         transition: "width 0.4s",
-        width: sidebarWidth, // Use dynamic width
+        width: collapsed ? "60px" : "250px",
         overflow: "hidden",
       }}
     >
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          justifyContent: "center", // Center horizontally
+          alignItems: "center", // Center vertically
           marginBottom: "25px",
           marginTop: "10px",
+          height: "40px", // Ensure consistent height for the container
         }}
       >
-        {!collapsed && (
-          <h1
-            style={{
-              fontSize: "20px",
-              fontWeight: "bold",
-              color: "white",
-              margin: 0,
-            }}
-          >
-            Dashboard
-          </h1>
-        )}
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column", // Align items vertically
-            justifyContent: "center", // Center vertically
-            alignItems: "center", // Center horizontally
-            height: "100%", // Ensure the container takes full height
-            gap: "16px", // Add spacing between the button and other elements
-          }}
-        >
+        {/* Back Button */}
+        {selectedPerson && (
           <button
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => setSelectedPerson(null)} // Go back to the list
             style={{
-              background: "none",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              background: collapsed ? "none" : "rgb(51, 51, 51)", // Dark gray background when expanded
               border: "none",
               color: "white",
               cursor: "pointer",
-              fontSize: "20px",
-              width: "40px",
-              height: "40px",
+              fontSize: "20px", // Same font size as "☰"
+              width: "40px", // Same width as "☰"
+              height: "40px", // Same height as "☰"
+              borderRadius: "10px", // Squiricircle effect
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            ← {/* Back arrow icon */}
+          </button>
+        )}
+
+        {/* Morphing Icon */}
+        {!selectedPerson && (
+          <button
+            onClick={() => {
+              if (collapsed) {
+                setCollapsed(false); // Expand the sidebar
+              } else {
+                setCollapsed(true); // Collapse the sidebar
+                setTimeout(() => {
+                  setSelectedItem(null); // Reset the selected item 0.1s before the sidebar fully collapses
+                }, 100); // Delay of 0.1s
+              }
+            }}
+            style={{
+              background: collapsed ? "none" : "rgb(51, 51, 51)", // Dark gray background when expanded
+              border: "none",
+              color: "white",
+              cursor: "pointer",
+              fontSize: "20px", // Same font size as "☰"
+              width: "40px", // Same width as "☰"
+              height: "40px", // Same height as "☰"
+              borderRadius: "10px", // Squiricircle effect
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             {collapsed ? "☰" : "✖"}
           </button>
-        </div>
+        )}
       </div>
       <nav
         style={{
@@ -220,145 +314,307 @@ const Sidebar = () => {
           alignItems: collapsed ? "center" : "normal",
         }}
       >
+        {/* Police Button */}
         <SidebarItem
           icon="👮‍♂️"
           label="Police"
           collapsed={collapsed}
           onClick={() => {
-            if (collapsed) {
-              setCollapsed(false); // Automatically expand the sidebar if collapsed
-              setTimeout(() => {
-                setSelectedItem("Police");
-                setIsModalOpen(true);
-              }, 500); // Delay opening the modal to match the transition
+            if (selectedItem === "Police") {
+              // If already selected, reset to main menu
+              setSelectedItem(null);
+              setSearchQuery(""); // Reset search query
+              setSelectedPerson(null); // Reset selected person
             } else {
+              // Otherwise, select Police
+              setCollapsed(false); // Expand the sidebar
               setSelectedItem("Police");
-              setIsModalOpen(true);
+              setSearchQuery(""); // Reset search query when switching sections
+              setSelectedPerson(null); // Reset selected person
             }
           }}
         />
+
+        {/* Render Police details if selected */}
+        {selectedItem === "Police" && !selectedPerson && (
+          <div
+            style={{
+              display: "flex", // Use flexbox for alignment
+              flexDirection: "column", // Stack items vertically
+              justifyContent: "flex-start", // Align items at the top
+              alignItems: "center", // Center horizontally
+              height: "100%", // Take full height of the sidebar
+              width: "100%", // Constrain to the sidebar's width
+              overflowY: "auto", // Allow scrolling if content overflows
+              padding: "10px", // Add padding for spacing
+              boxSizing: "border-box", // Include padding in width/height calculations
+            }}
+          >
+            {/* Search Bar */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "20px",
+                width: "100%", // Constrain to the sidebar's width
+                height: "40px", // Match the height of the buttons
+                boxSizing: "border-box", // Include padding in width calculation
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={(e) => (e.target.style.border = "1px solid pink")} // Highlight border in pink on focus
+                onBlur={(e) => (e.target.style.border = "1px solid #ccc")} // Reset border to default on blur
+                style={{
+                  flex: 1,
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc", // Default border
+                  backgroundColor: "#333333",
+                  color: "white",
+                  marginRight: "10px", // Add spacing between input and button
+                  height: "100%", // Match the height of the container
+                  boxSizing: "border-box", // Include padding in height calculation
+                }}
+              />
+              <button
+                onClick={handleBackClick}
+                style={{
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "none",
+                  backgroundColor: "#555555",
+                  color: "white",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%", // Match the height of the container
+                  width: "40px", // Keep consistent width
+                  boxSizing: "border-box", // Include padding in width calculation
+                }}
+              >
+                ← {/* Back arrow icon */}
+              </button>
+            </div>
+
+            {/* List of Cards */}
+            <div
+              style={{
+                width: "100%", // Constrain to the sidebar's width
+                height: "calc(100vh - 200px)", // Adjust height dynamically to fit within the sidebar
+                overflowY: "scroll", // Enable vertical scrolling
+                boxSizing: "border-box", // Include padding in width calculation
+                scrollbarWidth: "none", // Hide scrollbar for Firefox
+              }}
+            >
+              <style>
+                {`
+                  /* Hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}
+              </style>
+              {policeTeam.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => setSelectedPerson(item)} // Set the selected person on card click
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "#2a2a2a",
+                    color: "white",
+                    padding: "30px", // Keep padding consistent
+                    borderRadius: "8px",
+                    marginBottom: "16px",
+                    cursor: "pointer", // Indicate the card is clickable
+                    height: "110px", // Increased height by 30px
+                    width: "100%", // Constrain to the sidebar's width
+                    boxSizing: "border-box", // Include padding in width calculation
+                  }}
+                >
+                  <img
+                    src={item.photo}
+                    alt={item.full_name || item.name}
+                    style={{
+                      width: "90px", // Slightly larger image
+                      height: "90px", // Match the larger card height
+                      borderRadius: "50%",
+                      marginRight: "16px",
+                    }}
+                  />
+                  {!collapsed && (
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: "16px" }}>{item.full_name || item.name}</h3>
+                      <p style={{ margin: 0, fontSize: "14px" }}>
+                        {item.post}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Criminals Button */}
         <SidebarItem
           icon="🦹‍♂️"
           label="Criminals"
           collapsed={collapsed}
           onClick={() => {
-            if (collapsed) {
-              setCollapsed(false); // Automatically expand the sidebar if collapsed
-              setTimeout(() => {
-                setSelectedItem("Criminals");
-                setIsModalOpen(true);
-              }, 500); // Delay opening the modal to match the transition
+            if (selectedItem === "Criminals") {
+              // If already selected, reset to main menu
+              setSelectedItem(null);
+              setSearchQuery(""); // Reset search query
+              setSelectedPerson(null); // Reset selected person
             } else {
+              // Otherwise, select Criminals
+              setCollapsed(false); // Expand the sidebar
               setSelectedItem("Criminals");
-              setIsModalOpen(true);
+              setSearchQuery(""); // Reset search query when switching sections
+              setSelectedPerson(null); // Reset selected person
             }
           }}
         />
-      </nav>
 
-      {isModalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: collapsed ? "40px" : "15%", // Match the sidebar's width
-            height: "100vh",
-            backgroundColor: "#1a1a1a",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            color: "white",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            zIndex: 1000,
-            overflow: "hidden", // Hide the scrollbar
-            padding: collapsed ? "5px" : "20px", // Adjust padding based on collapsed state
-            transition: "width 0.4s", // Smooth transition for width
-          }}
-        >
+        {/* Render Criminals details if selected */}
+        {selectedItem === "Criminals" && !selectedPerson && (
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-              marginBottom: "20px",
+              display: "flex", // Use flexbox for alignment
+              flexDirection: "column", // Stack items vertically
+              justifyContent: "flex-start", // Align items at the top
+              alignItems: "center", // Center horizontally
+              height: "100%", // Take full height of the sidebar
+              width: "100%", // Constrain to the sidebar's width
+              overflowY: "auto", // Allow scrolling if content overflows
+              padding: "10px", // Add padding for spacing
+              boxSizing: "border-box", // Include padding in width/height calculations
             }}
           >
-            <h2 style={{ fontSize: "18px", margin: 0 }}>
-              {selectedItem === "Police" ? "Police Details" : "Criminal Details"}
-            </h2>
-            <div style={{ display: "flex", gap: "10px" }}>
-              {/* Conditional Back Button */}
-              <button
-                onClick={() => {
-                  if (selectedPerson) {
-                    setSelectedPerson(null); // Go back to the list view
-                  } else {
-                    setIsModalOpen(false); // Close the popup
-                  }
-                }}
+            {/* Search Bar */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "20px",
+                width: "100%", // Constrain to the sidebar's width
+                height: "40px", // Match the height of the buttons
+                boxSizing: "border-box", // Include padding in width calculation
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={(e) => (e.target.style.border = "1px solid pink")} // Highlight border in pink on focus
+                onBlur={(e) => (e.target.style.border = "1px solid #ccc")} // Reset border to default on blur
                 style={{
-                  background: "none",
-                  border: "none",
+                  flex: 1,
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc", // Default border
+                  backgroundColor: "#333333",
                   color: "white",
-                  fontSize: "16px",
+                  marginRight: "10px", // Add spacing between input and button
+                  height: "100%", // Match the height of the container
+                  boxSizing: "border-box", // Include padding in height calculation
+                }}
+              />
+              <button
+                onClick={handleBackClick}
+                style={{
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "none",
+                  backgroundColor: "#555555",
+                  color: "white",
                   cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%", // Match the height of the container
+                  width: "40px", // Keep consistent width
+                  boxSizing: "border-box", // Include padding in width calculation
                 }}
               >
-                ⬅ {/* Arrow icon for the back button */}
-              </button>
-              {/* Close Button */}
-              <button
-                onClick={() => {
-                  setIsModalOpen(false);
-                  setSelectedPerson(null); // Reset selected person when closing the modal
-                }}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "white",
-                  fontSize: "20px",
-                  cursor: "pointer",
-                }}
-              >
-                ✖
+                ← {/* Back arrow icon */}
               </button>
             </div>
-          </div>
-          <div
-            className="popup-container"
-            style={{
-              width: "100%",
-              height: "calc(100vh - 60px)", // Adjust height to fit within the popup
-              overflowY: "auto", // Enable scrolling
-              paddingRight: "15px", // Add padding to prevent content from being cut off
-            }}
-          >
-            {selectedPerson ? renderPersonDetails() : (
-              <>
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+
+            {/* List of Cards for Criminals */}
+            <div
+              style={{
+                width: "100%", // Constrain to the sidebar's width
+                height: "calc(100vh - 200px)", // Adjust height dynamically to fit within the sidebar
+                overflowY: "scroll", // Enable vertical scrolling
+                boxSizing: "border-box", // Include padding in width calculation
+                scrollbarWidth: "none", // Hide scrollbar for Firefox
+              }}
+            >
+              <style>
+                {`
+                  /* Hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}
+              </style>
+              {criminals.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => setSelectedPerson(item)} // Set the selected person on card click
                   style={{
-                    width: "calc(100% - 20px)",
-                    padding: "10px",
-                    marginBottom: "20px",
-                    borderRadius: "4px",
-                    border: "1px solid #ccc",
-                    backgroundColor: "#333333",
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "#2a2a2a",
                     color: "white",
+                    padding: "30px", // Keep padding consistent
+                    borderRadius: "8px",
+                    marginBottom: "16px",
+                    cursor: "pointer", // Indicate the card is clickable
+                    height: "110px", // Increased height by 30px
+                    width: "100%", // Constrain to the sidebar's width
+                    boxSizing: "border-box", // Include padding in width calculation
                   }}
-                />
-                {renderDetails(selectedItem === "Police" ? policeTeam : criminals)}
-              </>
-            )}
+                >
+                  <img
+                    src={item.photo}
+                    alt={item.full_name || item.name}
+                    style={{
+                      width: "90px", // Slightly larger image
+                      height: "90px", // Match the larger card height
+                      borderRadius: "50%",
+                      marginRight: "16px",
+                    }}
+                  />
+                  {!collapsed && (
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: "16px" }}>{item.full_name || item.name}</h3>
+                      <p style={{ margin: 0, fontSize: "14px" }}>
+                        {item.crime}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {/* Render Person Details if a person is selected */}
+        {selectedPerson && (
+          <div style={{ marginLeft: collapsed ? "0" : "16px" }}>
+            {renderPersonDetails()}
+          </div>
+        )}
+      </nav>
     </div>
   );
 };
@@ -394,4 +650,12 @@ const SidebarItem = ({ icon, label, collapsed, onClick }) => {
   );
 };
 
-export default Sidebar;
+export default function App() {
+  return (
+    // Ensure the parent container of Sidebar has a height of 100%
+    <div style={{ height: "100%" }}>
+      <Sidebar />
+    </div>
+  );
+}
+
