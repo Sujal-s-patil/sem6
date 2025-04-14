@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from './Sidebar';
 import { TaskCard } from './TaskCard';
-
+//comment
 const statuses = ["Pending", "In Progress", "Resolved", "Closed"];
 const statusColors = {
   Pending: "#fef3c7",
