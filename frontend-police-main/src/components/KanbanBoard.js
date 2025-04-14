@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from './Sidebar';
 import { TaskCard } from './TaskCard';
-/* comment */
+
 const statuses = ["Pending", "In Progress", "Resolved", "Closed"];
 const statusColors = {
   Pending: "#fef3c7",
@@ -9,9 +9,6 @@ const statusColors = {
   Resolved: "#bbf7d0",
   Closed: "#fecaca"
 };
-
-const SIDEBAR_WIDTH = 280;
-const SIDEBAR_HEIGHT = '100vh';
 
 const KanbanBoard = () => {
   const [tasks, setTasks] = useState([]);
@@ -81,30 +78,15 @@ const KanbanBoard = () => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       {/* Sidebar */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        height: SIDEBAR_HEIGHT,
-        width: `${SIDEBAR_WIDTH}px`,
-        zIndex: 1000,
-        backgroundColor: '#fff',
-        borderRight: '1px solid #ddd',
-        boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
-        overflowY: 'auto'
-      }}>
-        <Sidebar />
-      </div>
+      <Sidebar />
 
       {/* Kanban container that scrolls if needed */}
       <div style={{
-        marginLeft: `${SIDEBAR_WIDTH}px`,
         padding: '16px',
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
         gap: '16px',
         flexGrow: 1,
-        width: `calc(100vw - ${SIDEBAR_WIDTH}px)`
       }}>
         {statuses.map((status) => (
           <Column
