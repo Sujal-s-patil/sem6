@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
+// new comment
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(true); // Sidebar starts collapsed
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item (Police or Criminals)
