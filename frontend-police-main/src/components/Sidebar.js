@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+// lorem ipsum
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(true); // Sidebar starts collapsed
