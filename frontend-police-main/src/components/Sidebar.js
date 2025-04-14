@@ -38,6 +38,13 @@ const Sidebar = () => {
     };
   }, []);
 
+  // Cancel person details when sidebar is collapsed
+  useEffect(() => {
+    if (collapsed) {
+      setSelectedPerson(null); // Reset the selected person when the sidebar is collapsed
+    }
+  }, [collapsed]);
+
   const handleBackClick = () => {
     setSelectedItem(null); // Reset the selected item
     setSearchQuery(""); // Clear the search query
@@ -167,33 +174,77 @@ const Sidebar = () => {
     if (!selectedPerson) return null;
 
     return (
-      <div style={{ padding: "10px", textAlign: "left", width: "100%" }}>
-        <img
-          src={selectedPerson.photo}
-          alt={selectedPerson.full_name || selectedPerson.name}
+      <div
+        style={{
+          padding: "10px",
+          textAlign: "left",
+          width: "100%",
+          height: "calc(100vh - 60px)", // Adjust height to fit within the viewport
+          overflowY: "auto", // Enable vertical scrolling
+          boxSizing: "border-box", // Ensure padding is included in the width/height
+        }}
+      >
+        <div
           style={{
-            width: "100px",
-            height: "100px",
-            borderRadius: "50%",
-            marginBottom: "16px",
+            display: "flex",
+            alignItems: "center", // Align items vertically
+            gap: "12px", // Reduce spacing between the photo and the name
+            marginBottom: "1px", // Reduce bottom margin
           }}
-        />
-        <h2 style={{ margin: "0 0 10px 0" }}>
-          {selectedPerson.full_name || selectedPerson.name}
-        </h2>
-        {selectedItem === "Police" ? (
-          <>
-            <p><strong>Police ID:</strong> {selectedPerson.police_id}</p>
-            <p><strong>Post:</strong> {selectedPerson.post}</p>
-            <p><strong>Speciality:</strong> {selectedPerson.speciality}</p>
-          </>
-        ) : (
-          <>
-            <p><strong>Crime:</strong> {selectedPerson.crime}</p>
-            <p><strong>Date of Arrest:</strong> {new Date(selectedPerson.date_of_arrest).toISOString().split("T")[0]}</p>
-            <p><strong>Status:</strong> {selectedPerson.status}</p>
-          </>
-        )}
+        >
+          <img
+            src={selectedPerson.photo}
+            alt={selectedPerson.full_name || selectedPerson.name}
+            style={{
+              width: "100px",
+              height: "100px",
+              borderRadius: "50%",
+            }}
+          />
+          <h2 style={{ margin: 0 }}>
+            {selectedPerson.full_name || selectedPerson.name}
+          </h2>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1px", // Reduce spacing between details
+          }}
+        >
+          {selectedItem === "Police" ? (
+            <>
+              <p><strong>Police ID:</strong> {selectedPerson.police_id}</p>
+              <p><strong>Aadhar Card:</strong> {selectedPerson.aadhar_card}</p>
+              <p><strong>Email:</strong> {selectedPerson.email}</p>
+              <p><strong>Phone No:</strong> {selectedPerson.phone_no}</p>
+              <p><strong>Address:</strong> {selectedPerson.address}</p>
+              <p><strong>City:</strong> {selectedPerson.city}</p>
+              <p><strong>State:</strong> {selectedPerson.state}</p>
+              <p><strong>Blood Group:</strong> {selectedPerson.blood_group}</p>
+              <p><strong>Post:</strong> {selectedPerson.post}</p>
+              <p><strong>Speciality:</strong> {selectedPerson.speciality}</p>
+              <p><strong>Description:</strong> {selectedPerson.description}</p>
+            </>
+          ) : (
+            <>
+              <p><strong>Crime:</strong> {selectedPerson.crime}</p>
+              <p><strong>Date of Arrest:</strong> {new Date(selectedPerson.date_of_arrest).toISOString().split("T")[0]}</p>
+              <p><strong>Status:</strong> {selectedPerson.status}</p>
+              <p><strong>Aadhar Card:</strong> {selectedPerson.aadhar_card}</p>
+              <p><strong>Address:</strong> {selectedPerson.address}</p>
+              <p><strong>City:</strong> {selectedPerson.city}</p>
+              <p><strong>State:</strong> {selectedPerson.state}</p>
+              <p><strong>Date of Birth:</strong> {new Date(selectedPerson.date_of_birth).toISOString().split("T")[0]}</p>
+              <p><strong>Jail Address:</strong> {selectedPerson.jail_address}</p>
+              <p><strong>Jail City:</strong> {selectedPerson.jail_city}</p>
+              <p><strong>Jail State:</strong> {selectedPerson.jail_state}</p>
+              <p><strong>Phone No:</strong> {selectedPerson.phone_no}</p>
+              <p><strong>Sentence Duration:</strong> {selectedPerson.sentence_duration} months</p>
+              <p><strong>Description:</strong> {selectedPerson.description}</p>
+            </>
+          )}
+        </div>
       </div>
     );
   };
@@ -244,7 +295,13 @@ const Sidebar = () => {
 
         {!selectedPerson && (
           <button
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => {
+              setCollapsed(!collapsed); // Toggle the collapsed state
+              if (!collapsed) {
+                setSelectedPerson(null); // Cancel person details
+                setSelectedItem(null);   // Cancel the person details list page
+              }
+            }}
             style={{
               background: collapsed ? "none" : "rgb(51, 51, 51)",
               border: "none",
@@ -276,23 +333,27 @@ const Sidebar = () => {
           label="Police"
           collapsed={collapsed}
           onClick={() => {
-            setSelectedItem(selectedItem === "Police" ? null : "Police");
-            setSearchQuery("");
-            setSelectedPerson(null);
-          }}
-        />
-        <SidebarItem
-          icon="🦹‍♂️"
-          label="Criminals"
-          collapsed={collapsed}
-          onClick={() => {
-            setSelectedItem(selectedItem === "Criminals" ? null : "Criminals");
+            setCollapsed(false); // Ensure the sidebar expands
+            setSelectedItem(selectedItem === "Police" ? null : "Police"); // Toggle Police list
             setSearchQuery("");
             setSelectedPerson(null);
           }}
         />
         {selectedItem === "Police" && !selectedPerson && renderDetails(policeTeam)}
+
+        <SidebarItem
+          icon="🦹‍♂️"
+          label="Criminals"
+          collapsed={collapsed}
+          onClick={() => {
+            setCollapsed(false); // Ensure the sidebar expands
+            setSelectedItem(selectedItem === "Criminals" ? null : "Criminals"); // Toggle Criminals list
+            setSearchQuery("");
+            setSelectedPerson(null);
+          }}
+        />
         {selectedItem === "Criminals" && !selectedPerson && renderDetails(criminals)}
+
         {selectedPerson && renderPersonDetails()}
       </nav>
     </div>
