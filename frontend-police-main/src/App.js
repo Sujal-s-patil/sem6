@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/KanbanBoard" element={<KanbanBoard />} />
+        <Route path="/home" element={<KanbanBoard />} />
       </Routes>
     </Router>
   );
