@@ -61,7 +61,17 @@ const KanbanBoard = () => {
             body: JSON.stringify({ complaint_id: taskId }),
           })
             .then(res => res.json())
-            .then(data => console.log("Police officers unassigned:", data))
+            .then(data => {
+              console.log("Police officers unassigned:", data)
+              const userData = JSON.parse(sessionStorage.getItem("userData"));
+              sessionStorage.setItem("userData",
+                JSON.stringify({
+                  ...userData,
+                  complaint_id: null,
+                  occupied:0
+                })
+              );
+            })
             .catch(err => console.error("Error unassigning officers:", err));
         }
       })

@@ -61,6 +61,7 @@ const TaskModal = ({ task, onClose }) => {
               JSON.stringify({
                 ...userData,
                 complaint_id: task.complaint_id,
+                occupied:1
               })
             );
           }
