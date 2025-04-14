@@ -1,7 +1,6 @@
 // TaskCard.js
 import React, { useState, useEffect } from "react";
 
-
 const TaskModal = ({ task, onClose }) => {
   const [showAssignPopup, setShowAssignPopup] = useState(false);
   const [policeTeam, setPoliceTeam] = useState([]);
@@ -51,7 +50,21 @@ const TaskModal = ({ task, onClose }) => {
         }),
       })
         .then((response) => response.json())
-        .then((data) => console.log("Officer assigned:", data))
+        .then((data) => {
+          console.log("Officer assigned:", data);
+
+          // Update userData if the assigned officer matches userData.police_id
+          const userData = JSON.parse(sessionStorage.getItem("userData"));
+          if (userData?.police_id === police_id) {
+            sessionStorage.setItem(
+              "userData",
+              JSON.stringify({
+                ...userData,
+                complaint_id: task.complaint_id,
+              })
+            );
+          }
+        })
         .catch((error) => console.error("Error assigning officer:", error));
     });
     handleCloseAssignPopup();
@@ -345,9 +358,9 @@ const TaskModal = ({ task, onClose }) => {
   );
 };
 
-
 const TaskCard = ({ task, isDraggingOver }) => {
   const [showModal, setShowModal] = useState(false);
+  const userData = JSON.parse(sessionStorage.getItem("userData"));
 
   const handleDragStart = (e) => {
     e.dataTransfer.setData(
@@ -369,6 +382,16 @@ const TaskCard = ({ task, isDraggingOver }) => {
     setShowModal(false);
   };
 
+  // Determine the background color based on userData
+  const isHighlighted =
+    task.complaint_id === userData?.complaint_id && task.status !== "Closed";
+
+  const cardBackgroundColor = isHighlighted
+    ? "lightblue"
+    : isDraggingOver
+    ? "rgba(0, 0, 0, 0.1)"
+    : "white";
+
   return (
     <>
       <div
@@ -380,17 +403,23 @@ const TaskCard = ({ task, isDraggingOver }) => {
           padding: "8px",
           marginBottom: "8px",
           cursor: "grab",
-          backgroundColor: "white",
-          boxShadow: isDraggingOver ? "0 4px 8px rgba(0,0,0,0.2)" : "0 2px 4px rgba(0,0,0,0.1)",
+          backgroundColor: cardBackgroundColor,
+          boxShadow: isDraggingOver
+            ? "0 4px 8px rgba(0,0,0,0.2)"
+            : "0 2px 4px rgba(0,0,0,0.1)",
           border: "1px solid #ccc",
           borderRadius: "4px",
           transition: "transform 0.2s, box-shadow 0.2s",
           transform: isDraggingOver ? "scale(1.02)" : "none",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <p><strong>{task.crime_type}</strong></p>
-        <p style={{ fontSize: "12px", color: "gray" }}>{task.complainant_name}</p>
+        <p>
+          <strong>{task.crime_type}</strong>
+        </p>
+        <p style={{ fontSize: "12px", color: "gray" }}>
+          {task.complainant_name}
+        </p>
       </div>
       {showModal && <TaskModal task={task} onClose={handleCloseModal} />}
     </>
