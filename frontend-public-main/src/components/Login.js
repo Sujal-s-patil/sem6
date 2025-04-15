@@ -29,7 +29,7 @@ const Login = () => {
 
       if (response.ok && data.message === "Login successful") {
         sessionStorage.setItem('userData', JSON.stringify(data[0]));
-        navigate('/dashboard');
+        navigate('/home');
       } else {
         setErrorMessage(data.message || 'Login failed');
         setPassword(''); // Clear the password field for security
