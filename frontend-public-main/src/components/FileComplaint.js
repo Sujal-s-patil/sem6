@@ -85,7 +85,7 @@ const FileComplaint = () => {
           console.log('Complaint filed successfully:', result);
 
           // Navigate to a success page or show success message
-          navigate('/dashboard'); // Adjust the route as per your app
+          navigate('/home'); // Adjust the route as per your app
         };
         fileReader.readAsDataURL(file);
       } else {
@@ -106,7 +106,7 @@ const FileComplaint = () => {
         console.log('Complaint filed successfully:', result);
 
         // Navigate to a success page or show success message
-        navigate('/dashboard'); // Adjust the route as per your app
+        navigate('/home'); // Adjust the route as per your app
       }
     } catch (err) {
       console.error('Error filing complaint:', err);
