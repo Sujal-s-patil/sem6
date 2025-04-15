@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import '../css/Dashboard.css';
 
 const Dashboard = () => {
   const [complaints, setComplaints] = useState([]); // State to store fetched data

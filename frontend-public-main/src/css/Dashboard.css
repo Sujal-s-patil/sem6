@@ -1,0 +1,168 @@
+/* Page background styling */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #d1ebff, #87c9f4); /* Light gradient background */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* General container styling */
+.dashboard-container {
+  max-width: 600px; /* Increased width */
+  margin: 50px auto;
+  text-align: center;
+  font-family: 'Verdana', sans-serif; /* Changed to a basic font */
+  background: linear-gradient(135deg, #ffffff, #f8f9fa); /* Gradient background */
+  padding: 40px; /* Increased padding */
+  border-radius: 15px; /* Larger border radius for a smoother look */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for more depth */
+}
+
+.dashboard-container h2 {
+  font-size: 28px; /* Larger font size */
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.dashboard-container p {
+  font-size: 18px; /* Slightly larger font size */
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Buttons styling */
+.dashboard-container button {
+  width: 100%;
+  padding: 15px; /* Increased padding for larger buttons */
+  margin-bottom: 20px;
+  font-size: 18px; /* Larger font size */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px; /* Slightly larger border radius */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.dashboard-container button:hover {
+  transform: translateY(-3px); /* Lift effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.dashboard-container button:active {
+  transform: translateY(1px); /* Press effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow on press */
+}
+
+.dashboard-container .check-complaint-btn {
+  background-color: #007BFF; /* Blue */
+  color: white;
+}
+
+.dashboard-container .check-complaint-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.dashboard-container .file-complaint-btn {
+  background-color: #28A745; /* Green */
+  color: white;
+}
+
+.dashboard-container .file-complaint-btn:hover {
+  background-color: #1e7e34; /* Darker green on hover */
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 16px; /* Slightly larger font size */
+  margin-top: 15px;
+}
+
+/* Popup styling */
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: linear-gradient(135deg, #ffffff, #f2f2f2); /* Gradient background for popup */
+  border: 1px solid #ddd;
+  border-radius: 15px; /* Larger border radius */
+  padding: 25px; /* Increased padding */
+  width: 90%;
+  max-width: 700px; /* Increased max width */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for depth */
+  overflow: hidden;
+}
+
+.popup-container h3 {
+  font-size: 22px; /* Larger font size */
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.popup-container .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background-color: transparent;
+  font-size: 20px; /* Larger font size */
+  cursor: pointer;
+  color: #555;
+}
+
+.popup-container .close-btn:hover {
+  color: #000;
+}
+
+/* Table styling */
+.popup-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.popup-container th,
+.popup-container td {
+  padding: 12px; /* Increased padding */
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 16px; /* Larger font size */
+}
+
+.popup-container th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.popup-container tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.popup-container tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Scrollable table body */
+.popup-container .table-scrollable {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Background overlay with blur effect */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.046); /* Light transparent background */
+  backdrop-filter: blur(8px); /* Apply blur effect */
+  z-index: 999;
+}
