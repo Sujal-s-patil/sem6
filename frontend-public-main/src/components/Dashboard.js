@@ -51,110 +51,42 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto', textAlign: 'center' }}>
+    <div className="dashboard-container">
       <h2>Dashboard</h2>
       <p>Welcome to the Dashboard. Please select an action:</p>
-      <div style={{ margin: '20px 0' }}>
-        {/* Check Complaint Button */}
-        <button
-          onClick={handleCheckComplaints}
-          style={{
-            width: '100%',
-            padding: '10px',
-            marginBottom: '15px',
-            backgroundColor: '#007BFF',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            borderRadius: '5px',
-          }}
-        >
+      <div className="button-container">
+        <button className="check-complaint-btn" onClick={handleCheckComplaints}>
           Check Complaint
         </button>
-
-        {/* File a Complaint Button */}
         <button
-          onClick={() => navigate('/file-complaint')} // Correct the path here
-          style={{
-            width: '100%',
-            padding: '10px',
-            backgroundColor: '#28A745',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            borderRadius: '5px',
-          }}
+          className="file-complaint-btn"
+          onClick={() => navigate('/file-complaint')}
         >
           File a Complaint
         </button>
       </div>
-
-      {/* Error message if any */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {/* Popup for displaying complaint data */}
+      {error && <p className="error-message">{error}</p>}
       {showPopup && (
-        <div
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 1000,
-            backgroundColor: 'white',
-            border: '1px solid #ddd',
-            borderRadius: '10px',
-            padding: '20px',
-            width: '90%',
-            maxWidth: '600px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-            overflow: 'hidden', // Prevents overflow outside the popup area
-          }}
-        >
+        <div className="popup-container">
           <h3>Complaints</h3>
-          {/* Close button for the popup */}
-          <button
-            onClick={closePopup}
-            style={{
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              border: 'none',
-              backgroundColor: 'transparent',
-              fontSize: '16px',
-              cursor: 'pointer',
-            }}
-          >
+          <button className="close-btn" onClick={closePopup}>
             ❌
           </button>
-
-          {/* Displaying complaints in a table */}
           {complaints.length > 0 ? (
-            <div
-              style={{
-                maxHeight: '400px', // Limits the height of the table area
-                overflowY: 'auto',  // Makes the table body scrollable if content is too long
-              }}
-            >
-              <table
-                style={{
-                  width: '100%',
-                  borderCollapse: 'collapse',
-                  marginTop: '10px',
-                }}
-              >
+            <div className="table-scrollable">
+              <table>
                 <thead>
-                  <tr style={{ backgroundColor: '#f2f2f2' }}>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Status</th> {/* Moved status to first column */}
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Complainant Name</th>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Crime Type</th>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Crime Description</th>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Crime Location</th>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>City</th>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>State</th>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Crime Date</th>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Date Filed</th>
-                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Last Updated</th>
+                  <tr>
+                    <th>Status</th>
+                    <th>Complainant Name</th>
+                    <th>Crime Type</th>
+                    <th>Crime Description</th>
+                    <th>Crime Location</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Crime Date</th>
+                    <th>Date Filed</th>
+                    <th>Last Updated</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -162,41 +94,28 @@ const Dashboard = () => {
                     const cleanedComplaint = cleanComplaintData(complaint);
                     return (
                       <tr key={complaint.complaint_id}>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                          {cleanedComplaint.status} {/* Moved status to first column */}
-                        </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                          {cleanedComplaint.complainant_name}
-                        </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                          {cleanedComplaint.crime_type}
-                        </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                          {cleanedComplaint.crime_description}
-                        </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                          {cleanedComplaint.crime_location}
-                        </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                          {cleanedComplaint.city}
-                        </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                          {cleanedComplaint.state}
-                        </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                        <td>{cleanedComplaint.status}</td>
+                        <td>{cleanedComplaint.complainant_name}</td>
+                        <td>{cleanedComplaint.crime_type}</td>
+                        <td>{cleanedComplaint.crime_description}</td>
+                        <td>{cleanedComplaint.crime_location}</td>
+                        <td>{cleanedComplaint.city}</td>
+                        <td>{cleanedComplaint.state}</td>
+                        <td>
                           {new Date(cleanedComplaint.crime_date).toLocaleString()}
                         </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                        <td>
                           {new Date(cleanedComplaint.date_filed).toLocaleString()}
                         </td>
-                        <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                          {new Date(cleanedComplaint.last_updated).toLocaleString()}
+                        <td>
+                          {new Date(
+                            cleanedComplaint.last_updated
+                          ).toLocaleString()}
                         </td>
                       </tr>
                     );
                   })}
                 </tbody>
-
               </table>
             </div>
           ) : (
@@ -204,22 +123,7 @@ const Dashboard = () => {
           )}
         </div>
       )}
-
-      {/* Background overlay to close the popup when clicked */}
-      {showPopup && (
-        <div
-          onClick={closePopup}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 999,
-          }}
-        ></div>
-      )}
+      {showPopup && <div className="popup-overlay" onClick={closePopup}></div>}
     </div>
   );
 };

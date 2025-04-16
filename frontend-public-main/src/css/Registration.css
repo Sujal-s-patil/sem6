@@ -1,40 +1,112 @@
+/* Registration Container */
 .registration-container {
-    max-width: 500px;
+    width: 100%; /* Default width for smaller screens */
+    max-width: 800px; /* Increased maximum width for larger screens */
     margin: 50px auto;
+    padding: 40px;
     text-align: center;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa); /* Subtle gradient background */
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    font-family: 'Arial', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.registration-container:hover {
+    transform: translateY(-5px); /* Slight lift effect */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+/* Form Heading */
+.registration-container h2 {
+    font-size: 28px;
+    color: #333333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Input Fields */
 .input-field {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    text-align: left; /* Align labels and inputs to the left */
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555555;
 }
 
 .input-field input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    font-size: 14px;
+    color: #333333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-sizing: border-box;
 }
 
-.error-message {
-    color: red;
-    margin-top: 5px;
+.input-field input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
 }
 
+/* Error Message */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: left;
+}
+
+/* Buttons */
 .submit-button,
 .back-button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
     margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .submit-button {
-    background-color: #007BFF;
+    background-color: #007bff;
     color: white;
 }
 
+.submit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.02); /* Slight zoom effect */
+}
+
 .back-button {
-    background-color: #6C757D;
+    background-color: #6c757d;
     color: white;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+    transform: scale(1.02); /* Slight zoom effect */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .registration-container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .submit-button,
+    .back-button {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
