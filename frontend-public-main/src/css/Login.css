@@ -1,0 +1,85 @@
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff, #e3f2fd);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-container h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 25px;
+  font-family: 'Arial', sans-serif;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container input:focus {
+  border-color: #42a5f5;
+  outline: none;
+  box-shadow: 0 0 8px rgba(66, 165, 245, 0.5);
+}
+
+.login-container .error-message {
+  color: #d32f2f;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-container button[type="submit"] {
+  background-color: #42a5f5;
+  color: white;
+}
+
+.login-container button[type="submit"]:hover {
+  background-color: #1e88e5;
+  transform: translateY(-2px);
+}
+
+.login-container button[type="button"] {
+  background-color: #66bb6a;
+  color: white;
+  margin-top: 15px;
+}
+
+.login-container button[type="button"]:hover {
+  background-color: #43a047;
+  transform: translateY(-2px);
+}
+
+.login-container button:active {
+  transform: translateY(1px);
+}
+
+.login-container button:focus {
+  outline: none;
+}
