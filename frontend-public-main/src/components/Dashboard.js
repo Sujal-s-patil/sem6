@@ -78,43 +78,20 @@ const Dashboard = () => {
                 <thead>
                   <tr>
                     <th>Status</th>
-                    <th>Complainant Name</th>
                     <th>Crime Type</th>
-                    <th>Crime Description</th>
                     <th>Crime Location</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Crime Date</th>
                     <th>Date Filed</th>
-                    <th>Last Updated</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {complaints.map((complaint) => {
-                    const cleanedComplaint = cleanComplaintData(complaint);
-                    return (
-                      <tr key={complaint.complaint_id}>
-                        <td>{cleanedComplaint.status}</td>
-                        <td>{cleanedComplaint.complainant_name}</td>
-                        <td>{cleanedComplaint.crime_type}</td>
-                        <td>{cleanedComplaint.crime_description}</td>
-                        <td>{cleanedComplaint.crime_location}</td>
-                        <td>{cleanedComplaint.city}</td>
-                        <td>{cleanedComplaint.state}</td>
-                        <td>
-                          {new Date(cleanedComplaint.crime_date).toLocaleString()}
-                        </td>
-                        <td>
-                          {new Date(cleanedComplaint.date_filed).toLocaleString()}
-                        </td>
-                        <td>
-                          {new Date(
-                            cleanedComplaint.last_updated
-                          ).toLocaleString()}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {complaints.map((complaint) => (
+                    <tr key={complaint.complaint_id}>
+                      <td>{complaint.status}</td>
+                      <td>{complaint.crime_type}</td>
+                      <td>{complaint.crime_location}</td>
+                      <td>{new Date(complaint.date_filed).toLocaleString()}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
