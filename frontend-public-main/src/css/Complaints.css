@@ -154,7 +154,7 @@ td:last-child, th:last-child {
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(8px); /* Stronger blur for a modern look */
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+  background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent dark overlay */
   z-index: 9999; /* Increased z-index to ensure it's above all elements */
   display: flex; /* Use flexbox for centering */
   justify-content: center; /* Center horizontally */
@@ -167,13 +167,18 @@ td:last-child, th:last-child {
   border-radius: 16px; /* Larger rounded corners for a modern look */
   padding: 30px;
   width: 90%;
-  max-width: 680px; /* Increased max width for better layout */
+  max-width: 600px; /* Increased max width for better layout */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
   z-index: 10000; /* Even higher z-index than overlay */
   animation: fadeIn 0.3s ease-in-out;
   font-family: 'Arial', sans-serif;
-  position: static; /* Change from fixed to relative */
-  transform: none; /* Remove the transform */
+  position: absolute;
+  margin: 0 auto; /* Center the container */
+  max-height: 90vh; /* Limit height to 90% of viewport height */
+  overflow-y: auto; /* Allow scrolling if content is too tall */
+  top: 50%; /* Position from top */
+  left: 50%; /* Position from left */
+  transform: translate(-50%, -50%); /* Center the element */
 }
 
 /* Popup header */
@@ -211,10 +216,10 @@ td:last-child, th:last-child {
 
 /* Popup content styling with grid layout */
 .popup-content {
-  display: grid;
+  display: block;
   grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
   gap: 20px; /* Spacing between rows and columns */
-  max-height: 70vh;
+  max-height:170vh;
   overflow-y: auto;
   width: 100%;
   margin-top: 20px;
@@ -509,11 +514,11 @@ td:last-child, th:last-child {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: translate(-50%, -50%) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
