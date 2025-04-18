@@ -1,0 +1,667 @@
+/* Modernized container styling */
+.dashboard-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  width: 90%;
+}
+
+.complaints-container {
+  max-width: 1200px; /* Increased width for a larger container */
+  margin: 30px auto;
+  padding: 40px; /* Increased padding for better spacing */
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow for depth */
+  font-family: 'Arial', sans-serif;
+  width: 95%; /* Ensure it adjusts to smaller screens */
+  position: relative; /* Add this to establish a positioning context */
+}
+
+/* Header styling */
+h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.complaints-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.complaints-header h2 {
+  font-size: 32px;
+  color: #333;
+  margin: 0;
+}
+
+/* Modernized table styling */
+.table-scrollable {
+  width: 100%;
+  margin: 0 auto; /* Center the table */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 10px; /* Rounded corners for the table container */
+  margin-bottom: 20px; /* Add spacing before the button */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: separate; /* Use separate borders for a modern look */
+  border-spacing: 0; /* Remove spacing between cells */
+  font-size: 16px;
+  background-color: #ffffff; /* White background for the table */
+  border-radius: 8px; /* Rounded corners for the table */
+  overflow: hidden; /* Ensure rounded corners apply to the entire table */
+}
+
+th, td {
+  padding: 15px;
+  border-bottom: 1px solid #ddd; /* Add a bottom border for rows */
+  text-align: left;
+}
+
+th {
+  background-color: #007BFF; /* Blue header background */
+  color: white; /* White text for the header */
+  font-weight: bold;
+  text-align: center;
+  position: sticky; /* Keep the header fixed when scrolling */
+  top: 0;
+  z-index: 1;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light gray background for even rows */
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Slightly darker gray on hover */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+td:first-child, th:first-child {
+  border-top-left-radius: 10px; /* Rounded corners for the first column */
+}
+
+td:last-child, th:last-child {
+  border-top-right-radius: 10px; /* Rounded corners for the last column */
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* No complaints message styling */
+.no-complaints {
+  text-align: center;
+  color: #666;
+  font-size: 18px;
+  margin: 40px 0;
+}
+
+/* Back to Dashboard button styling */
+.back-btn {
+  display: block;
+  margin: 20px auto 0; /* Add spacing above the button */
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: auto; /* Ensure the width is minimal */
+  text-decoration: none; /* Remove underline from link */
+}
+
+.back-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Ensure proper spacing for the button container */
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed; /* Ensure the overlay covers the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px); /* Stronger blur for a modern look */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+  z-index: 9999; /* Increased z-index to ensure it's above all elements */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+/* Popup container */
+.popup-container {
+  background: linear-gradient(135deg, #ffffff, #f9f9f9); /* Subtle gradient background */
+  border-radius: 16px; /* Larger rounded corners for a modern look */
+  padding: 30px;
+  width: 90%;
+  max-width: 680px; /* Increased max width for better layout */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
+  z-index: 10000; /* Even higher z-index than overlay */
+  animation: fadeIn 0.3s ease-in-out;
+  font-family: 'Arial', sans-serif;
+  position: static; /* Change from fixed to relative */
+  transform: none; /* Remove the transform */
+}
+
+/* Popup header */
+.popup-header {
+  display: flex;
+  justify-content: space-between; /* Space between the heading and the close button */
+  align-items: center; /* Vertically align the heading and button */
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd; /* Add a subtle divider */
+  padding-bottom: 10px;
+}
+
+/* Popup header title */
+.popup-header h3 {
+  font-size: 24px;
+  margin: 0; /* Remove default margin for proper alignment */
+  color: #333;
+  font-weight: bold;
+}
+
+/* Modern close button */
+.modern-close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.modern-close-btn:hover {
+  color: #ff4d4d; /* Red color on hover */
+  transform: scale(1.2); /* Slight zoom effect */
+}
+
+/* Popup content styling with grid layout */
+.popup-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+  gap: 20px; /* Spacing between rows and columns */
+  max-height: 70vh;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.popup-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.popup-content th,
+.popup-content td {
+  padding: 10px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.popup-content th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  color: #333;
+}
+
+.popup-content td {
+  color: #555;
+}
+
+/* Full-width row for Crime Description */
+.full-width-row td {
+  grid-column: span 2; /* Make the last row span both columns */
+  text-align: left;
+  padding-top: 15px;
+  border-top: 2px solid #eee; /* Add a top border for separation */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .popup-content {
+    grid-template-columns: 1fr; /* Single column layout for smaller screens */
+    gap: 10px;
+  }
+
+  .full-width-row td {
+    grid-column: span 1; /* Reset to single column */
+  }
+}
+
+.proof-section {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 2px solid #eee;
+}
+
+.download-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.download-link:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Spinner container */
+.status-spinner {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  font-size: 14px;
+  color: #007BFF;
+}
+
+/* Spinner animation */
+.spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #007BFF;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 5px;
+}
+
+/* Spinner animation */
+.spinner {
+  border: 2px solid #007BFF;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Spinner animation keyframes */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Status tick container */
+.status-tick {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  font-size: 14px;
+  color: #28a745; /* Green color for resolved status */
+}
+
+/* Tick animation */
+.tick {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #28a745;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 5px;
+  animation: tickAppear 0.5s ease-in-out;
+}
+
+.tick::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  border: solid #28a745;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  top: 2px;
+  left: 4px;
+  animation: checkMark 0.5s ease-in-out;
+}
+
+/* Tick circle icon */
+.tick-circle-icon {
+  width: 16px; /* Adjusted size */
+  height: 16px; /* Adjusted size */
+  animation: circleAppear 0.5s ease-in-out;
+}
+
+.tick-circle-icon .circle {
+  stroke-dasharray: 63; /* Circumference of the circle */
+  stroke-dashoffset: 63; /* Start hidden */
+  animation: drawCircle 0.5s ease-in-out forwards;
+}
+
+.tick-circle-icon .tick {
+  stroke-dasharray: 20; /* Length of the tick */
+  stroke-dashoffset: 20; /* Start hidden */
+  animation: drawTick 0.5s ease-in-out 0.5s forwards; /* Delay to sync with circle */
+}
+
+/* Tick circle animation */
+@keyframes tickAppear {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Checkmark animation */
+@keyframes checkMark {
+  from {
+    transform: rotate(45deg) scale(0);
+  }
+  to {
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+/* Status closed container */
+.status-closed {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  font-size: 14px;
+  color: #dc3545; /* Red color for closed status */
+}
+
+/* Cross animation */
+.cross {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  margin-right: 5px;
+  animation: crossAppear 0.5s ease-in-out;
+}
+
+.cross::before,
+.cross::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background-color: #dc3545;
+  top: 7px;
+  left: 1px;
+  transform-origin: center;
+}
+
+.cross::before {
+  transform: rotate(45deg) scale(0);
+  animation: crossLine 0.5s ease-in-out forwards;
+}
+
+.cross::after {
+  transform: rotate(-45deg) scale(0);
+  animation: crossLine 0.5s ease-in-out forwards;
+}
+
+/* Cross line animation */
+@keyframes crossLine {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Cross circle animation */
+@keyframes crossAppear {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Dash in circle animation */
+.dash-circle {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #dc3545;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 5px;
+  animation: circleAppear 0.5s ease-in-out;
+}
+
+.dash-circle::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background-color: #dc3545;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: dashAppear 0.5s ease-in-out forwards;
+}
+
+/* Circle animation */
+@keyframes circleAppear {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Dash animation */
+@keyframes dashAppear {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Close button hover effect */
+.close-btn:hover {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+/* Standardized icon container */
+.status-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px; /* Add spacing between the text and the icon */
+  font-size: 14px; /* Match the font size of the status text */
+}
+
+/* SVG-based tick icon */
+.tick-icon {
+  width: 16px; /* Adjusted size */
+  height: 16px; /* Adjusted size */
+  stroke: #28a745; /* Green color for the tick */
+  animation: tickAppear 0.5s ease-in-out;
+}
+
+/* Table icon container */
+.table-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px; /* Add spacing between the icon and text */
+}
+
+/* Standardized icon size */
+.table-icon span {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+/* Popup content styling with grid layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+  gap: 20px; /* Spacing between rows and columns */
+  max-height: 70vh;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.grid-item {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.grid-item strong {
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Full-width row for Crime Description */
+.grid-item.full-width {
+  grid-column: span 2; /* Make the last row span both columns */
+  border-top: 2px solid #eee; /* Add a top border for separation */
+  padding-top: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Single column layout for smaller screens */
+    gap: 10px;
+  }
+
+  .grid-item.full-width {
+    grid-column: span 1; /* Reset to single column */
+  }
+}
+
+@media (max-width: 768px) {
+  .complaints-container {
+    margin: 15px;
+    padding: 20px;
+  }
+
+  .complaints-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .complaints-header h2 {
+    font-size: 24px;
+  }
+
+  th, td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .popup-content {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* Popup table styling */
+.popup-table {
+  width: 90%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.popup-table th,
+.popup-table td {
+  padding: 10px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  color: #555;
+}
+
+.popup-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
+
+.popup-table .full-width-row td {
+  grid-column: span 2;
+  text-align: left;
+  padding-top: 15px;
+  border-top: 2px solid #eee;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .popup-table th,
+  .popup-table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .popup-table .full-width-row td {
+    grid-column: span 1;
+  }
+}

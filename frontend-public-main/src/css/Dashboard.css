@@ -13,13 +13,13 @@ body {
 /* General container styling */
 .dashboard-container {
   max-width: 800px; /* Increased width for better layout */
-  margin: 50px auto;
+  margin: 30px auto;
   text-align: center;
   font-family: 'Verdana', sans-serif;
-  background: linear-gradient(135deg, #ffffff, #f8f9fa); /* Subtle gradient background */
-  padding: 40px;
+  background-color: white;
+  padding: 30px;
   border-radius: 15px; /* Larger border radius for a smoother look */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -94,17 +94,17 @@ body {
 
 /* Popup styling */
 .popup-container {
-  position: fixed;
+  position: fixed; /* Ensure the popup stays in the center of the viewport */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 1000; /* Ensure it appears above the overlay */
   background: linear-gradient(135deg, #ffffff, #f9f9f9); /* Subtle gradient background */
   border: 1px solid #ddd;
   border-radius: 15px; /* Smooth rounded corners */
   padding: 30px; /* Increased padding for better spacing */
   width: 90%;
-  max-width: 600px; /* Adjusted max width for better layout */
+  max-width: 800px; /* Adjusted max width for better layout */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
   overflow: hidden;
   animation: fadeIn 0.3s ease-in-out; /* Add a fade-in animation */
@@ -148,30 +148,6 @@ body {
   }
 }
 
-.popup-container h3 {
-  font-size: 24px; /* Larger font size for the title */
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center; /* Center-align the title */
-  font-weight: bold;
-}
-
-.popup-container .close-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px; /* Position the close button on the right */
-  border: none;
-  background-color: transparent;
-  font-size: 24px; /* Larger font size for better visibility */
-  cursor: pointer;
-  color: #555;
-  transition: color 0.3s ease;
-}
-
-.popup-container .close-btn:hover {
-  color: #000; /* Darker color on hover */
-}
-
 /* Table styling */
 .popup-container table {
   width: 100%;
@@ -211,14 +187,14 @@ body {
 
 /* Background overlay with blur effect */
 .popup-overlay {
-  position: fixed;
+  position: fixed; /* Ensure it covers the entire viewport */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark transparent background */
-  backdrop-filter: blur(5px); /* Subtle blur effect */
-  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px); /* Apply blur effect to the entire page */
+  z-index: 999; /* Ensure it appears above other elements */
+  background-color: rgba(255, 255, 255, 0.5); /* Light transparent background */
 }
 
 /* Responsive Design */
