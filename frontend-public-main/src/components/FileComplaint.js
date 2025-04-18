@@ -17,11 +17,13 @@ const FileComplaint = () => {
   const [file, setFile] = useState(null); // State to hold the uploaded file
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fileName, setFileName] = useState('');
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'file') {
       setFile(files[0]); // Set the uploaded file
+      setFileName(files[0] ? files[0].name : ''); // Set the file name
     } else {
       setComplaintData({
         ...complaintData,
@@ -117,57 +119,105 @@ const FileComplaint = () => {
   };
 
   const formInputs = [
-    { label: 'Complainant Name', name: 'complainant_name', type: 'text' },
-    { label: 'Crime Type', name: 'crime_type', type: 'text' },
-    { label: 'Crime Description', name: 'crime_description', type: 'textarea' },
-    { label: 'Crime Location', name: 'crime_location', type: 'text' },
-    { label: 'City', name: 'city', type: 'text' },
-    { label: 'State', name: 'state', type: 'text' },
-    { label: 'Crime Date', name: 'crime_date', type: 'date' },
+    { 
+      label: 'Complainant', 
+      name: 'complainant', 
+      type: 'text'
+    },
+    { 
+      label: 'Crime Type', 
+      name: 'crime_type', 
+      type: 'text'
+    },
+    { 
+      label: 'Crime Description', 
+      name: 'crime_description', 
+      type: 'textarea'
+    },
+    { 
+      label: 'Crime Location', 
+      name: 'crime_location', 
+      type: 'text'
+    },
+    { 
+      label: 'City', 
+      name: 'city', 
+      type: 'text'
+    },
+    { 
+      label: 'State', 
+      name: 'state', 
+      type: 'text'
+    },
+    { 
+      label: 'Crime Date', 
+      name: 'crime_date', 
+      type: 'date'
+    },
   ];
 
   return (
     <div className="form-container">
       <h2>File a Complaint</h2>
-      <form onSubmit={handleSubmit} className="complaint-form">
-        {formInputs.map((input) => (
-          <div key={input.name} className="form-group">
-            <label htmlFor={input.name}>{input.label}:</label>
-            {input.type === 'textarea' ? (
-              <textarea
-                name={input.name}
-                value={complaintData[input.name] || ''}
-                onChange={handleChange}
-                required
-                id={input.name}
-              />
-            ) : (
-              <input
-                type={input.type}
-                name={input.name}
-                value={complaintData[input.name] || ''}
-                onChange={handleChange}
-                required
-                id={input.name}
-              />
-            )}
-          </div>
-        ))}
+      <form onSubmit={handleSubmit}>
+        <div className="complaint-form">
+          {formInputs.map((input) => (
+            <div key={input.name} className="form-group">
+              <label htmlFor={input.name}>
+                {input.label}
+              </label>
+              <div className="input-cell">
+                {input.type === 'textarea' ? (
+                  <textarea
+                    name={input.name}
+                    value={complaintData[input.name] || ''}
+                    onChange={handleChange}
+                    required
+                    id={input.name}
+                    placeholder={`Enter ${input.label.toLowerCase()}...`}
+                  />
+                ) : (
+                  <input
+                    type={input.type}
+                    name={input.name}
+                    value={complaintData[input.name] || ''}
+                    onChange={handleChange}
+                    required
+                    id={input.name}
+                    placeholder={`Enter ${input.label.toLowerCase()}...`}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
 
-        {/* File Upload Section */}
-        <div className="form-group">
-          <label htmlFor="file">Upload Proof (optional):</label>
-          <input
-            type="file"
-            name="file"
-            onChange={handleChange}
-            id="file"
-          />
+          {/* File Upload Section */}
+          <div className="form-group">
+            <label htmlFor="file">
+              Upload Proof (optional)
+            </label>
+            <div className="input-cell">
+              <div className="file-upload-container">
+                <label className="file-upload-label" htmlFor="file">
+                  <span>📁</span> Choose a file
+                </label>
+                <input
+                  type="file"
+                  name="file"
+                  onChange={handleChange}
+                  id="file"
+                />
+                {fileName && <div className="file-name">Selected: {fileName}</div>}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <button type="submit" disabled={isSubmitting} className="submit-button">
-          {isSubmitting ? 'Submitting...' : 'Submit Complaint'}
-        </button>
+        <div className="button-container">
+          <button type="submit" disabled={isSubmitting} className="submit-button">
+            {isSubmitting ? 'Submitting...' : 'Submit Complaint'}
+          </button>
+        </div>
       </form>
 
       {error && <p className="error-message">{error}</p>}
