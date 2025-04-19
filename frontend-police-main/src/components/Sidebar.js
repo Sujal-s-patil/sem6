@@ -136,11 +136,11 @@ const Sidebar = () => {
                 alignItems: "center",
                 backgroundColor: "#2a2a2a",
                 color: "white",
-                padding: "30px",
+                padding: "10px",
                 borderRadius: "8px",
                 marginBottom: "16px",
                 cursor: "pointer",
-                height: "110px",
+                height: "100px",
                 width: "100%",
                 boxSizing: "border-box",
               }}
@@ -149,8 +149,8 @@ const Sidebar = () => {
                 src={item.photo}
                 alt={item.full_name || item.name}
                 style={{
-                  width: "90px",
-                  height: "90px",
+                  width: "70px",
+                  height: "70px",
                   borderRadius: "50%",
                   marginRight: "16px",
                 }}
