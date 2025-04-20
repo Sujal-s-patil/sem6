@@ -166,6 +166,12 @@ const TaskModal = ({ task, onClose }) => {
                 placeholder="Enter your comment"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleCommentSubmit();
+                  }
+                }}
                 style={{
                   flex: 1,
                   padding: "8px",
