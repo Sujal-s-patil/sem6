@@ -56,23 +56,23 @@
 }
 
 .login-container button[type="submit"] {
-  background-color: #42a5f5;
+  background-color: #007BFF;
   color: white;
 }
 
 .login-container button[type="submit"]:hover {
-  background-color: #1e88e5;
+  background-color: #0056b3;
   transform: translateY(-2px);
 }
 
 .login-container button[type="button"] {
-  background-color: #66bb6a;
+  background-color: #28A745;
   color: white;
   margin-top: 15px;
 }
 
 .login-container button[type="button"]:hover {
-  background-color: #43a047;
+  background-color: #1e7e34;
   transform: translateY(-2px);
 }
 

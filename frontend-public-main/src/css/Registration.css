@@ -64,37 +64,52 @@
 }
 
 /* Buttons */
-.submit-button,
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+    flex-direction: row; /* Default direction with Back to Login on left */
+}
+
+.register-button,
 .back-button {
-    width: 100%;
+    flex: 1;
     padding: 12px;
     border: none;
     cursor: pointer;
-    border-radius: 6px;
-    margin-bottom: 15px;
+    border-radius: 8px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 500;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.submit-button {
-    background-color: #007bff;
+.register-button {
+    background-color: #28A745; /* Green to match dashboard */
     color: white;
+    order: 2; /* Move to the right */
 }
 
-.submit-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.02); /* Slight zoom effect */
+.register-button:hover {
+    background-color: #1e7e34; /* Darker green on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .back-button {
-    background-color: #6c757d;
+    background-color: #007BFF; /* Blue to match dashboard */
     color: white;
+    order: 1; /* Keep on the left */
 }
 
 .back-button:hover {
-    background-color: #5a6268;
-    transform: scale(1.02); /* Slight zoom effect */
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive Design */
@@ -104,7 +119,7 @@
         margin: 20px auto;
     }
 
-    .submit-button,
+    .register-button,
     .back-button {
         font-size: 14px;
         padding: 10px;

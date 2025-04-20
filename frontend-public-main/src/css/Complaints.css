@@ -143,7 +143,10 @@ td:last-child, th:last-child {
 /* Ensure proper spacing for the button container */
 .button-container {
   text-align: center;
-  margin-top: 20px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
 /* Popup overlay */
@@ -289,7 +292,7 @@ td:last-child, th:last-child {
   transform: translateY(-2px);
 }
 
-/* Spinner container */
+/* Pending status container */
 .status-spinner {
   display: inline-flex;
   align-items: center;
@@ -298,32 +301,37 @@ td:last-child, th:last-child {
   color: #007BFF;
 }
 
-/* Spinner animation */
-.spinner {
-  width: 12px;
-  height: 12px;
-  border: 2px solid #007BFF;
-  border-top: 2px solid transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+/* Pending animation - pulsing dots */
+.table-icon .spinner {
+  display: inline-flex;
+  align-items: center;
   margin-right: 5px;
 }
 
-/* Spinner animation */
-.spinner {
-  border: 2px solid #007BFF;
-  border-top: 2px solid transparent;
+.table-icon .spinner::before,
+.table-icon .spinner::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #007BFF;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  margin: 0 2px;
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* Spinner animation keyframes */
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
+.table-icon .spinner::after {
+  animation-delay: 0.5s;
+}
+
+/* Pending animation keyframes */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
   }
 }
 

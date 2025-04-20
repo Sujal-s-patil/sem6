@@ -30,11 +30,18 @@ h2:after {
   border-radius: 3px;
 }
 
-/* Table styling for form - matching Complaints.css popup-table */
+.form-description {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+/* Table styling for form */
 .complaint-form {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin: 20px auto;
   font-size: 16px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -47,6 +54,7 @@ h2:after {
   display: table-row;
   margin-bottom: 0;
   position: relative;
+  background-color: #ffffff;
 }
 
 .form-group:nth-child(even) {
@@ -74,6 +82,11 @@ label {
   background-color: #f5f5f5;
 }
 
+.required {
+  color: #e74c3c;
+  margin-left: 3px;
+}
+
 .input-cell {
   display: table-cell;
   padding: 10px 15px;
@@ -81,6 +94,7 @@ label {
   text-align: left;
   width: 70%;
   color: #555;
+  background-color: #ffffff;
 }
 
 input[type='text'],
@@ -89,9 +103,9 @@ textarea {
   width: 100%;
   padding: 10px;
   border-radius: 4px;
-  border: none;
-  background-color: transparent;
-  transition: background-color 0.3s;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  transition: all 0.3s;
   box-sizing: border-box;
   outline: none;
   font-family: inherit;
@@ -101,7 +115,20 @@ textarea {
 input[type='text']:focus,
 input[type='date']:focus,
 textarea:focus {
-  background-color: rgba(0, 123, 255, 0.05);
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+input[type='text'].error,
+input[type='date'].error,
+textarea.error {
+  border-color: #e74c3c;
+}
+
+.field-error {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
 textarea {
@@ -127,45 +154,98 @@ textarea[name="crime_description"] {
   width: 100%;
   display: flex;
   justify-content: center;
+  gap: 20px;
   margin-top: 30px;
 }
 
-.submit-button {
+.back-dashboard-button {
   padding: 12px 30px;
   color: white;
-  background-color: #007bff;
+  background-color: #007BFF; /* Blue to match dashboard */
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
   font-weight: 500;
-  width: 100%;
-  max-width: 400px;
+  width: 200px; /* Fixed width instead of auto */
+  min-width: 200px; 
+  max-width: 200px; 
+  height: 44px;
+  line-height: 1.2;
+  box-sizing: border-box;
 }
 
-.submit-button i {
-  margin-right: 10px;
+.back-dashboard-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+  padding: 12px 30px;
+  color: white;
+  background-color: #28A745; /* Green to match dashboard */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  width: 200px; /* Fixed width instead of auto */
+  min-width: 200px; 
+  max-width: 200px;  
+  height: 44px;
+  line-height: 1.2;
+  box-sizing: border-box;
 }
 
 .submit-button:hover {
-  background-color: #0056b3;
+  background-color: #1e7e34; /* Darker green on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .error-message {
-  color: red;
+  color: #e74c3c;
   margin-top: 15px;
   text-align: center;
   font-size: 15px;
+  padding: 10px;
+  background-color: rgba(231, 76, 60, 0.1);
+  border-radius: 4px;
+  border-left: 4px solid #e74c3c;
+}
+
+.success-message {
+  color: #27ae60;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px;
+  background-color: rgba(39, 174, 96, 0.1);
+  border-radius: 4px;
+  border-left: 4px solid #27ae60;
 }
 
 /* File upload styling */
 .file-upload-container {
   position: relative;
   margin-bottom: 0;
+  background-color: #ffffff;
 }
 
 .file-upload-label {
@@ -176,6 +256,7 @@ textarea[name="crime_description"] {
   border: 1px dashed #ccc;
   border-radius: 4px;
   transition: all 0.3s;
+  background-color: #f9f9f9;
 }
 
 .file-upload-label:hover {
@@ -183,9 +264,10 @@ textarea[name="crime_description"] {
   background-color: rgba(0, 123, 255, 0.05);
 }
 
-.file-upload-label i {
+.file-upload-label span {
   margin-right: 8px;
   color: #007bff;
+  font-size: 18px;
 }
 
 input[type='file'] {
@@ -201,6 +283,9 @@ input[type='file'] {
   margin-top: 5px;
   font-size: 12px;
   color: #666;
+  padding: 5px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
 }
 
 /* Info icon and tooltip */
@@ -268,6 +353,7 @@ input[type='file'] {
   .form-group {
     display: block;
     margin-bottom: 15px;
+    background-color: #ffffff;
   }
   
   label, .input-cell {
