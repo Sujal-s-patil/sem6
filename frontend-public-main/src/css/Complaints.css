@@ -323,6 +323,56 @@ td:last-child, th:last-child {
   animation-delay: 0.5s;
 }
 
+/* New pending icon animation */
+.table-icon .pending-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  position: relative;
+}
+
+.table-icon .pending-icon::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #007BFF;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: pending-spin 1.5s linear infinite;
+}
+
+.table-icon .pending-icon::after {
+  content: '?';
+  position: absolute;
+  color: #007BFF;
+  font-weight: bold;
+  font-size: 12px;
+  animation: pending-pulse 1.5s ease-in-out infinite;
+}
+
+/* Pending animation keyframes */
+@keyframes pending-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pending-pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 /* Pending animation keyframes */
 @keyframes pulse {
   0%, 100% {

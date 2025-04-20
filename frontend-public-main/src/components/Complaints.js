@@ -66,8 +66,11 @@ const Complaints = () => {
                     <td>
                       <span className="table-icon status-icon">
                         {complaint.status.toLowerCase() === 'resolved' && <span className="tick"></span>}
-                        {(complaint.status.toLowerCase() === 'in progress' || complaint.status.toLowerCase() === 'pending') && (
+                        {complaint.status.toLowerCase() === 'in progress' && (
                           <span className="spinner"></span>
+                        )}
+                        {complaint.status.toLowerCase() === 'pending' && (
+                          <span className="pending-icon"></span>
                         )}
                         {complaint.status.toLowerCase() === 'closed' && <span className="dash-circle"></span>}
                       </span>
