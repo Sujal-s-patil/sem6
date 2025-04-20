@@ -115,6 +115,8 @@ const TaskModal = ({ task, onClose }) => {
             <dt style={dtStyle}>Crime Date:</dt><dd style={ddStyle}>{new Date(task.crime_date).toLocaleString()}</dd>
             <dt style={dtStyle}>Filed:</dt><dd style={ddStyle}>{new Date(task.date_filed).toLocaleString()}</dd>
             <dt style={dtStyle}>Last Updated:</dt><dd style={ddStyle}>{new Date(task.last_updated).toLocaleString()}</dd>
+            <dt style={dtStyle}>Comment:</dt><dd style={ddStyle}>{task.comment}</dd>
+          
           </dl>
         </div>
 
@@ -146,7 +148,7 @@ const TaskModal = ({ task, onClose }) => {
             onClick={handleCloseAssignPopup}>
             <div style={{
               backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-              zIndex: 1101, maxWidth: "500px", width: "90%", maxHeight: "80vh", overflow: "hidden", display: "flex", flexDirection: "column"
+              zIndex: 1101, maxWidth: "500px", width: "90%", maxHeight: "75vh", overflow: "hidden", display: "flex", flexDirection: "column"
             }}
               onClick={(e) => e.stopPropagation()}
             >
