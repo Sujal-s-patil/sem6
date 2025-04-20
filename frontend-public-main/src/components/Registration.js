@@ -150,9 +150,22 @@ const Registration = () => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" className="submit-button">Register</button>
+        <div className="button-container">
+          <button type="submit" className="register-button">Register</button>
+        </div>
       </form>
-      <button onClick={() => navigate('/')} className="back-button">Back to Login</button>
+      <div className="button-container">
+        <button 
+          onClick={() => {
+            if (window.confirm('Your changes will not be saved.')) {
+              navigate('/');
+            }
+          }} 
+          className="back-button"
+        >
+          Back to Login
+        </button>
+      </div>
     </div>
   );
 };

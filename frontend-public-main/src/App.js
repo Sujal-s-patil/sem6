@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Dashboard from './components/Dashboard';
+import Complaints from './components/Complaints';
 import FileComplaint from './components/FileComplaint';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/home" element={<Dashboard />} />
+        <Route path="/complaints" element={<Complaints />} />
         <Route path="/file-complaint" element={<FileComplaint />} />
       </Routes>
     </Router>
