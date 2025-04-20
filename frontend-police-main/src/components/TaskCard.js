@@ -1,6 +1,7 @@
 // TaskCard.js
 import React, { useState, useEffect } from "react";
 
+
 const TaskModal = ({ task, onClose }) => {
   const [showAssignPopup, setShowAssignPopup] = useState(false);
   const [policeTeam, setPoliceTeam] = useState([]);
@@ -14,7 +15,7 @@ const TaskModal = ({ task, onClose }) => {
       fetch(`${process.env.REACT_APP_API_URL}/police/team`)
         .then((response) => response.json())
         .then((data) => {
-          const availableOfficers = data.filter(officer => officer.occupied !== 1);
+          const availableOfficers = data.filter((officer) => officer.occupied !== 1);
           setPoliceTeam(availableOfficers);
         })
         .catch((error) => console.error("Error fetching police team:", error));
@@ -41,9 +42,7 @@ const TaskModal = ({ task, onClose }) => {
     selectedOfficers.forEach((police_id) => {
       fetch(`${process.env.REACT_APP_API_URL}/police/assign`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           police_id,
           complaint_id: task.complaint_id,
@@ -52,8 +51,6 @@ const TaskModal = ({ task, onClose }) => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Officer assigned:", data);
-
-          // Update userData if the assigned officer matches userData.police_id
           const userData = JSON.parse(sessionStorage.getItem("userData"));
           if (userData?.police_id === police_id) {
             sessionStorage.setItem(
@@ -61,7 +58,7 @@ const TaskModal = ({ task, onClose }) => {
               JSON.stringify({
                 ...userData,
                 complaint_id: task.complaint_id,
-                occupied:1
+                occupied: 1,
               })
             );
           }
@@ -75,12 +72,10 @@ const TaskModal = ({ task, onClose }) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/ticket/comment`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           complaint_id: task.complaint_id,
-          comment: comment,
+          comment,
         }),
       });
       const result = await response.json();
@@ -102,60 +97,66 @@ const TaskModal = ({ task, onClose }) => {
 
   return (
     <div style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      zIndex: 1000
+      position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
+      display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000
     }}>
       <div
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0,0,0,0.5)",
-          cursor: "pointer"
+          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+          backgroundColor: "rgba(0,0,0,0.5)", cursor: "pointer"
         }}
         onClick={onClose}
       />
       <div style={{
-        backgroundColor: "white",
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-        zIndex: 1001,
-        maxWidth: "500px",
-        width: "90%",
-        display: 'flex',
-        flexDirection: 'column',
-        position: "relative"
+        backgroundColor: "white", padding: "20px", borderRadius: "10px",
+        boxShadow: "0 4px 8px rgba(0,0,0,0.2)", zIndex: 1001,
+        maxWidth: "500px", width: "95%", maxHeight: "90vh", overflowY: "auto",
+        display: "flex", flexDirection: "column", position: "relative"
       }}>
         <h2 style={{ marginBottom: "16px" }}>Complaint Details</h2>
-        {Object.entries(task).map(([key, value]) => (
-          <p key={key} style={{ margin: "8px 0" }}>
-            <strong>{key.replace(/_/g, ' ').toUpperCase()}:</strong> {value}
-          </p>
-        ))}
+
+        {/* Complaint Details Section */}
+        <div style={{ marginBottom: "20px" }}>
+          <h3 style={{ marginBottom: "16px" }}>Complaint Details</h3>
+          <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", rowGap: "10px", columnGap: "20px" }}>
+            <dt style={dtStyle}>Status:</dt>
+            <dd style={ddStyle}>{task.status}</dd>
+
+            <dt style={dtStyle}>Complainant Name:</dt>
+            <dd style={ddStyle}>{task.complainant_name}</dd>
+
+            <dt style={dtStyle}>Crime Type:</dt>
+            <dd style={ddStyle}>{task.crime_type}</dd>
+
+            <dt style={dtStyle}>Crime Description:</dt>
+            <dd style={ddStyle}>{task.crime_description}</dd>
+
+            <dt style={dtStyle}>Crime Location:</dt>
+            <dd style={ddStyle}>{task.crime_location}</dd>
+
+            <dt style={dtStyle}>City:</dt>
+            <dd style={ddStyle}>{task.city}</dd>
+
+            <dt style={dtStyle}>State:</dt>
+            <dd style={ddStyle}>{task.state}</dd>
+
+            <dt style={dtStyle}>Crime Date:</dt>
+            <dd style={ddStyle}>{new Date(task.crime_date).toLocaleString()}</dd>
+
+            <dt style={dtStyle}>Date Filed:</dt>
+            <dd style={ddStyle}>{new Date(task.date_filed).toLocaleString()}</dd>
+
+            <dt style={dtStyle}>Last Updated:</dt>
+            <dd style={ddStyle}>{new Date(task.last_updated).toLocaleString()}</dd>
+          </dl>
+        </div>
 
         {/* Comment Section */}
         <div style={{ marginTop: "20px" }}>
           {!showCommentInput ? (
             <button
               onClick={() => setShowCommentInput(true)}
-              style={{
-                padding: "8px 16px",
-                backgroundColor: "#6b7280",
-                color: "#fff",
-                borderRadius: "4px",
-                border: "none",
-                cursor: "pointer"
-              }}
+              style={btnSecondary}
             >
               Add Comment
             </button>
@@ -166,12 +167,7 @@ const TaskModal = ({ task, onClose }) => {
                 placeholder="Enter your comment"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleCommentSubmit();
-                  }
-                }}
+                onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit()}
                 style={{
                   flex: 1,
                   padding: "8px",
@@ -179,86 +175,33 @@ const TaskModal = ({ task, onClose }) => {
                   borderRadius: "4px",
                 }}
               />
-              <button
-                onClick={handleCommentSubmit}
-                style={{
-                  padding: "8px 16px",
-                  backgroundColor: "#10b981",
-                  color: "#fff",
-                  borderRadius: "4px",
-                  border: "none",
-                  cursor: "pointer"
-                }}
-              >
-                Submit
-              </button>
+              <button onClick={handleCommentSubmit} style={btnPrimary}>Submit</button>
             </div>
           )}
         </div>
 
-        <div style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: '8px',
-          marginTop: '16px'
-        }}>
-          <button
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "#34d399",
-              color: "#fff",
-              borderRadius: "4px",
-              border: "none",
-              cursor: "pointer"
-            }}
-            onClick={handleAssignClick}
-          >
-            Assign
-          </button>
-          <button
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "#007bff",
-              color: "white",
-              borderRadius: "4px",
-              border: "none",
-              cursor: "pointer"
-            }}
-            onClick={onClose}
-          >
-            Close
-          </button>
+        {/* Footer Buttons */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '16px' }}>
+          <button onClick={handleAssignClick} style={btnPrimary}>Assign</button>
+          <button onClick={onClose} style={btnClose}>Close</button>
         </div>
 
+        {/* Assign Popup */}
         {showAssignPopup && (
           <div
             style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: 1100,
-              backgroundColor: "rgba(0,0,0,0.5)",
+              position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
+              display: "flex", justifyContent: "center", alignItems: "center",
+              zIndex: 1100, backgroundColor: "rgba(0,0,0,0.5)",
             }}
             onClick={handleCloseAssignPopup}
           >
             <div
               style={{
-                backgroundColor: "white",
-                padding: "20px",
-                borderRadius: "10px",
-                boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-                zIndex: 1101,
-                maxWidth: "500px",
-                width: "90%",
-                maxHeight: "80vh",
-                overflow: "hidden",
-                display: "flex",
-                flexDirection: "column",
+                backgroundColor: "white", padding: "20px", borderRadius: "10px",
+                boxShadow: "0 4px 8px rgba(0,0,0,0.2)", zIndex: 1101,
+                maxWidth: "500px", width: "90%", maxHeight: "80vh", overflow: "hidden",
+                display: "flex", flexDirection: "column",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -269,50 +212,35 @@ const TaskModal = ({ task, onClose }) => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 style={{
-                  padding: "8px",
-                  marginBottom: "12px",
-                  border: "1px solid #ccc",
-                  borderRadius: "4px",
-                  width: "95%",
+                  padding: "8px", marginBottom: "12px", border: "1px solid #ccc",
+                  borderRadius: "4px", width: "95%",
                 }}
               />
               {policeTeam.length > 0 ? (
                 <div
                   style={{
-                    overflowY: "auto",
-                    flex: 1,
-                    maxHeight: "300px",
-                    marginBottom: "16px",
-                    border: "1px solid #eee",
-                    borderRadius: "5px",
+                    overflowY: "auto", flex: 1, maxHeight: "60vh", marginBottom: "16px",
+                    border: "1px solid #eee", borderRadius: "5px",
                   }}
                 >
                   {filteredPoliceTeam.map((officer) => (
                     <div
                       key={officer.police_id}
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        padding: "10px",
-                        borderBottom: "1px solid #ddd",
+                        display: "flex", alignItems: "center", justifyContent: "space-between",
+                        padding: "10px", borderBottom: "1px solid #ddd",
                       }}
                     >
                       <img
                         src={officer.photo || "placeholder.jpg"}
                         alt={officer.full_name}
                         style={{
-                          width: "50px",
-                          height: "50px",
-                          borderRadius: "50%",
-                          marginRight: "30px",
+                          width: "50px", height: "50px", borderRadius: "50%", marginRight: "30px",
                         }}
                       />
                       <div style={{ flex: 1 }}>
                         <p style={{ fontWeight: "bold", margin: 0 }}>{officer.full_name}</p>
-                        <p style={{ margin: 0, fontSize: "12px", color: "gray" }}>
-                          {officer.speciality}
-                        </p>
+                        <p style={{ margin: 0, fontSize: "12px", color: "gray" }}>{officer.speciality}</p>
                       </div>
                       <input
                         type="checkbox"
@@ -325,37 +253,9 @@ const TaskModal = ({ task, onClose }) => {
               ) : (
                 <p>Loading officers...</p>
               )}
-              <div style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                gap: "8px",
-              }}>
-                <button
-                  onClick={handleConfirmAssignment}
-                  style={{
-                    padding: "8px 16px",
-                    backgroundColor: "#34d399",
-                    color: "#fff",
-                    borderRadius: "4px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  Confirm Assignment
-                </button>
-                <button
-                  onClick={handleCloseAssignPopup}
-                  style={{
-                    padding: "8px 16px",
-                    backgroundColor: "#007bff",
-                    color: "white",
-                    borderRadius: "4px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  Close
-                </button>
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                <button onClick={handleConfirmAssignment} style={btnPrimary}>Confirm Assignment</button>
+                <button onClick={handleCloseAssignPopup} style={btnClose}>Cancel</button>
               </div>
             </div>
           </div>
@@ -364,6 +264,33 @@ const TaskModal = ({ task, onClose }) => {
     </div>
   );
 };
+
+const thStyle = { padding: '10px', border: '1px solid #ddd' };
+const tdStyle = { padding: '10px', border: '1px solid #ddd' };
+const btnPrimary = {
+  padding: "8px 16px", backgroundColor: "#10b981", color: "#fff",
+  borderRadius: "4px", border: "none", cursor: "pointer"
+};
+const btnSecondary = {
+  padding: "8px 16px", backgroundColor: "#6b7280", color: "#fff",
+  borderRadius: "4px", border: "none", cursor: "pointer"
+};
+const btnClose = {
+  padding: "8px 16px", backgroundColor: "#007bff", color: "white",
+  borderRadius: "4px", border: "none", cursor: "pointer"
+};
+const dtStyle = {
+  fontWeight: "bold",
+  color: "#333",
+};
+
+const ddStyle = {
+  margin: 0,
+  color: "#555",
+};
+
+export default TaskModal;
+
 
 const TaskCard = ({ task, isDraggingOver }) => {
   const [showModal, setShowModal] = useState(false);

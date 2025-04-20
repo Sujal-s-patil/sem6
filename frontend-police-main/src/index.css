@@ -26,21 +26,3 @@ code {
 .column.dragover {
   background-color: rgba(255,255,255,0.1);
 }
-/* Custom scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #1a1a1a; /* Color of the scrollbar thumb */
-  border-radius: 4px; /* Rounded corners for the scrollbar thumb */
-}
-
-::-webkit-scrollbar-track {
-  background-color: #333333; /* Color of the scrollbar track */
-}
-
-html {
-  scrollbar-color: #1a1a1a #333333; /* For Firefox: thumb color and track color */
-  scrollbar-width: thin; /* For Firefox: thin scrollbar */
-}
