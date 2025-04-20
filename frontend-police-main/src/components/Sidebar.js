@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-// new comment
+
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(true); // Sidebar starts collapsed
+  const [collapsed, setCollapsed] = useState(true);
+  const sidebarRef = useRef(null);
+  const userData = JSON.parse(sessionStorage.getItem("userData"));
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item (Police or Criminals)
   const [policeTeam, setPoliceTeam] = useState([]); // Dynamic police data
   const [criminals, setCriminals] = useState([]); // Dynamic criminal data
   const [searchQuery, setSearchQuery] = useState(""); // Track search input
   const [selectedPerson, setSelectedPerson] = useState(null); // Track selected person for full details
-  const sidebarRef = useRef(null); // Ref for the sidebar
 
   // Fetch data from APIs
   useEffect(() => {
@@ -136,11 +137,11 @@ const Sidebar = () => {
                 alignItems: "center",
                 backgroundColor: "#2a2a2a",
                 color: "white",
-                padding: "30px",
+                padding: "10px",
                 borderRadius: "8px",
                 marginBottom: "16px",
                 cursor: "pointer",
-                height: "110px",
+                height: "100px",
                 width: "100%",
                 boxSizing: "border-box",
               }}
@@ -149,8 +150,8 @@ const Sidebar = () => {
                 src={item.photo}
                 alt={item.full_name || item.name}
                 style={{
-                  width: "90px",
-                  height: "90px",
+                  width: "70px",
+                  height: "70px",
                   borderRadius: "50%",
                   marginRight: "16px",
                 }}
@@ -253,109 +254,144 @@ const Sidebar = () => {
     <div
       ref={sidebarRef}
       style={{
-        height: "100vh",
+        height: "98vh",
         backgroundColor: "#1a1a1a",
         color: "white",
         padding: "7px",
         transition: "width 0.4s",
         width: collapsed ? "60px" : "250px",
         overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
+      <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "25px",
+            marginTop: "10px",
+            height: "40px",
+          }}
+        >
+          {selectedPerson && (
+            <button
+              onClick={() => setSelectedPerson(null)}
+              style={{
+                background: collapsed ? "none" : "rgb(51, 51, 51)",
+                border: "none",
+                color: "white",
+                cursor: "pointer",
+                fontSize: "20px",
+                width: "40px",
+                height: "40px",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              ←
+            </button>
+          )}
+
+          {!selectedPerson && (
+            <button
+              onClick={() => {
+                setCollapsed(!collapsed); // Toggle the collapsed state
+                if (!collapsed) {
+                  setSelectedPerson(null); // Cancel person details
+                  setSelectedItem(null);   // Cancel the person details list page
+                }
+              }}
+              style={{
+                background: collapsed ? "none" : "rgb(51, 51, 51)",
+                border: "none",
+                color: "white",
+                cursor: "pointer",
+                fontSize: "20px",
+                width: "40px",
+                height: "40px",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {collapsed ? "☰" : "✖"}
+            </button>
+          )}
+        </div>
+        <nav
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+            alignItems: collapsed ? "center" : "normal",
+          }}
+        >
+          <SidebarItem
+            icon="👮‍♂️"
+            label="Police"
+            collapsed={collapsed}
+            onClick={() => {
+              setCollapsed(false); // Ensure the sidebar expands
+              setSelectedItem(selectedItem === "Police" ? null : "Police"); // Toggle Police list
+              setSearchQuery("");
+              setSelectedPerson(null);
+            }}
+          />
+          {selectedItem === "Police" && !selectedPerson && renderDetails(policeTeam)}
+
+          <SidebarItem
+            icon="🦹‍♂️"
+            label="Criminals"
+            collapsed={collapsed}
+            onClick={() => {
+              setCollapsed(false); // Ensure the sidebar expands
+              setSelectedItem(selectedItem === "Criminals" ? null : "Criminals"); // Toggle Criminals list
+              setSearchQuery("");
+              setSelectedPerson(null);
+            }}
+          />
+          {selectedItem === "Criminals" && !selectedPerson && renderDetails(criminals)}
+
+          {selectedPerson && renderPersonDetails()}
+        </nav>
+      </div>
+
       <div
         style={{
           display: "flex",
-          justifyContent: "center",
           alignItems: "center",
-          marginBottom: "25px",
-          marginTop: "10px",
-          height: "40px",
+          gap: "10px",
+          cursor: "pointer",
+          padding: "10px",
+          backgroundColor: "#333333",
+          borderRadius: "8px",
         }}
       >
-        {selectedPerson && (
-          <button
-            onClick={() => setSelectedPerson(null)}
-            style={{
-              background: collapsed ? "none" : "rgb(51, 51, 51)",
-              border: "none",
-              color: "white",
-              cursor: "pointer",
-              fontSize: "20px",
-              width: "40px",
-              height: "40px",
-              borderRadius: "10px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            ←
-          </button>
-        )}
-
-        {!selectedPerson && (
-          <button
-            onClick={() => {
-              setCollapsed(!collapsed); // Toggle the collapsed state
-              if (!collapsed) {
-                setSelectedPerson(null); // Cancel person details
-                setSelectedItem(null);   // Cancel the person details list page
-              }
-            }}
-            style={{
-              background: collapsed ? "none" : "rgb(51, 51, 51)",
-              border: "none",
-              color: "white",
-              cursor: "pointer",
-              fontSize: "20px",
-              width: "40px",
-              height: "40px",
-              borderRadius: "10px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {collapsed ? "☰" : "✖"}
-          </button>
+        <img
+          src={userData.photo}
+          alt={userData.full_name}
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+          }}
+        />
+        {!collapsed && (
+          <div>
+            <p style={{ margin: 0, fontSize: "14px" }}>{userData.full_name}</p>
+            <p style={{ margin: 0, fontSize: "12px", color: "#ccc" }}>
+              {userData.police_id}
+            </p>
+          </div>
         )}
       </div>
-      <nav
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-          alignItems: collapsed ? "center" : "normal",
-        }}
-      >
-        <SidebarItem
-          icon="👮‍♂️"
-          label="Police"
-          collapsed={collapsed}
-          onClick={() => {
-            setCollapsed(false); // Ensure the sidebar expands
-            setSelectedItem(selectedItem === "Police" ? null : "Police"); // Toggle Police list
-            setSearchQuery("");
-            setSelectedPerson(null);
-          }}
-        />
-        {selectedItem === "Police" && !selectedPerson && renderDetails(policeTeam)}
-
-        <SidebarItem
-          icon="🦹‍♂️"
-          label="Criminals"
-          collapsed={collapsed}
-          onClick={() => {
-            setCollapsed(false); // Ensure the sidebar expands
-            setSelectedItem(selectedItem === "Criminals" ? null : "Criminals"); // Toggle Criminals list
-            setSearchQuery("");
-            setSelectedPerson(null);
-          }}
-        />
-        {selectedItem === "Criminals" && !selectedPerson && renderDetails(criminals)}
-
-        {selectedPerson && renderPersonDetails()}
-      </nav>
     </div>
   );
 };
@@ -391,11 +427,5 @@ const SidebarItem = ({ icon, label, collapsed, onClick }) => {
   );
 };
 
-export default function App() {
-  return (
-    <div style={{ height: "100%" }}>
-      <Sidebar />
-    </div>
-  );
-}
+export default Sidebar;
 
