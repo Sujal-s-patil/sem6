@@ -104,20 +104,84 @@ const TaskModal = ({ task, onClose }) => {
         <h2 style={{ marginBottom: "16px" }}>Complaint Details</h2>
 
         <div style={{ marginBottom: "20px" }}>
-          <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", rowGap: "10px", columnGap: "20px" }}>
-            <dt style={dtStyle}>Status:</dt><dd style={ddStyle}>{task.status}</dd>
-            <dt style={dtStyle}>Complainant Name:</dt><dd style={ddStyle}>{task.complainant_name}</dd>
-            <dt style={dtStyle}>Crime Type:</dt><dd style={ddStyle}>{task.crime_type}</dd>
-            <dt style={dtStyle}>Crime Description:</dt><dd style={ddStyle}>{task.crime_description}</dd>
-            <dt style={dtStyle}>Location:</dt><dd style={ddStyle}>{task.crime_location}</dd>
-            <dt style={dtStyle}>City:</dt><dd style={ddStyle}>{task.city}</dd>
-            <dt style={dtStyle}>State:</dt><dd style={ddStyle}>{task.state}</dd>
-            <dt style={dtStyle}>Crime Date:</dt><dd style={ddStyle}>{new Date(task.crime_date).toLocaleString()}</dd>
-            <dt style={dtStyle}>Filed:</dt><dd style={ddStyle}>{new Date(task.date_filed).toLocaleString()}</dd>
-            <dt style={dtStyle}>Last Updated:</dt><dd style={ddStyle}>{new Date(task.last_updated).toLocaleString()}</dd>
-            <dt style={dtStyle}>Comment:</dt><dd style={ddStyle}>{task.comment}</dd>
-          
-          </dl>
+
+          <div
+            style={{
+              display: "flex", // Use flexbox to align tables side by side
+              maxHeight: "400px", // Limit the height of the container
+              overflowY: "auto", // Make the container scrollable if content is too long
+            }}
+          >
+            {/* First Table */}
+
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+              }}
+            >
+              <tbody>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Status</td>
+                  <td style={verticalTableCellStyle}>{task.status}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Complainant Name</td>
+                  <td style={verticalTableCellStyle}>{task.complainant_name}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Crime Type</td>
+                  <td style={verticalTableCellStyle}>{task.crime_type}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Crime Location</td>
+                  <td style={verticalTableCellStyle}>{task.crime_location}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Crime Description</td>
+                  <td style={verticalTableCellStyle}>{task.crime_description}</td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            {/* Second Table */}
+
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+              }}
+            >
+              <tbody>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>City</td>
+                  <td style={verticalTableCellStyle}>{task.city}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>State</td>
+                  <td style={verticalTableCellStyle}>{task.state}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Crime Date</td>
+                  <td style={verticalTableCellStyle}>{new Date(task.crime_date).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Date Filed</td>
+                  <td style={verticalTableCellStyle}>{new Date(task.date_filed).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Last Updated</td>
+                  <td style={verticalTableCellStyle}>{new Date(task.last_updated).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td style={verticalTableHeaderStyle}>Comment</td>
+                  <td style={verticalTableCellStyle}>{comment || "No comment added yet"}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
         </div>
 
         <div style={{ marginTop: "20px" }}>
@@ -194,6 +258,21 @@ const TaskModal = ({ task, onClose }) => {
       </div>
     </div>
   );
+};
+
+const verticalTableHeaderStyle = {
+  padding: "10px",
+  fontWeight: "bold",
+  backgroundColor: "#f2f2f2",
+  border: "1px solid #ddd",
+  textAlign: "left",
+  width: "40%", // Adjust width for readability
+};
+
+const verticalTableCellStyle = {
+  padding: "10px",
+  border: "1px solid #ddd",
+  textAlign: "left",
 };
 
 // TaskCard component
