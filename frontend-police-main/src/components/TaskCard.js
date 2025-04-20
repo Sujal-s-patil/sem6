@@ -1,7 +1,6 @@
-// TaskCard.js
 import React, { useState, useEffect } from "react";
 
-
+// TaskModal component
 const TaskModal = ({ task, onClose }) => {
   const [showAssignPopup, setShowAssignPopup] = useState(false);
   const [policeTeam, setPoliceTeam] = useState([]);
@@ -23,7 +22,6 @@ const TaskModal = ({ task, onClose }) => {
   }, [showAssignPopup]);
 
   const handleAssignClick = () => setShowAssignPopup(true);
-
   const handleCloseAssignPopup = () => {
     setShowAssignPopup(false);
     setSelectedOfficers([]);
@@ -50,7 +48,6 @@ const TaskModal = ({ task, onClose }) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Officer assigned:", data);
           const userData = JSON.parse(sessionStorage.getItem("userData"));
           if (userData?.police_id === police_id) {
             sessionStorage.setItem(
@@ -79,7 +76,6 @@ const TaskModal = ({ task, onClose }) => {
         }),
       });
       const result = await response.json();
-      console.log("Comment added:", result);
       setComment("");
       setShowCommentInput(false);
     } catch (error) {
@@ -96,70 +92,35 @@ const TaskModal = ({ task, onClose }) => {
   if (!task) return null;
 
   return (
-    <div style={{
-      position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
-      display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000
-    }}>
+    <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
       <div
-        style={{
-          position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-          backgroundColor: "rgba(0,0,0,0.5)", cursor: "pointer"
-        }}
+        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.5)" }}
         onClick={onClose}
       />
       <div style={{
-        backgroundColor: "white", padding: "20px", borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.2)", zIndex: 1001,
-        maxWidth: "500px", width: "95%", maxHeight: "90vh", overflowY: "auto",
-        display: "flex", flexDirection: "column", position: "relative"
+        backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+        zIndex: 1001, maxWidth: "500px", width: "95%", maxHeight: "90vh", overflowY: "auto", position: "relative"
       }}>
         <h2 style={{ marginBottom: "16px" }}>Complaint Details</h2>
 
-        {/* Complaint Details Section */}
         <div style={{ marginBottom: "20px" }}>
-          <h3 style={{ marginBottom: "16px" }}>Complaint Details</h3>
           <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", rowGap: "10px", columnGap: "20px" }}>
-            <dt style={dtStyle}>Status:</dt>
-            <dd style={ddStyle}>{task.status}</dd>
-
-            <dt style={dtStyle}>Complainant Name:</dt>
-            <dd style={ddStyle}>{task.complainant_name}</dd>
-
-            <dt style={dtStyle}>Crime Type:</dt>
-            <dd style={ddStyle}>{task.crime_type}</dd>
-
-            <dt style={dtStyle}>Crime Description:</dt>
-            <dd style={ddStyle}>{task.crime_description}</dd>
-
-            <dt style={dtStyle}>Crime Location:</dt>
-            <dd style={ddStyle}>{task.crime_location}</dd>
-
-            <dt style={dtStyle}>City:</dt>
-            <dd style={ddStyle}>{task.city}</dd>
-
-            <dt style={dtStyle}>State:</dt>
-            <dd style={ddStyle}>{task.state}</dd>
-
-            <dt style={dtStyle}>Crime Date:</dt>
-            <dd style={ddStyle}>{new Date(task.crime_date).toLocaleString()}</dd>
-
-            <dt style={dtStyle}>Date Filed:</dt>
-            <dd style={ddStyle}>{new Date(task.date_filed).toLocaleString()}</dd>
-
-            <dt style={dtStyle}>Last Updated:</dt>
-            <dd style={ddStyle}>{new Date(task.last_updated).toLocaleString()}</dd>
+            <dt style={dtStyle}>Status:</dt><dd style={ddStyle}>{task.status}</dd>
+            <dt style={dtStyle}>Complainant Name:</dt><dd style={ddStyle}>{task.complainant_name}</dd>
+            <dt style={dtStyle}>Crime Type:</dt><dd style={ddStyle}>{task.crime_type}</dd>
+            <dt style={dtStyle}>Crime Description:</dt><dd style={ddStyle}>{task.crime_description}</dd>
+            <dt style={dtStyle}>Location:</dt><dd style={ddStyle}>{task.crime_location}</dd>
+            <dt style={dtStyle}>City:</dt><dd style={ddStyle}>{task.city}</dd>
+            <dt style={dtStyle}>State:</dt><dd style={ddStyle}>{task.state}</dd>
+            <dt style={dtStyle}>Crime Date:</dt><dd style={ddStyle}>{new Date(task.crime_date).toLocaleString()}</dd>
+            <dt style={dtStyle}>Filed:</dt><dd style={ddStyle}>{new Date(task.date_filed).toLocaleString()}</dd>
+            <dt style={dtStyle}>Last Updated:</dt><dd style={ddStyle}>{new Date(task.last_updated).toLocaleString()}</dd>
           </dl>
         </div>
 
-        {/* Comment Section */}
         <div style={{ marginTop: "20px" }}>
           {!showCommentInput ? (
-            <button
-              onClick={() => setShowCommentInput(true)}
-              style={btnSecondary}
-            >
-              Add Comment
-            </button>
+            <button onClick={() => setShowCommentInput(true)} style={btnSecondary}>Add Comment</button>
           ) : (
             <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
               <input
@@ -168,41 +129,25 @@ const TaskModal = ({ task, onClose }) => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit()}
-                style={{
-                  flex: 1,
-                  padding: "8px",
-                  border: "1px solid #ccc",
-                  borderRadius: "4px",
-                }}
+                style={{ flex: 1, padding: "8px", border: "1px solid #ccc", borderRadius: "4px" }}
               />
               <button onClick={handleCommentSubmit} style={btnPrimary}>Submit</button>
             </div>
           )}
         </div>
 
-        {/* Footer Buttons */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '16px' }}>
           <button onClick={handleAssignClick} style={btnPrimary}>Assign</button>
           <button onClick={onClose} style={btnClose}>Close</button>
         </div>
 
-        {/* Assign Popup */}
         {showAssignPopup && (
-          <div
-            style={{
-              position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
-              display: "flex", justifyContent: "center", alignItems: "center",
-              zIndex: 1100, backgroundColor: "rgba(0,0,0,0.5)",
+          <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1100, backgroundColor: "rgba(0,0,0,0.5)" }}
+            onClick={handleCloseAssignPopup}>
+            <div style={{
+              backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              zIndex: 1101, maxWidth: "500px", width: "90%", maxHeight: "80vh", overflow: "hidden", display: "flex", flexDirection: "column"
             }}
-            onClick={handleCloseAssignPopup}
-          >
-            <div
-              style={{
-                backgroundColor: "white", padding: "20px", borderRadius: "10px",
-                boxShadow: "0 4px 8px rgba(0,0,0,0.2)", zIndex: 1101,
-                maxWidth: "500px", width: "90%", maxHeight: "80vh", overflow: "hidden",
-                display: "flex", flexDirection: "column",
-              }}
               onClick={(e) => e.stopPropagation()}
             >
               <h3>Assign Task</h3>
@@ -211,48 +156,32 @@ const TaskModal = ({ task, onClose }) => {
                 placeholder="Search by name or speciality"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{
-                  padding: "8px", marginBottom: "12px", border: "1px solid #ccc",
-                  borderRadius: "4px", width: "95%",
-                }}
+                style={{ padding: "8px", marginBottom: "12px", border: "1px solid #ccc", borderRadius: "4px", width: "95%" }}
               />
-              {policeTeam.length > 0 ? (
-                <div
-                  style={{
-                    overflowY: "auto", flex: 1, maxHeight: "60vh", marginBottom: "16px",
-                    border: "1px solid #eee", borderRadius: "5px",
-                  }}
-                >
-                  {filteredPoliceTeam.map((officer) => (
-                    <div
-                      key={officer.police_id}
-                      style={{
-                        display: "flex", alignItems: "center", justifyContent: "space-between",
-                        padding: "10px", borderBottom: "1px solid #ddd",
-                      }}
-                    >
-                      <img
-                        src={officer.photo || "placeholder.jpg"}
-                        alt={officer.full_name}
-                        style={{
-                          width: "50px", height: "50px", borderRadius: "50%", marginRight: "30px",
-                        }}
-                      />
-                      <div style={{ flex: 1 }}>
-                        <p style={{ fontWeight: "bold", margin: 0 }}>{officer.full_name}</p>
-                        <p style={{ margin: 0, fontSize: "12px", color: "gray" }}>{officer.speciality}</p>
-                      </div>
-                      <input
-                        type="checkbox"
-                        checked={selectedOfficers.includes(officer.police_id)}
-                        onChange={() => handleOfficerSelect(officer.police_id)}
-                      />
+              <div style={{ overflowY: "auto", flex: 1, maxHeight: "60vh", marginBottom: "16px", border: "1px solid #eee", borderRadius: "5px" }}>
+                {filteredPoliceTeam.map((officer) => (
+                  <label
+                    key={officer.police_id}
+                    style={{ display: "flex", alignItems: "center", padding: "10px", borderBottom: "1px solid #ddd", cursor: "pointer", gap: "10px" }}
+                  >
+                    <img
+                      src={officer.photo || "placeholder.jpg"}
+                      alt={officer.full_name}
+                      style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                    />
+                    <div style={{ flex: 1 }}>
+                      <p style={{ fontWeight: "bold", margin: 0 }}>{officer.full_name}</p>
+                      <p style={{ margin: 0, fontSize: "12px", color: "gray" }}>{officer.speciality}</p>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <p>Loading officers...</p>
-              )}
+                    <input
+                      type="checkbox"
+                      checked={selectedOfficers.includes(officer.police_id)}
+                      onChange={() => handleOfficerSelect(officer.police_id)}
+                      style={{ width: "20px", height: "20px" }}
+                    />
+                  </label>
+                ))}
+              </div>
               <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
                 <button onClick={handleConfirmAssignment} style={btnPrimary}>Confirm Assignment</button>
                 <button onClick={handleCloseAssignPopup} style={btnClose}>Cancel</button>
@@ -265,99 +194,57 @@ const TaskModal = ({ task, onClose }) => {
   );
 };
 
-const thStyle = { padding: '10px', border: '1px solid #ddd' };
-const tdStyle = { padding: '10px', border: '1px solid #ddd' };
-const btnPrimary = {
-  padding: "8px 16px", backgroundColor: "#10b981", color: "#fff",
-  borderRadius: "4px", border: "none", cursor: "pointer"
-};
-const btnSecondary = {
-  padding: "8px 16px", backgroundColor: "#6b7280", color: "#fff",
-  borderRadius: "4px", border: "none", cursor: "pointer"
-};
-const btnClose = {
-  padding: "8px 16px", backgroundColor: "#007bff", color: "white",
-  borderRadius: "4px", border: "none", cursor: "pointer"
-};
-const dtStyle = {
-  fontWeight: "bold",
-  color: "#333",
-};
-
-const ddStyle = {
-  margin: 0,
-  color: "#555",
-};
-
-export default TaskModal;
-
-
+// TaskCard component
 const TaskCard = ({ task, isDraggingOver }) => {
   const [showModal, setShowModal] = useState(false);
   const userData = JSON.parse(sessionStorage.getItem("userData"));
 
-  const handleDragStart = (e) => {
-    e.dataTransfer.setData(
-      "application/json",
-      JSON.stringify({ id: task.id })
-    );
-    e.target.style.opacity = "0.5";
-  };
+  const handleCardClick = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
-  const handleDragEnd = (e) => {
-    e.target.style.opacity = "1";
-  };
-
-  const handleCardClick = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  // Determine the background color based on userData
-  const isHighlighted =
-    task.complaint_id === userData?.complaint_id && task.status !== "Closed";
-
-  const cardBackgroundColor = isHighlighted
-    ? "lightblue"
-    : isDraggingOver
-    ? "rgba(0, 0, 0, 0.1)"
-    : "white";
+  const isHighlighted = task.complaint_id === userData?.complaint_id && task.status !== "Closed";
 
   return (
     <>
       <div
         draggable
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
+        onDragStart={(e) => {
+          e.dataTransfer.setData("application/json", JSON.stringify({ id: task.id }));
+          e.target.style.opacity = "0.5";
+        }}
+        onDragEnd={(e) => (e.target.style.opacity = "1")}
         onClick={handleCardClick}
         style={{
           padding: "8px",
           marginBottom: "8px",
           cursor: "grab",
-          backgroundColor: cardBackgroundColor,
-          boxShadow: isDraggingOver
-            ? "0 4px 8px rgba(0,0,0,0.2)"
-            : "0 2px 4px rgba(0,0,0,0.1)",
+          backgroundColor: isHighlighted ? "lightblue" : isDraggingOver ? "rgba(0, 0, 0, 0.1)" : "white",
+          boxShadow: isDraggingOver ? "0 4px 8px rgba(0,0,0,0.2)" : "0 2px 4px rgba(0,0,0,0.1)",
           border: "1px solid #ccc",
           borderRadius: "4px",
           transition: "transform 0.2s, box-shadow 0.2s",
           transform: isDraggingOver ? "scale(1.02)" : "none",
-          position: "relative",
         }}
       >
-        <p>
-          <strong>{task.crime_type}</strong>
-        </p>
-        <p style={{ fontSize: "12px", color: "gray" }}>
-          {task.complainant_name}
-        </p>
+        <p><strong>{task.crime_type}</strong></p>
+        <p style={{ fontSize: "12px", color: "gray" }}>{task.complainant_name}</p>
       </div>
       {showModal && <TaskModal task={task} onClose={handleCloseModal} />}
     </>
   );
 };
+
+// Styles
+const btnPrimary = {
+  padding: "8px 16px", backgroundColor: "#10b981", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer"
+};
+const btnSecondary = {
+  padding: "8px 16px", backgroundColor: "#6b7280", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer"
+};
+const btnClose = {
+  padding: "8px 16px", backgroundColor: "#007bff", color: "white", borderRadius: "4px", border: "none", cursor: "pointer"
+};
+const dtStyle = { fontWeight: "bold", color: "#333" };
+const ddStyle = { margin: 0, color: "#555" };
 
 export { TaskCard, TaskModal };
