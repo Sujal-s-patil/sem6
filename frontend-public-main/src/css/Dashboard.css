@@ -83,24 +83,29 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 0;
+  position: relative;
 }
 
 .logout-button:hover {
-  background-color: #ffebee; /* Light red background on hover */
+  background-color: #ffebee;
 }
 
 .logout-button:hover .logout-icon {
-  color: #dc3545; /* Red color for icon on hover */
+  color: #dc3545;
 }
 
 .logout-icon {
   color: #6c757d;
-  font-size: 20px;
+  font-size: 18px;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
-  height: 24px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* General container styling */
@@ -436,7 +441,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); 
 }
 
 .logout-confirmation-popup {
@@ -520,4 +525,122 @@ body {
   100% {
     opacity: 1;
   }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-icon {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #ffffff;
+}
+
+body.dark-theme .dashboard-container {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .theme-toggle {
+  background-color: #333;
+}
+
+body.dark-theme .theme-icon {
+  color: #fff;
+}
+
+body.dark-theme h2 {
+  color: #fff;
+}
+
+body.dark-theme p {
+  color: #ccc;
+}
+
+body.dark-theme .profile-circle {
+  background-color: #333;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .profile-icon,
+body.dark-theme .profile-text {
+  color: #fff;
+}
+
+body.dark-theme .logout-button {
+  background-color: #333;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .logout-icon {
+  color: #fff;
+}
+
+body.dark-theme .profile-popup-container {
+  background: #2d2d2d;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .profile-popup-header {
+  color: white;
+}
+
+body.dark-theme .profile-info-label {
+  color: #ccc;
+}
+
+body.dark-theme .profile-info-value {
+  color: #fff;
+}
+
+body.dark-theme .profile-info-item {
+  border-bottom: 1px solid #444;
+}
+
+body.dark-theme .logout-confirmation-popup {
+  background-color: #2d2d2d;
+}
+
+body.dark-theme .logout-confirmation-message {
+  color: #fff;
+}
+
+body.dark-theme .logout-confirm-btn.cancel {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+body.dark-theme .logout-confirm-btn.cancel:hover {
+  background-color: #555;
+}
+
+body.dark-theme .logout-confirmation-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
 }
