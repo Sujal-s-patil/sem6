@@ -137,6 +137,7 @@
     justify-content: center;
     align-items: center;
     z-index: 2000;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .back-confirmation-popup {
@@ -220,4 +221,109 @@
     100% {
         opacity: 1;
     }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-icon {
+    width: 24px;
+    height: 24px;
+    color: #333;
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: #ffffff;
+}
+
+body.dark-theme .registration-container {
+    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .theme-toggle {
+    background-color: #333;
+}
+
+body.dark-theme .theme-icon {
+    color: #fff;
+}
+
+body.dark-theme input[type="text"],
+body.dark-theme input[type="email"],
+body.dark-theme input[type="password"],
+body.dark-theme input[type="date"] {
+    background-color: #333;
+    color: #fff;
+    border-color: #444;
+}
+
+body.dark-theme input[type="text"]:focus,
+body.dark-theme input[type="email"]:focus,
+body.dark-theme input[type="password"]:focus,
+body.dark-theme input[type="date"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+body.dark-theme .back-confirmation-overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+body.dark-theme .back-confirmation-popup {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.4);
+}
+
+body.dark-theme .back-confirmation-header {
+    background-color: #dc3545;
+}
+
+body.dark-theme .back-confirmation-message {
+    color: #fff;
+}
+
+body.dark-theme .back-confirm-btn.cancel {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+body.dark-theme .back-confirm-btn.cancel:hover {
+    background-color: #555;
+}
+
+body.dark-theme h2 {
+    color: #fff;
+}
+
+body.dark-theme .form-description {
+    color: #ccc;
+}
+
+body.dark-theme .error-message {
+    color: #ff6b6b;
 }

@@ -376,3 +376,66 @@ input[type='file'] {
     font-size: 15px;
   }
 }
+
+/* Dark Theme Styles */
+body.dark-theme .file-complaint-container {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .file-complaint-form {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .form-title {
+  color: #fff;
+}
+
+body.dark-theme .form-group label {
+  color: #fff;
+}
+
+body.dark-theme .form-control {
+  background-color: #1a1a1a;
+  border-color: #444;
+  color: #fff;
+}
+
+body.dark-theme .form-control:focus {
+  border-color: #666;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+body.dark-theme .form-control::placeholder {
+  color: #888;
+}
+
+body.dark-theme .file-input-label {
+  background-color: #1a1a1a;
+  border-color: #444;
+  color: #fff;
+}
+
+body.dark-theme .file-input-label:hover {
+  background-color: #333;
+}
+
+body.dark-theme .submit-btn {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-theme .submit-btn:hover {
+  background: linear-gradient(135deg, #333, #222);
+  border-color: #666;
+}
+
+body.dark-theme .error-message {
+  color: #ff6b6b;
+}
+
+body.dark-theme .success-message {
+  color: #51cf66;
+}
