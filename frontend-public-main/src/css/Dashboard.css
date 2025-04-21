@@ -623,6 +623,11 @@ body.dark-theme .profile-info-item {
   border-bottom: 1px solid #444;
 }
 
+body.dark-theme .profile-info-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
 body.dark-theme .logout-confirmation-popup {
   background-color: #2d2d2d;
 }
