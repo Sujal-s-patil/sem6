@@ -83,3 +83,67 @@
 .login-container button:focus {
   outline: none;
 }
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-icon {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #ffffff;
+}
+
+body.dark-theme .login-container {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .login-container h2 {
+  color: #fff;
+}
+
+body.dark-theme .login-container input {
+  background-color: #333;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-theme .login-container input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+body.dark-theme .theme-toggle {
+  background-color: #333;
+}
+
+body.dark-theme .theme-icon {
+  color: #fff;
+}
