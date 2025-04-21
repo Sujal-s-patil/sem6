@@ -25,9 +25,15 @@ const PoliceTeamCard = ({ complaintId }) => {
     fetchOfficers();
   }, [complaintId]);
 
+  const handleCardClick = () => {
+    if (officers.length > 0) {
+      setIsModalOpen(true);
+    } 
+  };
+
   return (
     <>
-      <div className="card" onClick={() => setIsModalOpen(true)}>
+      <div className="card" style={{ maxWidth: "180px", margin: "0 auto" }} onClick={handleCardClick}>
         <div className="title">Assigned Police Team</div>
         <div className="image-stack">
           {officers.length > 0 ? (
@@ -56,27 +62,18 @@ const PoliceTeamCard = ({ complaintId }) => {
             }
           }}
         >
-          <div className="close-btn" onClick={() => setIsModalOpen(false)}>
-            ×
-          </div>
           <div className="modal">
             <h2>Police Officers</h2>
             <div id="officerList">
-              {officers.length === 0 ? (
-                <p>No officers assigned.</p>
-              ) : (
-                officers.map((officer) => (
-                  <div key={officer.full_name} className="officer">
-                    <img src={officer.photo} alt={officer.full_name} />
-                    <div className="officer-info">
-                      <div className="officer-name">{officer.full_name}</div>
-                      <div className="officer-speciality">
-                        {officer.speciality}
-                      </div>
-                    </div>
+              {officers.map((officer) => (
+                <div key={officer.full_name} className="officer">
+                  <img src={officer.photo} alt={officer.full_name} />
+                  <div className="officer-info">
+                    <div className="officer-name">{officer.full_name}</div>
+                    <div className="officer-speciality">{officer.speciality}</div>
                   </div>
-                ))
-              )}
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -206,7 +206,7 @@ const TaskModal = ({ task, onClose }) => {
 
         {/* Bottom Section: PoliceTeamCard on left, Buttons on right */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '16px' }}>
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
             <PoliceTeamCard complaintId={task.complaint_id} />
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
