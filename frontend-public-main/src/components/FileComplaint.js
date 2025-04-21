@@ -411,16 +411,16 @@ const FileComplaint = () => {
 
         {/* Back Confirmation Popup */}
         {showBackConfirmation && (
-          <div className="back-confirmation-overlay">
-            <div className="back-confirmation-popup" ref={backConfirmationRef}>
-              <div className="back-confirmation-header">
+          <div className="complaint-back-overlay">
+            <div className="complaint-back-popup" ref={backConfirmationRef}>
+              <div className="complaint-back-header">
                 <h3>Confirm Navigation</h3>
               </div>
-              <div className="back-confirmation-content">
-                <p className="back-confirmation-message">Your changes will not be saved. Are you sure you want to go back?</p>
-                <div className="back-confirmation-buttons">
-                  <button className="back-confirm-btn cancel" onClick={cancelBack}>Cancel</button>
-                  <button className="back-confirm-btn confirm" onClick={confirmBack}>Go Back</button>
+              <div className="complaint-back-content">
+                <p className="complaint-back-message">Your changes will not be saved. Are you sure you want to go back?</p>
+                <div className="complaint-back-buttons">
+                  <button className="complaint-back-btn cancel" onClick={cancelBack}>Cancel</button>
+                  <button className="complaint-back-btn confirm" onClick={confirmBack}>Go Back</button>
                 </div>
               </div>
             </div>

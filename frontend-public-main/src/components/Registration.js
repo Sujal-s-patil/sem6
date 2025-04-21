@@ -233,16 +233,16 @@ const Registration = () => {
 
         {/* Back Confirmation Popup */}
         {showBackConfirmation && (
-          <div className="back-confirmation-overlay">
-            <div className="back-confirmation-popup" ref={backConfirmationRef}>
-              <div className="back-confirmation-header">
+          <div className="registration-back-overlay">
+            <div className="registration-back-popup" ref={backConfirmationRef}>
+              <div className="registration-back-header">
                 <h3>Confirm Navigation</h3>
               </div>
-              <div className="back-confirmation-content">
-                <p className="back-confirmation-message">Your changes will not be saved. Are you sure you want to go back?</p>
-                <div className="back-confirmation-buttons">
-                  <button className="back-confirm-btn cancel" onClick={cancelBack}>Cancel</button>
-                  <button className="back-confirm-btn confirm" onClick={confirmBack}>Go Back</button>
+              <div className="registration-back-content">
+                <p className="registration-back-message">Your changes will not be saved. Are you sure you want to go back?</p>
+                <div className="registration-back-buttons">
+                  <button className="registration-back-btn cancel" onClick={cancelBack}>Cancel</button>
+                  <button className="registration-back-btn confirm" onClick={confirmBack}>Go Back</button>
                 </div>
               </div>
             </div>

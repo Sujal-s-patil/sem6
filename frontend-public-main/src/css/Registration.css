@@ -130,8 +130,8 @@
     }
 }
 
-/* Back Confirmation Popup Styles */
-.back-confirmation-overlay {
+/* Registration Back Confirmation Popup Styles */
+.registration-back-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -141,11 +141,10 @@
     justify-content: center;
     align-items: center;
     z-index: 10001;
-    background: none !important;
+    
 }
 
-.back-confirmation-popup {
-    pointer-events: auto;
+.registration-back-popup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -159,7 +158,7 @@
     z-index: 10002;
 }
 
-.back-confirmation-header {
+.registration-back-header {
     padding: 15px 20px;
     background-color: #dc3545;
     color: white;
@@ -168,30 +167,30 @@
     align-items: center;
 }
 
-.back-confirmation-header h3 {
+.registration-back-header h3 {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
 }
 
-.back-confirmation-content {
+.registration-back-content {
     padding: 20px;
     text-align: center;
 }
 
-.back-confirmation-message {
+.registration-back-message {
     margin-bottom: 20px;
     color: #333;
     font-size: 16px;
 }
 
-.back-confirmation-buttons {
+.registration-back-buttons {
     display: flex;
     justify-content: center;
     gap: 15px;
 }
 
-.back-confirm-btn {
+.registration-back-btn {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -200,33 +199,42 @@
     transition: all 0.3s ease;
 }
 
-.back-confirm-btn.cancel {
+.registration-back-btn.cancel {
     background-color: #f8f9fa;
     color: #333;
     border: 1px solid #ddd;
 }
 
-.back-confirm-btn.cancel:hover {
+.registration-back-btn.cancel:hover {
     background-color: #e9ecef;
 }
 
-.back-confirm-btn.confirm {
+.registration-back-btn.confirm {
     background-color: #dc3545;
     color: white;
 }
 
-.back-confirm-btn.confirm:hover {
+.registration-back-btn.confirm:hover {
     background-color: #c82333;
 }
 
-/* Remove fadeIn animation */
-@keyframes fadeIn {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-    }
+/* Dark Theme Styles */
+body.dark-theme .registration-back-popup {
+    background-color: #2d2d2d;
+}
+
+body.dark-theme .registration-back-message {
+    color: #fff;
+}
+
+body.dark-theme .registration-back-btn.cancel {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+body.dark-theme .registration-back-btn.cancel:hover {
+    background-color: #555;
 }
 
 /* Theme Toggle Button */
@@ -294,29 +302,6 @@ body.dark-theme input[type="date"]:focus {
     border-color: #007bff;
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
     background-color: #1a1a1a;
-}
-
-body.dark-theme .back-confirmation-popup {
-    background-color: #2d2d2d;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.4);
-}
-
-body.dark-theme .back-confirmation-header {
-    background-color: #dc3545;
-}
-
-body.dark-theme .back-confirmation-message {
-    color: #fff;
-}
-
-body.dark-theme .back-confirm-btn.cancel {
-    background-color: #444;
-    color: #fff;
-    border: 1px solid #555;
-}
-
-body.dark-theme .back-confirm-btn.cancel:hover {
-    background-color: #555;
 }
 
 body.dark-theme h2 {
