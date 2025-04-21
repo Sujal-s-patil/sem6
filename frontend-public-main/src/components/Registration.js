@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Registration.css';
 
@@ -16,12 +16,32 @@ const Registration = () => {
     photo: null, // Photo field
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [showBackConfirmation, setShowBackConfirmation] = useState(false);
+  const backConfirmationRef = useRef(null);
   const navigate = useNavigate();
 
   // Ensure password and confirm password match
   useEffect(() => {
     setPasswordMatch(formData.password === formData.confirmPassword);
   }, [formData.password, formData.confirmPassword]);
+
+  // Effect to handle clicks outside the back confirmation popup
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (backConfirmationRef.current && !backConfirmationRef.current.contains(event.target) && 
+          !event.target.closest('.back-button')) {
+        setShowBackConfirmation(false);
+      }
+    };
+
+    if (showBackConfirmation) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showBackConfirmation]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -46,6 +66,21 @@ const Registration = () => {
       reader.onload = () => resolve(reader.result); // Base64 string
       reader.onerror = (error) => reject(error);
     });
+
+  // Show back confirmation popup
+  const showBackConfirmationPopup = () => {
+    setShowBackConfirmation(true);
+  };
+
+  // Cancel going back
+  const cancelBack = () => {
+    setShowBackConfirmation(false);
+  };
+
+  // Confirm going back to login
+  const confirmBack = () => {
+    navigate('/');
+  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -156,16 +191,30 @@ const Registration = () => {
       </form>
       <div className="button-container">
         <button 
-          onClick={() => {
-            if (window.confirm('Your changes will not be saved.')) {
-              navigate('/');
-            }
-          }} 
+          onClick={showBackConfirmationPopup} 
           className="back-button"
         >
           Back to Login
         </button>
       </div>
+
+      {/* Back Confirmation Popup */}
+      {showBackConfirmation && (
+        <div className="back-confirmation-overlay">
+          <div className="back-confirmation-popup" ref={backConfirmationRef}>
+            <div className="back-confirmation-header">
+              <h3>Confirm Navigation</h3>
+            </div>
+            <div className="back-confirmation-content">
+              <p className="back-confirmation-message">Your changes will not be saved. Are you sure you want to go back?</p>
+              <div className="back-confirmation-buttons">
+                <button className="back-confirm-btn cancel" onClick={cancelBack}>Cancel</button>
+                <button className="back-confirm-btn confirm" onClick={confirmBack}>Go Back</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
