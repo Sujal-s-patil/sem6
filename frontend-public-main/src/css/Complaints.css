@@ -728,3 +728,115 @@ td:last-child, th:last-child {
     grid-column: span 1;
   }
 }
+
+/* Dark Theme Styles */
+body.dark-theme .complaints-container {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme h2 {
+  color: #fff;
+}
+
+body.dark-theme .table-scrollable {
+  border-color: #444;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme table {
+  background-color: #2d2d2d;
+}
+
+body.dark-theme th {
+  background-color: #007BFF;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-theme td {
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-theme tr:nth-child(even) {
+  background-color: #333;
+}
+
+body.dark-theme tr:hover {
+  background-color: #444;
+}
+
+body.dark-theme .popup-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+body.dark-theme .popup-container {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .popup-header {
+  border-bottom-color: #444;
+}
+
+body.dark-theme .popup-header h3 {
+  color: #fff;
+}
+
+body.dark-theme .modern-close-btn {
+  color: #fff;
+}
+
+body.dark-theme .popup-table th {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-theme .popup-table th:first-child {
+  border-top-left-radius: 0;
+}
+
+body.dark-theme .popup-table td {
+  color: #ccc;
+  border-color: #444;
+}
+
+body.dark-theme .download-link {
+  background-color: #1a1a1a;
+}
+
+body.dark-theme .download-link:hover {
+  background-color: #333;
+}
+
+body.dark-theme .back-btn {
+  background-color: #007BFF;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .back-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.logout-confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Dark Theme Styles */
+body.dark-theme .logout-confirmation-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}

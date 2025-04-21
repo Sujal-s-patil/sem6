@@ -1,6 +1,6 @@
 /* Registration Container */
 .registration-container {
-    width: 100%; /* Default width for smaller screens */
+    width: 125%; /* Increased width for better use of screen space */
     max-width: 800px; /* Increased maximum width for larger screens */
     margin: 50px auto;
     padding: 40px;
@@ -10,11 +10,12 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     font-family: 'Arial', sans-serif;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Ensure proper positioning */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
 }
-
 .registration-container:hover {
-    transform: translateY(-5px); /* Slight lift effect */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
 }
 
 /* Form Heading */
@@ -47,12 +48,14 @@
     color: #333333;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-sizing: border-box;
+    background-color: #ffffff;
 }
 
 .input-field input:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
+    background-color: #ffffff;
 }
 
 /* Error Message */
@@ -70,6 +73,7 @@
     gap: 15px;
     margin-top: 20px;
     flex-direction: row; /* Default direction with Back to Login on left */
+    width: 100%; /* Ensure full width */
 }
 
 .register-button,
@@ -125,3 +129,191 @@
         padding: 10px;
     }
 }
+
+/* Registration Back Confirmation Popup Styles */
+.registration-back-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    
+}
+
+.registration-back-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.8);
+    overflow: hidden;
+    z-index: 10002;
+}
+
+.registration-back-header {
+    padding: 15px 20px;
+    background-color: #dc3545;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.registration-back-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.registration-back-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.registration-back-message {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 16px;
+}
+
+.registration-back-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.registration-back-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.registration-back-btn.cancel {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.registration-back-btn.cancel:hover {
+    background-color: #e9ecef;
+}
+
+.registration-back-btn.confirm {
+    background-color: #dc3545;
+    color: white;
+}
+
+.registration-back-btn.confirm:hover {
+    background-color: #c82333;
+}
+
+/* Dark Theme Styles */
+body.dark-theme .registration-back-popup {
+    background-color: #2d2d2d;
+}
+
+body.dark-theme .registration-back-message {
+    color: #fff;
+}
+
+body.dark-theme .registration-back-btn.cancel {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+body.dark-theme .registration-back-btn.cancel:hover {
+    background-color: #555;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-icon {
+    width: 24px;
+    height: 24px;
+    color: #333;
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: #ffffff;
+}
+
+body.dark-theme .registration-container {
+    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .theme-toggle {
+    background-color: #333;
+}
+
+body.dark-theme .theme-icon {
+    color: #fff;
+}
+
+body.dark-theme input[type="text"],
+body.dark-theme input[type="email"],
+body.dark-theme input[type="password"],
+body.dark-theme input[type="date"] {
+    background-color: #1a1a1a;
+    color: #fff;
+    border-color: #444;
+}
+
+body.dark-theme input[type="text"]:focus,
+body.dark-theme input[type="email"]:focus,
+body.dark-theme input[type="password"]:focus,
+body.dark-theme input[type="date"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    background-color: #1a1a1a;
+}
+
+body.dark-theme h2 {
+    color: #fff;
+}
+
+body.dark-theme .form-description {
+    color: #ccc;
+}
+
+body.dark-theme .error-message {
+    color: #ff6b6b;
+}
+
+/* No Errors*/

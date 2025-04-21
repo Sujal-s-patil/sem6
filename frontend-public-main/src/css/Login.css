@@ -1,11 +1,17 @@
 .login-container {
   max-width: 400px;
+  width: 100%;
   margin: 50px auto;
   text-align: center;
   background: linear-gradient(135deg, #ffffff, #e3f2fd);
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+.login-container:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  transition: transform 0.8s ease;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
 }
 
 .login-container h2 {
@@ -23,18 +29,65 @@
 .login-container input {
   width: 100%;
   padding: 12px;
+  height: 45px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
   font-size: 16px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+  color: #333;
+  font-family: 'Arial', sans-serif;
 }
 
-.login-container input:focus {
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Fix for autofill background color */
+.login-container input:-webkit-autofill,
+.login-container input:-webkit-autofill:hover,
+.login-container input:-webkit-autofill:focus,
+.login-container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+  -webkit-text-fill-color: #333 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
   border-color: #42a5f5;
   outline: none;
   box-shadow: 0 0 8px rgba(66, 165, 245, 0.5);
+  background-color: #ffffff;
+}
+
+/* Dark theme input styles */
+body.dark-theme .login-container input[type="text"],
+body.dark-theme .login-container input[type="password"] {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: #444;
+}
+
+/* Fix for autofill background color in dark theme */
+body.dark-theme .login-container input:-webkit-autofill,
+body.dark-theme .login-container input:-webkit-autofill:hover,
+body.dark-theme .login-container input:-webkit-autofill:focus,
+body.dark-theme .login-container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+body.dark-theme .login-container input[type="text"]:focus,
+body.dark-theme .login-container input[type="password"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  background-color: #1a1a1a;
 }
 
 .login-container .error-message {
@@ -82,4 +135,57 @@
 
 .login-container button:focus {
   outline: none;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.theme-icon {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #ffffff;
+}
+
+body.dark-theme .login-container {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .login-container h2 {
+  color: #fff;
+}
+
+body.dark-theme .theme-toggle {
+  background-color: #333;
+}
+
+body.dark-theme .theme-icon {
+  color: #fff;
 }

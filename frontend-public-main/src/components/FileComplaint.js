@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserNav from './UserNav';
 import '../css/FileComplaint.css';
 
 const FileComplaint = () => {
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showBackConfirmation, setShowBackConfirmation] = useState(false);
+  const backConfirmationRef = useRef(null);
   const [complaintData, setComplaintData] = useState({
     complainant_name: '',
     crime_type: '',
@@ -14,12 +18,66 @@ const FileComplaint = () => {
     crime_date: '',
   });
 
+  // Effect to handle theme changes
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true);
+      document.body.classList.add('dark-theme');
+    }
+  }, []);
+
+  // Function to toggle theme
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    if (!isDarkMode) {
+      document.body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
   const [file, setFile] = useState(null); // State to hold the uploaded file
   const [fileName, setFileName] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
+
+  // Effect to handle clicks outside the back confirmation popup
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (backConfirmationRef.current && !backConfirmationRef.current.contains(event.target) && 
+          !event.target.closest('.back-dashboard-button')) {
+        setShowBackConfirmation(false);
+      }
+    };
+
+    if (showBackConfirmation) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showBackConfirmation]);
+
+  // Show back confirmation popup
+  const showBackConfirmationPopup = () => {
+    setShowBackConfirmation(true);
+  };
+
+  // Cancel going back
+  const cancelBack = () => {
+    setShowBackConfirmation(false);
+  };
+
+  // Confirm going back to dashboard
+  const confirmBack = () => {
+    navigate('/home');
+  };
 
   const validateForm = () => {
     const errors = {};
@@ -240,103 +298,136 @@ const FileComplaint = () => {
   ];
 
   return (
-    <div className="form-container">
-      <h2>File a Complaint</h2>
-      <p className="form-description">
-        Please fill out the form below to file your complaint. All fields marked with an asterisk (*) are required.
-      </p>
-      
-      {successMessage && (
-        <div className="success-message">
-          {successMessage}
-        </div>
-      )}
-      
-      {error && <p className="error-message">{error}</p>}
-      
-      <form onSubmit={handleSubmit}>
-        <div className="complaint-form">
-          {formInputs.map((input) => (
-            <div key={input.name} className="form-group">
-              <label htmlFor={input.name}>
-                {input.label} <span className="required">*</span>
+    <>
+      <button className="theme-toggle" onClick={toggleTheme}>
+        {isDarkMode ? (
+          <svg className="theme-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+          </svg>
+        ) : (
+          <svg className="theme-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        )}
+      </button>
+
+      <UserNav />
+      <div className="form-container">
+        <h2>File a Complaint</h2>
+        <p className="form-description">
+          Please fill out the form below to file your complaint. All fields marked with an asterisk (*) are required.
+        </p>
+        
+        {successMessage && (
+          <div className="success-message">
+            {successMessage}
+          </div>
+        )}
+        
+        {error && <p className="error-message">{error}</p>}
+        
+        <form onSubmit={handleSubmit}>
+          <div className="complaint-form">
+            {formInputs.map((input) => (
+              <div key={input.name} className="form-group">
+                <label htmlFor={input.name}>
+                  {input.label} <span className="required">*</span>
+                </label>
+                <div className="input-cell">
+                  {input.type === 'textarea' ? (
+                    <textarea
+                      name={input.name}
+                      value={complaintData[input.name] || ''}
+                      onChange={handleChange}
+                      required
+                      id={input.name}
+                      placeholder={input.placeholder}
+                      className={validationErrors[input.name] ? 'error' : ''}
+                    />
+                  ) : (
+                    <input
+                      type={input.type}
+                      name={input.name}
+                      value={complaintData[input.name] || ''}
+                      onChange={handleChange}
+                      required
+                      id={input.name}
+                      placeholder={input.placeholder}
+                      className={validationErrors[input.name] ? 'error' : ''}
+                    />
+                  )}
+                  {validationErrors[input.name] && (
+                    <div className="field-error">{validationErrors[input.name]}</div>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {/* File Upload Section */}
+            <div className="form-group">
+              <label htmlFor="file">
+                Upload Proof (optional)
               </label>
               <div className="input-cell">
-                {input.type === 'textarea' ? (
-                  <textarea
-                    name={input.name}
-                    value={complaintData[input.name] || ''}
-                    onChange={handleChange}
-                    required
-                    id={input.name}
-                    placeholder={input.placeholder}
-                    className={validationErrors[input.name] ? 'error' : ''}
-                  />
-                ) : (
+                <div className="file-upload-container">
+                  <label className="file-upload-label" htmlFor="file">
+                    <span>📁</span> Choose a file
+                  </label>
                   <input
-                    type={input.type}
-                    name={input.name}
-                    value={complaintData[input.name] || ''}
+                    type="file"
+                    name="file"
                     onChange={handleChange}
-                    required
-                    id={input.name}
-                    placeholder={input.placeholder}
-                    className={validationErrors[input.name] ? 'error' : ''}
+                    id="file"
                   />
-                )}
-                {validationErrors[input.name] && (
-                  <div className="field-error">{validationErrors[input.name]}</div>
-                )}
-              </div>
-            </div>
-          ))}
-
-          {/* File Upload Section */}
-          <div className="form-group">
-            <label htmlFor="file">
-              Upload Proof (optional)
-            </label>
-            <div className="input-cell">
-              <div className="file-upload-container">
-                <label className="file-upload-label" htmlFor="file">
-                  <span>📁</span> Choose a file
-                </label>
-                <input
-                  type="file"
-                  name="file"
-                  onChange={handleChange}
-                  id="file"
-                />
-                {fileName && <div className="file-name">Selected: {fileName}</div>}
+                  {fileName && <div className="file-name">Selected: {fileName}</div>}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="button-container">
-          <button 
-            type="button" 
-            className="back-dashboard-button"
-            onClick={() => navigate('/home')}
-          >
-            Back to Dashboard
-          </button>
-          <button 
-            type="submit" 
-            disabled={isSubmitting} 
-            className="submit-button"
-          >
-            {isSubmitting ? (
-              <>
-                <span className="spinner"></span> Submitting...
-              </>
-            ) : (
-              'Submit Complaint'
-            )}
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="button-container">
+            <button 
+              type="button" 
+              className="back-dashboard-button"
+              onClick={showBackConfirmationPopup}
+            >
+              Back to Dashboard
+            </button>
+            <button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="submit-button"
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="spinner"></span> Submitting...
+                </>
+              ) : (
+                'Submit Complaint'
+              )}
+            </button>
+          </div>
+        </form>
+
+        {/* Back Confirmation Popup */}
+        {showBackConfirmation && (
+          <div className="complaint-back-overlay">
+            <div className="complaint-back-popup" ref={backConfirmationRef}>
+              <div className="complaint-back-header">
+                <h3>Confirm Navigation</h3>
+              </div>
+              <div className="complaint-back-content">
+                <p className="complaint-back-message">Your changes will not be saved. Are you sure you want to go back?</p>
+                <div className="complaint-back-buttons">
+                  <button className="complaint-back-btn cancel" onClick={cancelBack}>Cancel</button>
+                  <button className="complaint-back-btn confirm" onClick={confirmBack}>Go Back</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
