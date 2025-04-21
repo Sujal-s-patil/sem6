@@ -221,16 +221,15 @@ const Registration = () => {
           </div>
           <div className="button-container">
             <button type="submit" className="register-button">Register</button>
+            <button 
+              type="button"
+              onClick={showBackConfirmationPopup} 
+              className="back-button"
+            >
+              Back to Login
+            </button>
           </div>
         </form>
-        <div className="button-container">
-          <button 
-            onClick={showBackConfirmationPopup} 
-            className="back-button"
-          >
-            Back to Login
-          </button>
-        </div>
 
         {/* Back Confirmation Popup */}
         {showBackConfirmation && (

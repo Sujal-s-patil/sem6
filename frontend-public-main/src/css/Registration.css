@@ -1,6 +1,6 @@
 /* Registration Container */
 .registration-container {
-    width: 100%; /* Default width for smaller screens */
+    width: 125%; /* Increased width for better use of screen space */
     max-width: 800px; /* Increased maximum width for larger screens */
     margin: 50px auto;
     padding: 40px;
@@ -10,11 +10,12 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     font-family: 'Arial', sans-serif;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Ensure proper positioning */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
 }
-
 .registration-container:hover {
-    transform: translateY(-5px); /* Slight lift effect */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
 }
 
 /* Form Heading */
@@ -72,6 +73,7 @@
     gap: 15px;
     margin-top: 20px;
     flex-direction: row; /* Default direction with Back to Login on left */
+    width: 100%; /* Ensure full width */
 }
 
 .register-button,

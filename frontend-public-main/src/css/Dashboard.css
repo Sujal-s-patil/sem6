@@ -83,24 +83,29 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 0;
+  position: relative;
 }
 
 .logout-button:hover {
-  background-color: #ffebee; /* Light red background on hover */
+  background-color: #ffebee;
 }
 
 .logout-button:hover .logout-icon {
-  color: #dc3545; /* Red color for icon on hover */
+  color: #dc3545;
 }
 
 .logout-icon {
   color: #6c757d;
-  font-size: 20px;
+  font-size: 18px;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
-  height: 24px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* General container styling */

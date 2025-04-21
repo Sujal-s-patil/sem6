@@ -8,6 +8,10 @@
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+.login-container:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+}
 
 .login-container h2 {
   font-size: 28px;
@@ -133,7 +137,7 @@ body.dark-theme .login-container input[type="password"]:focus {
 
 .theme-toggle:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .theme-icon {
