@@ -10,7 +10,22 @@ const UserNav = () => {
 
   // Function to toggle profile popup
   const toggleProfilePopup = () => {
-    setShowProfilePopup(!showProfilePopup);
+    if (showProfilePopup) {
+      // If popup is already open, use the closing animation
+      const popupElement = profilePopupRef.current;
+      if (popupElement) {
+        popupElement.classList.add('closing');
+        
+        setTimeout(() => {
+          setShowProfilePopup(false);
+        }, 300);
+      } else {
+        setShowProfilePopup(false);
+      }
+    } else {
+      // If popup is closed, simply open it
+      setShowProfilePopup(true);
+    }
   };
 
   // Function to close profile popup
@@ -117,7 +132,7 @@ const UserNav = () => {
                   <span className="profile-info-value">{userData.name}</span>
                 </div>
                 <div className="profile-info-item">
-                  <span className="profile-info-label">Aadhar Card No:</span>
+                  <span className="profile-info-label">Aadhar No:</span>
                   <span className="profile-info-value">{userData.aadharNo}</span>
                 </div>
                 <div className="profile-info-item">

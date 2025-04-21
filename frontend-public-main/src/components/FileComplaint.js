@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserNav from './UserNav';
 import '../css/FileComplaint.css';
@@ -6,6 +6,8 @@ import '../css/FileComplaint.css';
 const FileComplaint = () => {
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showBackConfirmation, setShowBackConfirmation] = useState(false);
+  const backConfirmationRef = useRef(null);
   const [complaintData, setComplaintData] = useState({
     complainant_name: '',
     crime_type: '',
@@ -43,6 +45,39 @@ const FileComplaint = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
+
+  // Effect to handle clicks outside the back confirmation popup
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (backConfirmationRef.current && !backConfirmationRef.current.contains(event.target) && 
+          !event.target.closest('.back-dashboard-button')) {
+        setShowBackConfirmation(false);
+      }
+    };
+
+    if (showBackConfirmation) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showBackConfirmation]);
+
+  // Show back confirmation popup
+  const showBackConfirmationPopup = () => {
+    setShowBackConfirmation(true);
+  };
+
+  // Cancel going back
+  const cancelBack = () => {
+    setShowBackConfirmation(false);
+  };
+
+  // Confirm going back to dashboard
+  const confirmBack = () => {
+    navigate('/home');
+  };
 
   const validateForm = () => {
     const errors = {};
@@ -354,7 +389,7 @@ const FileComplaint = () => {
             <button 
               type="button" 
               className="back-dashboard-button"
-              onClick={() => navigate('/home')}
+              onClick={showBackConfirmationPopup}
             >
               Back to Dashboard
             </button>
@@ -373,6 +408,24 @@ const FileComplaint = () => {
             </button>
           </div>
         </form>
+
+        {/* Back Confirmation Popup */}
+        {showBackConfirmation && (
+          <div className="back-confirmation-overlay">
+            <div className="back-confirmation-popup" ref={backConfirmationRef}>
+              <div className="back-confirmation-header">
+                <h3>Confirm Navigation</h3>
+              </div>
+              <div className="back-confirmation-content">
+                <p className="back-confirmation-message">Your changes will not be saved. Are you sure you want to go back?</p>
+                <div className="back-confirmation-buttons">
+                  <button className="back-confirm-btn cancel" onClick={cancelBack}>Cancel</button>
+                  <button className="back-confirm-btn confirm" onClick={confirmBack}>Go Back</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
