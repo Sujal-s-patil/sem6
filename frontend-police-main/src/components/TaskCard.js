@@ -178,7 +178,7 @@ const TaskModal = ({ task, onClose }) => {
                 </tr>
                 <tr>
                   <td style={verticalTableHeaderStyle}>Comment</td>
-                  <td style={verticalTableCellStyle}>{comment || "No comment added yet"}</td>
+                  <td style={verticalTableCellStyle}>{task.comment || "No comment added yet"}</td>
                 </tr>
               </tbody>
             </table>
