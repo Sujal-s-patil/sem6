@@ -436,7 +436,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6); 
 }
 
 .logout-confirmation-popup {
@@ -538,7 +538,6 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  transition: all 0.3s ease;
 }
 
 .theme-toggle:hover {
@@ -604,7 +603,7 @@ body.dark-theme .profile-popup-container {
 }
 
 body.dark-theme .profile-popup-header {
-  background-color: #1a1a1a;
+  color: white;
 }
 
 body.dark-theme .profile-info-label {

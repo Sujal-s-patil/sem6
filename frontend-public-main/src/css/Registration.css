@@ -47,12 +47,14 @@
     color: #333333;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-sizing: border-box;
+    background-color: #ffffff;
 }
 
 .input-field input:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
+    background-color: #ffffff;
 }
 
 /* Error Message */
@@ -137,7 +139,6 @@
     justify-content: center;
     align-items: center;
     z-index: 2000;
-    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .back-confirmation-popup {
@@ -276,7 +277,7 @@ body.dark-theme input[type="text"],
 body.dark-theme input[type="email"],
 body.dark-theme input[type="password"],
 body.dark-theme input[type="date"] {
-    background-color: #333;
+    background-color: #1a1a1a;
     color: #fff;
     border-color: #444;
 }
@@ -287,10 +288,7 @@ body.dark-theme input[type="password"]:focus,
 body.dark-theme input[type="date"]:focus {
     border-color: #007bff;
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-
-body.dark-theme .back-confirmation-overlay {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #1a1a1a;
 }
 
 body.dark-theme .back-confirmation-popup {

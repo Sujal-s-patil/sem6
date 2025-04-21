@@ -1,5 +1,6 @@
 .login-container {
   max-width: 400px;
+  width: 100%;
   margin: 50px auto;
   text-align: center;
   background: linear-gradient(135deg, #ffffff, #e3f2fd);
@@ -23,18 +24,45 @@
 .login-container input {
   width: 100%;
   padding: 12px;
+  height: 45px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
   font-size: 16px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+  color: #333;
+  font-family: 'Arial', sans-serif;
 }
 
-.login-container input:focus {
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
   border-color: #42a5f5;
   outline: none;
   box-shadow: 0 0 8px rgba(66, 165, 245, 0.5);
+  background-color: #ffffff;
+}
+
+/* Dark theme input styles */
+body.dark-theme .login-container input[type="text"],
+body.dark-theme .login-container input[type="password"] {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-theme .login-container input[type="text"]:focus,
+body.dark-theme .login-container input[type="password"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  background-color: #1a1a1a;
 }
 
 .login-container .error-message {
@@ -127,17 +155,6 @@ body.dark-theme .login-container {
 
 body.dark-theme .login-container h2 {
   color: #fff;
-}
-
-body.dark-theme .login-container input {
-  background-color: #333;
-  color: #fff;
-  border-color: #444;
-}
-
-body.dark-theme .login-container input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 body.dark-theme .theme-toggle {

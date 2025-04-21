@@ -749,7 +749,7 @@ body.dark-theme table {
 }
 
 body.dark-theme th {
-  background-color: #1a1a1a;
+  background-color: #007BFF;
   color: #fff;
   border-color: #444;
 }
@@ -808,12 +808,15 @@ body.dark-theme .download-link:hover {
 }
 
 body.dark-theme .back-btn {
-  background-color: #1a1a1a;
+  background-color: #007BFF;
   color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-theme .back-btn:hover {
-  background-color: #333;
+  background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .logout-confirmation-overlay {
