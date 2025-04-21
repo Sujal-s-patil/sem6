@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PoliceTeamCard from "./PoliceTeamCard"; // adjust path if needed
 
 // TaskModal component
 const TaskModal = ({ task, onClose }) => {
@@ -203,10 +204,17 @@ const TaskModal = ({ task, onClose }) => {
           )}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '16px' }}>
-          <button onClick={handleAssignClick} style={btnPrimary}>Assign</button>
-          <button onClick={onClose} style={btnClose}>Close</button>
+        {/* Bottom Section: PoliceTeamCard on left, Buttons on right */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '16px' }}>
+          <div style={{ flex: 1 }}>
+            <PoliceTeamCard complaintId={task.complaint_id} />
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button onClick={handleAssignClick} style={btnPrimary}>Assign</button>
+            <button onClick={onClose} style={btnClose}>Close</button>
+          </div>
         </div>
+
 
         {showAssignPopup && (
           <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1100, backgroundColor: "rgba(0,0,0,0.5)" }}
