@@ -8,6 +8,99 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative; /* Add position relative to body */
+}
+
+/* User profile container */
+.user-profile-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* User profile styling */
+.user-profile {
+  position: relative;
+}
+
+.profile-circle {
+  height: 40px;
+  background-color: white;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-circle:hover {
+  background-color: #e6f2ff; /* Light blue background on hover */
+}
+
+.profile-circle:hover .profile-icon,
+.profile-circle:hover .profile-text {
+  color: #007bff; /* Blue color for icon and text on hover */
+}
+
+.profile-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-icon {
+  width: 24px;
+  height: 24px;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-text {
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Logout button styling */
+.logout-button {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0;
+}
+
+.logout-button:hover {
+  background-color: #ffebee; /* Light red background on hover */
+}
+
+.logout-button:hover .logout-icon {
+  color: #dc3545; /* Red color for icon on hover */
+}
+
+.logout-icon {
+  color: #6c757d;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  height: 24px;
 }
 
 /* General container styling */
@@ -171,7 +264,7 @@ body {
 
 .popup-container tbody tr:nth-child(even) {
   background-color: #f9f9f9;
-}
+} 
 
 .popup-container tbody tr:hover {
   background-color: #f1f1f1; /* Highlight row on hover */
@@ -224,5 +317,207 @@ body {
   .popup-container th,
   .popup-container td {
     font-size: 14px;
+  }
+}
+
+/* Profile Popup Styling */
+.profile-popup-container {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: slideDown 0.3s ease forwards;
+  z-index: 1000;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.profile-popup-container.closing {
+  animation: slideUp 0.3s ease forwards;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.profile-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #007BFF;
+  color: white;
+}
+
+.profile-popup-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.profile-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.profile-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.profile-popup-content {
+  padding: 20px;
+}
+
+.profile-info-item {
+  display: flex;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-info-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.profile-info-label {
+  font-weight: bold;
+  width: 40%;
+  color: #555;
+}
+
+.profile-info-value {
+  width: 60%;
+  color: #333;
+}
+
+/* Logout Confirmation Popup */
+.logout-confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+}
+
+.logout-confirmation-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.logout-confirmation-header {
+  padding: 15px 20px;
+  background-color: #dc3545;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout-confirmation-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.logout-confirmation-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.logout-confirmation-message {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 16px;
+}
+
+.logout-confirmation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.logout-confirm-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.logout-confirm-btn.cancel {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.logout-confirm-btn.cancel:hover {
+  background-color: #e9ecef;
+}
+
+.logout-confirm-btn.confirm {
+  background-color: #dc3545;
+  color: white;
+}
+
+.logout-confirm-btn.confirm:hover {
+  background-color: #c82333;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
