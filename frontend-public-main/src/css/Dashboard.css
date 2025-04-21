@@ -13,10 +13,10 @@ body {
 
 /* User profile container */
 .user-profile-container {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 100;
+  z-index: 2000;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -436,7 +436,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .logout-confirmation-popup {
@@ -448,7 +448,7 @@ body {
   border-radius: 10px;
   width: 400px;
   max-width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(220, 53, 69, 0.8);
   overflow: hidden;
   animation: fadeIn 0.3s ease forwards;
 }

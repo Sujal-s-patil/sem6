@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserNav from './UserNav';
 import '../css/FileComplaint.css';
 
 const FileComplaint = () => {
@@ -240,103 +241,106 @@ const FileComplaint = () => {
   ];
 
   return (
-    <div className="form-container">
-      <h2>File a Complaint</h2>
-      <p className="form-description">
-        Please fill out the form below to file your complaint. All fields marked with an asterisk (*) are required.
-      </p>
-      
-      {successMessage && (
-        <div className="success-message">
-          {successMessage}
-        </div>
-      )}
-      
-      {error && <p className="error-message">{error}</p>}
-      
-      <form onSubmit={handleSubmit}>
-        <div className="complaint-form">
-          {formInputs.map((input) => (
-            <div key={input.name} className="form-group">
-              <label htmlFor={input.name}>
-                {input.label} <span className="required">*</span>
+    <>
+      <UserNav />
+      <div className="form-container">
+        <h2>File a Complaint</h2>
+        <p className="form-description">
+          Please fill out the form below to file your complaint. All fields marked with an asterisk (*) are required.
+        </p>
+        
+        {successMessage && (
+          <div className="success-message">
+            {successMessage}
+          </div>
+        )}
+        
+        {error && <p className="error-message">{error}</p>}
+        
+        <form onSubmit={handleSubmit}>
+          <div className="complaint-form">
+            {formInputs.map((input) => (
+              <div key={input.name} className="form-group">
+                <label htmlFor={input.name}>
+                  {input.label} <span className="required">*</span>
+                </label>
+                <div className="input-cell">
+                  {input.type === 'textarea' ? (
+                    <textarea
+                      name={input.name}
+                      value={complaintData[input.name] || ''}
+                      onChange={handleChange}
+                      required
+                      id={input.name}
+                      placeholder={input.placeholder}
+                      className={validationErrors[input.name] ? 'error' : ''}
+                    />
+                  ) : (
+                    <input
+                      type={input.type}
+                      name={input.name}
+                      value={complaintData[input.name] || ''}
+                      onChange={handleChange}
+                      required
+                      id={input.name}
+                      placeholder={input.placeholder}
+                      className={validationErrors[input.name] ? 'error' : ''}
+                    />
+                  )}
+                  {validationErrors[input.name] && (
+                    <div className="field-error">{validationErrors[input.name]}</div>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {/* File Upload Section */}
+            <div className="form-group">
+              <label htmlFor="file">
+                Upload Proof (optional)
               </label>
               <div className="input-cell">
-                {input.type === 'textarea' ? (
-                  <textarea
-                    name={input.name}
-                    value={complaintData[input.name] || ''}
-                    onChange={handleChange}
-                    required
-                    id={input.name}
-                    placeholder={input.placeholder}
-                    className={validationErrors[input.name] ? 'error' : ''}
-                  />
-                ) : (
+                <div className="file-upload-container">
+                  <label className="file-upload-label" htmlFor="file">
+                    <span>📁</span> Choose a file
+                  </label>
                   <input
-                    type={input.type}
-                    name={input.name}
-                    value={complaintData[input.name] || ''}
+                    type="file"
+                    name="file"
                     onChange={handleChange}
-                    required
-                    id={input.name}
-                    placeholder={input.placeholder}
-                    className={validationErrors[input.name] ? 'error' : ''}
+                    id="file"
                   />
-                )}
-                {validationErrors[input.name] && (
-                  <div className="field-error">{validationErrors[input.name]}</div>
-                )}
-              </div>
-            </div>
-          ))}
-
-          {/* File Upload Section */}
-          <div className="form-group">
-            <label htmlFor="file">
-              Upload Proof (optional)
-            </label>
-            <div className="input-cell">
-              <div className="file-upload-container">
-                <label className="file-upload-label" htmlFor="file">
-                  <span>📁</span> Choose a file
-                </label>
-                <input
-                  type="file"
-                  name="file"
-                  onChange={handleChange}
-                  id="file"
-                />
-                {fileName && <div className="file-name">Selected: {fileName}</div>}
+                  {fileName && <div className="file-name">Selected: {fileName}</div>}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="button-container">
-          <button 
-            type="button" 
-            className="back-dashboard-button"
-            onClick={() => navigate('/home')}
-          >
-            Back to Dashboard
-          </button>
-          <button 
-            type="submit" 
-            disabled={isSubmitting} 
-            className="submit-button"
-          >
-            {isSubmitting ? (
-              <>
-                <span className="spinner"></span> Submitting...
-              </>
-            ) : (
-              'Submit Complaint'
-            )}
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="button-container">
+            <button 
+              type="button" 
+              className="back-dashboard-button"
+              onClick={() => navigate('/home')}
+            >
+              Back to Dashboard
+            </button>
+            <button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="submit-button"
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="spinner"></span> Submitting...
+                </>
+              ) : (
+                'Submit Complaint'
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
