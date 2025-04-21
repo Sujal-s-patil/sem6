@@ -794,6 +794,10 @@ body.dark-theme .popup-table th {
   border-color: #444;
 }
 
+body.dark-theme .popup-table th:first-child {
+  border-top-left-radius: 0;
+}
+
 body.dark-theme .popup-table td {
   color: #ccc;
   border-color: #444;

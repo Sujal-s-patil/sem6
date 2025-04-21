@@ -10,6 +10,7 @@
 }
 .login-container:hover {
   transform: translateY(-5px); /* Slight lift effect */
+  transition: transform 0.8s ease;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
 }
 
@@ -46,6 +47,16 @@
   color: #333;
 }
 
+/* Fix for autofill background color */
+.login-container input:-webkit-autofill,
+.login-container input:-webkit-autofill:hover,
+.login-container input:-webkit-autofill:focus,
+.login-container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+  -webkit-text-fill-color: #333 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .login-container input[type="text"]:focus,
 .login-container input[type="password"]:focus {
   border-color: #42a5f5;
@@ -60,6 +71,16 @@ body.dark-theme .login-container input[type="password"] {
   background-color: #1a1a1a;
   color: #fff;
   border-color: #444;
+}
+
+/* Fix for autofill background color in dark theme */
+body.dark-theme .login-container input:-webkit-autofill,
+body.dark-theme .login-container input:-webkit-autofill:hover,
+body.dark-theme .login-container input:-webkit-autofill:focus,
+body.dark-theme .login-container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 body.dark-theme .login-container input[type="text"]:focus,

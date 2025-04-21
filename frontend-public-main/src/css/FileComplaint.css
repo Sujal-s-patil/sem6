@@ -518,3 +518,145 @@ body.dark-theme .theme-toggle {
 body.dark-theme .theme-icon {
   color: #fff;
 }
+
+/* Back Confirmation Popup Styles */
+.back-confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001;
+  animation: fadeIn 0.3s ease;
+}
+
+.back-confirmation-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(220, 53, 69, 0.8);
+  overflow: hidden;
+  animation: fadeIn 0.3s ease forwards;
+  z-index: 10002;
+}
+
+.back-confirmation-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.back-confirmation-header h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.back-confirmation-content {
+  padding: 20px;
+}
+
+.back-confirmation-message {
+  margin: 0 0 20px 0;
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.back-confirmation-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.back-confirm-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-confirm-btn.cancel {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.back-confirm-btn.cancel:hover {
+  background-color: #e0e0e0;
+}
+
+.back-confirm-btn.confirm {
+  background-color: #dc3545;
+  color: white;
+}
+
+.back-confirm-btn.confirm:hover {
+  background-color: #c82333;
+}
+
+/* Dark Theme Styles for Back Confirmation Popup */
+body.dark-theme .back-confirmation-popup {
+  background-color: #1a1a1a;
+  box-shadow: 0 4px 20px rgba(220, 53, 69, 0.8);
+}
+
+body.dark-theme .back-confirmation-header {
+  border-bottom: 1px solid #333;
+}
+
+body.dark-theme .back-confirmation-header h3 {
+  color: #fff;
+}
+
+body.dark-theme .back-confirmation-message {
+  color: #ccc;
+}
+
+body.dark-theme .back-confirm-btn.cancel {
+  background-color: #333;
+  color: #fff;
+}
+
+body.dark-theme .back-confirm-btn.cancel:hover {
+  background-color: #444;
+}
+
+body.dark-theme .back-confirm-btn.confirm {
+  background-color: #dc3545;
+  color: white;
+}
+
+body.dark-theme .back-confirm-btn.confirm:hover {
+  background-color: #c82333;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
