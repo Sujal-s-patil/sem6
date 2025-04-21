@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #d1ebff, #87c9f4); /* Light gradient background */
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* Light gradient background */
   min-height: 100vh; /* Ensure it covers the full viewport height */
   display: flex;
   justify-content: center;
@@ -12,26 +12,35 @@ body {
 
 /* General container styling */
 .dashboard-container {
-  max-width: 600px; /* Increased width */
-  margin: 50px auto;
+  max-width: 800px; /* Increased width for better layout */
+  margin: 30px auto;
   text-align: center;
-  font-family: 'Verdana', sans-serif; /* Changed to a basic font */
-  background: linear-gradient(135deg, #ffffff, #f8f9fa); /* Gradient background */
-  padding: 40px; /* Increased padding */
+  font-family: 'Verdana', sans-serif;
+  background-color: white;
+  padding: 30px;
   border-radius: 15px; /* Larger border radius for a smoother look */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for more depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.dashboard-container:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+/* Heading styling */
 .dashboard-container h2 {
-  font-size: 28px; /* Larger font size */
+  font-size: 32px; /* Larger font size */
   color: #333;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
+/* Paragraph styling */
 .dashboard-container p {
   font-size: 18px; /* Slightly larger font size */
   color: #555;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 /* Buttons styling */
@@ -85,40 +94,58 @@ body {
 
 /* Popup styling */
 .popup-container {
-  position: fixed;
+  position: fixed; /* Ensure the popup stays in the center of the viewport */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
-  background: linear-gradient(135deg, #ffffff, #f2f2f2); /* Gradient background for popup */
+  z-index: 1000; /* Ensure it appears above the overlay */
+  background: linear-gradient(135deg, #ffffff, #f9f9f9); /* Subtle gradient background */
   border: 1px solid #ddd;
-  border-radius: 15px; /* Larger border radius */
-  padding: 25px; /* Increased padding */
+  border-radius: 15px; /* Smooth rounded corners */
+  padding: 30px; /* Increased padding for better spacing */
   width: 90%;
-  max-width: 700px; /* Increased max width */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow for depth */
+  max-width: 800px; /* Adjusted max width for better layout */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
   overflow: hidden;
+  animation: fadeIn 0.3s ease-in-out; /* Add a fade-in animation */
+  position: relative; /* Ensure the close button is positioned relative to the popup */
 }
 
 .popup-container h3 {
-  font-size: 22px; /* Larger font size */
+  font-size: 24px; /* Larger font size for the title */
   color: #333;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  text-align: center; /* Center-align the title */
+  font-weight: bold;
 }
 
 .popup-container .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px; /* Position the close button on the right */
   border: none;
   background-color: transparent;
-  font-size: 20px; /* Larger font size */
+  font-size: 24px; /* Larger font size for better visibility */
   cursor: pointer;
   color: #555;
+  transition: color 0.3s ease;
+  line-height: 1; /* Prevent the button from taking extra space */
 }
 
 .popup-container .close-btn:hover {
-  color: #000;
+  color: #000; /* Darker color on hover */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }
 
 /* Table styling */
@@ -130,15 +157,16 @@ body {
 
 .popup-container th,
 .popup-container td {
-  padding: 12px; /* Increased padding */
+  padding: 12px; /* Increased padding for better spacing */
   border: 1px solid #ddd;
   text-align: left;
-  font-size: 16px; /* Larger font size */
+  font-size: 16px; /* Larger font size for readability */
 }
 
 .popup-container th {
   background-color: #f2f2f2;
   font-weight: bold;
+  text-align: center; /* Center-align table headers */
 }
 
 .popup-container tbody tr:nth-child(even) {
@@ -146,23 +174,55 @@ body {
 }
 
 .popup-container tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: #f1f1f1; /* Highlight row on hover */
 }
 
 /* Scrollable table body */
 .popup-container .table-scrollable {
-  max-height: 400px;
+  max-height: 300px; /* Adjusted height for better usability */
   overflow-y: auto;
+  border: 1px solid #ddd; /* Add border around the scrollable area */
+  border-radius: 8px; /* Smooth corners for the scrollable area */
 }
 
 /* Background overlay with blur effect */
 .popup-overlay {
-  position: fixed;
+  position: fixed; /* Ensure it covers the entire viewport */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.046); /* Light transparent background */
-  backdrop-filter: blur(8px); /* Apply blur effect */
-  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px); /* Apply blur effect to the entire page */
+  z-index: 999; /* Ensure it appears above other elements */
+  background-color: rgba(255, 255, 255, 0.5); /* Light transparent background */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 20px;
+    margin: 20px auto;
+  }
+
+  .dashboard-container h2 {
+    font-size: 24px;
+  }
+
+  .dashboard-container p {
+    font-size: 16px;
+  }
+
+  .popup-container {
+    padding: 20px;
+    width: 95%;
+  }
+
+  .popup-container h3 {
+    font-size: 20px;
+  }
+
+  .popup-container th,
+  .popup-container td {
+    font-size: 14px;
+  }
 }

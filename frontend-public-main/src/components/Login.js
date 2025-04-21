@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../css/Login.css';
 
 const Login = () => {
   const [aadharCardNo, setAadharCardNo] = useState('');
@@ -42,69 +43,33 @@ const Login = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto', textAlign: 'center' }}>
+    <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleLogin} autoComplete="off">
-        <div style={{ marginBottom: '15px' }}>
+        <div>
           <input
             type="text"
             value={aadharCardNo}
             onChange={(e) => setAadharCardNo(e.target.value)}
             placeholder="Aadhar Card Number"
             autoComplete="off"
-            maxLength="12" // Aadhar card numbers are 12 digits long
-            style={{
-              width: '100%',
-              padding: '10px',
-              boxSizing: 'border-box',
-            }}
+            maxLength="12"
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
+        <div>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             autoComplete="off"
-            style={{
-              width: '100%',
-              padding: '10px',
-              boxSizing: 'border-box',
-            }}
           />
         </div>
         {errorMessage && (
-          <div style={{ color: 'red', marginBottom: '15px' }}>{errorMessage}</div>
+          <div className="error-message">{errorMessage}</div>
         )}
-        <button
-          type="submit"
-          style={{
-            width: '100%',
-            padding: '10px',
-            backgroundColor: '#007BFF',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            borderRadius: '5px',
-            marginBottom: '15px',
-          }}
-        >
-          Login
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate('/register')}
-          style={{
-            width: '100%',
-            padding: '10px',
-            backgroundColor: '#28A745',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            borderRadius: '5px',
-          }}
-        >
+        <button type="submit">Login</button>
+        <button type="button" onClick={() => navigate('/register')}>
           Register
         </button>
       </form>
