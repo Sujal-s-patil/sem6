@@ -76,6 +76,7 @@ const TaskModal = ({ task, onClose }) => {
         }),
       });
       const result = await response.json();
+      console.log(result);
       setComment("");
       setShowCommentInput(false);
     } catch (error) {
@@ -325,7 +326,5 @@ const btnSecondary = {
 const btnClose = {
   padding: "8px 16px", backgroundColor: "#007bff", color: "white", borderRadius: "4px", border: "none", cursor: "pointer"
 };
-const dtStyle = { fontWeight: "bold", color: "#333" };
-const ddStyle = { margin: 0, color: "#555" };
 
 export { TaskCard, TaskModal };
