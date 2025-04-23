@@ -243,6 +243,7 @@ const Sidebar = () => {
                 </svg>}
                 label="Police"
                 collapsed={collapsed}
+                isActive={selectedItem === "Police"}
                 onClick={() => {
                   setCollapsed(false); // Ensure the sidebar expands
                   setSelectedItem(selectedItem === "Police" ? null : "Police"); // Toggle Police list
@@ -258,6 +259,7 @@ const Sidebar = () => {
                 </svg>}
                 label="Criminals"
                 collapsed={collapsed}
+                isActive={selectedItem === "Criminals"}
                 onClick={() => {
                   setCollapsed(false); // Ensure the sidebar expands
                   setSelectedItem(selectedItem === "Criminals" ? null : "Criminals"); // Toggle Criminals list
@@ -360,11 +362,11 @@ const Sidebar = () => {
   );
 };
 
-const SidebarItem = ({ icon, label, collapsed, onClick }) => {
+const SidebarItem = ({ icon, label, collapsed, onClick, isActive }) => {
   return (
     <div
       onClick={onClick}
-      className="sidebar-item"
+      className={`sidebar-item ${isActive ? 'active' : ''}`}
     >
       <span className="sidebar-item-icon">{icon}</span>
       {!collapsed && (

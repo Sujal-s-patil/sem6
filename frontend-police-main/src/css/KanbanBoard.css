@@ -3,7 +3,7 @@
   min-height: 100vh;
   padding-left: 60px; /* Account for fixed sidebar */
   transition: padding-left 0.4s;
-  background-color: #f4f5f7; /* Light gray background for the entire board area */
+  background-color: white;
 }
 
 .kanban-container.expanded {
@@ -21,44 +21,69 @@
 }
 
 .column {
-  background: #f4f5f7; /* Match board background - columns are defined by spacing */
-  border-radius: 3px; /* More subtle radius like Jira */
-  width: 280px; /* Slightly narrower columns */
+  background: #f4f5f7;
+  border-radius: 8px;
+  width: 280px;
   flex-shrink: 0;
-  border: none;
-  box-shadow: none; /* Remove column shadow */
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  margin: 4px;
 }
 
 .column-header {
-  padding: 10px 8px; /* Adjust padding */
-  /* border-bottom: 1px solid #dfe1e6; */ /* Remove border */
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .column-title {
-  font-weight: 500; /* Medium weight */
-  font-size: 12px; /* Smaller font size */
+  font-weight: 600;
+  font-size: 14px;
   margin: 0;
-  color: #5e6c84; /* Jira's gray */
-  text-transform: uppercase; /* Uppercase text */
-  /* Title and count are now combined in JS, remove justify/gap */
-  display: block; /* Ensure it takes full width if needed */
-  text-align: left; /* Align text left */
+  color: #172b4d;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.column-title span {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: normal;
 }
 
 /* Remove separate task-count span style */
 /* .task-count { ... } */
 
 .tasks-container {
-  padding: 0 8px 8px 8px; /* Adjust padding, remove top */
+  padding: 16px;
   overflow-y: auto;
   flex-grow: 1;
-  min-height: 50px; /* Ensure drop zone exists even when empty */
-  /* Add subtle separation if needed, e.g. for focus */
-  border-radius: 3px; /* Match column radius */
+  min-height: 50px;
+  border-radius: 0 0 12px 12px;
+}
+
+.task-card {
+  background: white;
+  border-radius: 3px;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .drop-indicator {
