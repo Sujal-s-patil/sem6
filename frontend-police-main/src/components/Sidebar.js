@@ -4,12 +4,32 @@ import "../css/Sidebar.css";
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const sidebarRef = useRef(null);
+  const profilePopupRef = useRef(null);
   const userData = JSON.parse(sessionStorage.getItem("userData"));
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item (Police or Criminals)
   const [policeTeam, setPoliceTeam] = useState([]); // Dynamic police data
   const [criminals, setCriminals] = useState([]); // Dynamic criminal data
   const [searchQuery, setSearchQuery] = useState(""); // Track search input
   const [selectedPerson, setSelectedPerson] = useState(null); // Track selected person for full details
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const closeProfilePopup = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setShowProfilePopup(false);
+      setIsClosing(false);
+    }, 300); // Match this with CSS animation duration
+  };
+
+  const toggleProfilePopup = () => {
+    if (showProfilePopup) {
+      closeProfilePopup();
+    } else {
+      setShowProfilePopup(true);
+      setIsClosing(false);
+    }
+  }; // Track profile popup visibility
 
   // Fetch data from APIs
   useEffect(() => {
@@ -24,13 +44,22 @@ const Sidebar = () => {
       .catch((error) => console.error("Error fetching criminal records:", error));
   }, []);
 
-  // Collapse sidebar when clicking outside
+  // Handle clicks outside sidebar and popup
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // Handle sidebar clicks
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setCollapsed(true); // Collapse the sidebar
-        setSelectedItem(null); // Reset the selected item
-        setSelectedPerson(null); // Reset the selected person
+        setCollapsed(true);
+        setSelectedItem(null);
+        setSelectedPerson(null);
+      }
+
+      // Handle popup clicks - close when clicking outside popup and profile toggle
+      const isClickInPopup = profilePopupRef.current && profilePopupRef.current.contains(event.target);
+      const isClickInProfileToggle = event.target.closest('.user-profile');
+      
+      if (showProfilePopup && !isClickInPopup && !isClickInProfileToggle) {
+        closeProfilePopup();
       }
     };
 
@@ -38,7 +67,14 @@ const Sidebar = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [showProfilePopup]);
+
+  // Close popup when sidebar expands
+  useEffect(() => {
+    if (!collapsed) {
+      closeProfilePopup();
+    }
+  }, [collapsed]);
 
   // Cancel person details when sidebar is collapsed
   useEffect(() => {
@@ -80,7 +116,7 @@ const Sidebar = () => {
             onClick={handleBackClick}
             className="back-button-small"
           >
-            ←
+            <span className="material-icons">arrow_back</span>
           </button>
         </div>
 
@@ -177,7 +213,7 @@ const Sidebar = () => {
               onClick={() => setSelectedPerson(null)}
               className="back-button"
             >
-              ←
+              <span className="material-icons">arrow_back</span>
             </button>
           )}
 
@@ -192,53 +228,131 @@ const Sidebar = () => {
               }}
               className={`sidebar-toggle-button ${!collapsed ? 'expanded' : ''}`}
             >
-              {collapsed ? "☰" : "✖"}
+              <span className="material-icons">
+                {collapsed ? "menu" : "close"}
+              </span>
             </button>
           )}
         </div>
         <nav className={`sidebar-nav ${!collapsed ? 'expanded' : ''}`}>
-          <SidebarItem
-            icon="👮‍♂️"
-            label="Police"
-            collapsed={collapsed}
-            onClick={() => {
-              setCollapsed(false); // Ensure the sidebar expands
-              setSelectedItem(selectedItem === "Police" ? null : "Police"); // Toggle Police list
-              setSearchQuery("");
-              setSelectedPerson(null);
-            }}
-          />
-          {selectedItem === "Police" && !selectedPerson && renderDetails(policeTeam)}
+          {!selectedPerson && (
+            <>
+              <SidebarItem
+                icon={<svg className="sidebar-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10c-1.4 0-2.5-1.1-2.5-2.5S10.6 6 12 6s2.5 1.1 2.5 2.5S13.4 11 12 11zm6 6H6v-.9c0-2 4-3.1 6-3.1s6 1.1 6 3.1v.9z"/>
+                </svg>}
+                label="Police"
+                collapsed={collapsed}
+                onClick={() => {
+                  setCollapsed(false); // Ensure the sidebar expands
+                  setSelectedItem(selectedItem === "Police" ? null : "Police"); // Toggle Police list
+                  setSearchQuery("");
+                  setSelectedPerson(null);
+                }}
+              />
+              {selectedItem === "Police" && renderDetails(policeTeam)}
 
-          <SidebarItem
-            icon="🦹‍♂️"
-            label="Criminals"
-            collapsed={collapsed}
-            onClick={() => {
-              setCollapsed(false); // Ensure the sidebar expands
-              setSelectedItem(selectedItem === "Criminals" ? null : "Criminals"); // Toggle Criminals list
-              setSearchQuery("");
-              setSelectedPerson(null);
-            }}
-          />
-          {selectedItem === "Criminals" && !selectedPerson && renderDetails(criminals)}
+              <SidebarItem
+                icon={<svg className="sidebar-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16 2c-2.76 0-5 2.24-5 5 0 .5.1 1 .24 1.5l-2.74 2.74c-.5-.14-1-.24-1.5-.24-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5c0-.5-.1-1-.24-1.5l2.74-2.74c.5.14 1 .24 1.5.24 2.76 0 5-2.24 5-5s-2.24-5-5-5zm-9 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm9-10c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+                </svg>}
+                label="Criminals"
+                collapsed={collapsed}
+                onClick={() => {
+                  setCollapsed(false); // Ensure the sidebar expands
+                  setSelectedItem(selectedItem === "Criminals" ? null : "Criminals"); // Toggle Criminals list
+                  setSearchQuery("");
+                  setSelectedPerson(null);
+                }}
+              />
+              {selectedItem === "Criminals" && renderDetails(criminals)}
+            </>
+          )}
 
           {selectedPerson && renderPersonDetails()}
         </nav>
       </div>
 
-      <div className="user-profile">
-        <img
-          src={userData.photo}
-          alt={userData.full_name}
-          className="user-photo"
-        />
-        {!collapsed && (
-          <div className="user-info">
-            <p className="user-name">{userData.full_name}</p>
-            <p className="user-id">
-              {userData.police_id}
-            </p>
+      <div className="user-profile-container">
+        <div 
+          className="user-profile"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleProfilePopup();
+          }}
+          style={{ cursor: 'pointer' }}
+        >
+          <img
+            src={userData.photo}
+            alt={userData.full_name}
+            className="user-photo"
+          />
+          {!collapsed && (
+            <div className="user-info">
+              <p className="user-name">{userData.full_name}</p>
+              <p className="user-id">
+                {userData.police_id}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {showProfilePopup && (
+          <div 
+            className={`profile-popup ${isClosing ? 'closing' : ''}`}
+            ref={profilePopupRef}
+            style={{
+              left: collapsed ? '70px' : '250px',
+              animation: isClosing ? 'slideDown 0.3s ease-in forwards' : 'slideUp 0.3s ease-out forwards'
+            }}
+          >
+            <div className="profile-popup-header">
+              <div className="profile-header-content">
+                <div className="profile-header-photo">
+                  <img src={userData.photo} alt={userData.full_name} />
+                </div>
+                <div className="profile-header-info">
+                  <h3>{userData.full_name}</h3>
+                  <span className="profile-header-id">{userData.police_id}</span>
+                </div>
+              </div>
+              <button 
+                className="profile-close-btn"
+                onClick={() => closeProfilePopup()}
+              >
+                <span className="material-icons">close</span>
+              </button>
+            </div>
+            <div className="profile-popup-content">
+              <table className="profile-details">
+                <tbody>
+                  <tr>
+                    <td className="detail-label">Post</td>
+                    <td className="detail-value">{userData.post}</td>
+                  </tr>
+                  <tr>
+                    <td className="detail-label">Aadhar Card</td>
+                    <td className="detail-value">{userData.aadhar_card}</td>
+                  </tr>
+                  <tr>
+                    <td className="detail-label">Email</td>
+                    <td className="detail-value">{userData.email}</td>
+                  </tr>
+                  <tr>
+                    <td className="detail-label">Phone</td>
+                    <td className="detail-value">{userData.phone_no}</td>
+                  </tr>
+                  <tr>
+                    <td className="detail-label">City</td>
+                    <td className="detail-value">{userData.city}</td>
+                  </tr>
+                  <tr>
+                    <td className="detail-label">Address</td>
+                    <td className="detail-value">{userData.address}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
