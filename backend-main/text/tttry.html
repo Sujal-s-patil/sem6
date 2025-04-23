@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload & Test Files</title>
+</head>
+<body>
+  <h1>Upload & Test Files</h1>
+
+  <!-- Single File Upload -->
+  <div>
+    <h3>Upload Single Photo</h3>
+    <input type="file" id="singlePhotoInput" />
+    <button type="button" onclick="uploadSinglePhoto()">Upload</button>
+    <button type="button" onclick="testSingleFileUpload()">Test</button>
+    <p id="singlePhotoResult"></p>
+  </div>
+
+  <hr />
+
+  <!-- Multiple Files Upload -->
+  <div>
+    <h3>Upload Multiple Photos or Videos</h3>
+    <input type="file" id="multipleFilesInput" multiple />
+    <button type="button" onclick="uploadMultipleFiles()">Upload</button>
+    <button type="button" onclick="testMultipleFileUpload()">Test</button>
+    <p id="multipleFilesResult"></p>
+  </div>
+
+  <script>
+    const baseUrl = 'http://localhost:5555/photo';
+
+    // Upload Single File with Redirect
+    async function uploadSinglePhoto() {
+      const input = document.getElementById('singlePhotoInput');
+      const file = input.files[0];
+
+      if (!file) {
+        alert("Please select a file first.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('photo', file);
+
+      try {
+        const response = await fetch(`${baseUrl}/upload`, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+        console.log('Uploaded photo URL:', data.url);
+        window.location.href = `result.html?url=${encodeURIComponent(data.url)}`;
+      } catch (error) {
+        alert('Upload failed. Please try again.');
+        console.error(error);
+      }
+    }
+
+    // Upload Multiple Files with Redirect
+    async function uploadMultipleFiles() {
+      const input = document.getElementById('multipleFilesInput');
+      const files = input.files;
+
+      if (!files.length) {
+        alert("Please select files first.");
+        return;
+      }
+
+      const formData = new FormData();
+      for (const file of files) {
+        formData.append('files', file);
+      }
+
+      try {
+        const response = await fetch(`${baseUrl}/upload-multiple`, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+        console.log('Uploaded files:', data.files);
+
+        const urls = data.files.map(file => file.url).join(',');
+        window.location.href = `result.html?urls=${encodeURIComponent(urls)}`;
+      } catch (error) {
+        alert('Upload failed. Please try again.');
+        console.error(error);
+      }
+    }
+
+    // Test Single File Upload with Result Display
+    async function testSingleFileUpload() {
+      const input = document.getElementById('singlePhotoInput');
+      const file = input.files[0];
+      const resultElement = document.getElementById('singlePhotoResult');
+
+      if (!file) {
+        resultElement.textContent = "Please select a file first.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('photo', file);
+
+      try {
+        const response = await fetch(`${baseUrl}/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error('Failed to upload file.');
+
+        const data = await response.json();
+        resultElement.textContent = `Uploaded photo URL: ${data.url}`;
+        console.log('Single file upload response:', data);
+      } catch (error) {
+        resultElement.textContent = 'Upload failed. Please try again.';
+        console.error(error);
+      }
+    }
+
+    // Test Multiple Files Upload with Result Display
+    async function testMultipleFileUpload() {
+      const input = document.getElementById('multipleFilesInput');
+      const files = input.files;
+      const resultElement = document.getElementById('multipleFilesResult');
+
+      if (!files.length) {
+        resultElement.textContent = "Please select files first.";
+        return;
+      }
+
+      const formData = new FormData();
+      for (const file of files) {
+        formData.append('files', file);
+      }
+
+      try {
+        const response = await fetch(`${baseUrl}/upload-multiple`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error('Failed to upload files.');
+
+        const data = await response.json();
+        const fileUrls = data.files.map(file => file.url).join(', ');
+        resultElement.textContent = `Uploaded files URLs: ${fileUrls}`;
+        console.log('Multiple files upload response:', data);
+      } catch (error) {
+        resultElement.textContent = 'Upload failed. Please try again.';
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
