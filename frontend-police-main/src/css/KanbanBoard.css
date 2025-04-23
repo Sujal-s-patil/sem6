@@ -15,11 +15,11 @@
   display: flex;
   gap: 16px; /* Spacing between columns */
   flex-grow: 1;
-  align-items: flex-start;
+  align-items: stretch;
   overflow-x: auto;
   height: calc(100vh - 48px); /* Adjust based on desired board height */
 }
-
+  
 .column {
   background: #f4f5f7;
   border-radius: 8px;
@@ -27,8 +27,10 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  height: 100%;
   margin: 4px;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .column-header {
@@ -72,12 +74,12 @@
 
 .task-card {
   background: white;
-  border-radius: 3px;
-  padding: 12px;
-  margin-bottom: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 12px;
+  min-height: 80px; /* Increased from 60px */
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .task-card:hover {
@@ -201,4 +203,16 @@
 
 .column-closed {
   background-color: #ffffff;
-} 
+}
+
+.task-title {
+  font-size: 16px; /* Increased from 14px */
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.task-description {
+  font-size: 14px; /* Increased from 12px */
+  color: #5e6c84;
+  line-height: 1.4;
+}
