@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PoliceTeamCard from "./PoliceTeamCard"; // adjust path if needed
 import "../css/TaskCard.css";
 
 // TaskModal component
@@ -182,7 +181,7 @@ const TaskModal = ({ task, onClose }) => {
         {/* Bottom Section: PoliceTeamCard on left, Buttons on right */}
         <div className="modal-footer">
           <div className="police-team-container">
-            <PoliceTeamCard complaintId={task.complaint_id} />
+            {/* Placeholder for PoliceTeamCard */}
           </div>
           <div className="modal-buttons">
             <button onClick={handleAssignClick} className="btn-primary">Assign</button>
@@ -238,9 +237,22 @@ const TaskModal = ({ task, onClose }) => {
 };
 
 // TaskCard component
-const TaskCard = ({ task, isDraggingOver }) => {
+const TaskCard = ({ task }) => {
   const [showModal, setShowModal] = useState(false);
+  const [assignedOfficers, setAssignedOfficers] = useState([]);
   const userData = JSON.parse(sessionStorage.getItem("userData"));
+
+  useEffect(() => {
+    // Fetch assigned officers when component mounts
+    fetch(`${process.env.REACT_APP_API_URL}/police/specific`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ complaint_id: task.complaint_id }),
+    })
+      .then((response) => response.json())
+      .then((data) => setAssignedOfficers(data || []))
+      .catch((error) => console.error("Error loading officers:", error));
+  }, [task.complaint_id]);
 
   const handleCardClick = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -252,15 +264,41 @@ const TaskCard = ({ task, isDraggingOver }) => {
       <div
         draggable
         onDragStart={(e) => {
-          e.dataTransfer.setData("application/json", JSON.stringify({ id: task.id }));
-          e.target.style.opacity = "0.5";
+          try {
+            // Ensure task.id is available and stringified
+            if (task && task.id !== undefined) {
+                 e.dataTransfer.setData("application/json", JSON.stringify({ id: task.id }));
+                 e.target.style.opacity = "0.5"; // Visual feedback for dragging
+            } else {
+                console.error("Task ID is undefined during drag start:", task);
+                 e.preventDefault(); // Prevent dragging if ID is missing
+            }
+          } catch (error) {
+            console.error("Error setting drag data:", error);
+          }
         }}
-        onDragEnd={(e) => (e.target.style.opacity = "1")}
+        onDragEnd={(e) => (e.target.style.opacity = "1")} // Restore opacity
         onClick={handleCardClick}
-        className={`task-card ${isHighlighted ? 'highlighted' : ''} ${isDraggingOver ? 'dragging-over' : ''}`}
+        className={`task-card ${isHighlighted ? 'highlighted' : ''}`} // Removed dragging-over class here
+        data-task-id={task.id} // IMPORTANT: Add data attribute
       >
         <p className="task-card-title">{task.crime_type}</p>
-        <p className="task-card-subtitle">{task.complainant_name}</p>
+        <div className="task-card-location">{task.crime_location}</div>
+        <div className="task-card-footer">
+          <div className="assigned-officers">
+            {assignedOfficers.map((officer, index) => (
+              <img
+                key={officer.police_id}
+                src={officer.photo}
+                alt={officer.full_name}
+                className="officer-avatar"
+                style={{ zIndex: assignedOfficers.length - index }}
+                title={officer.full_name} // Add tooltip
+              />
+            ))}
+          </div>
+          {/* You could add task ID or other icons here */}
+        </div>
       </div>
       {showModal && <TaskModal task={task} onClose={handleCloseModal} />}
     </>
