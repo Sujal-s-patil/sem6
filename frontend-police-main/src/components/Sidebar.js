@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import "../css/Sidebar.css";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -57,109 +58,41 @@ const Sidebar = () => {
     );
 
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          height: "100%",
-          width: "100%",
-          overflowY: "auto",
-          padding: "10px",
-          boxSizing: "border-box",
-        }}
-      >
+      <div className="details-container">
         {/* Search Bar */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "20px",
-            width: "100%",
-            height: "40px",
-            boxSizing: "border-box",
-          }}
-        >
+        <div className="search-container">
           <input
             type="text"
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{
-              flex: 1,
-              padding: "10px",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-              backgroundColor: "#333333",
-              color: "white",
-              marginRight: "10px",
-              height: "100%",
-              boxSizing: "border-box",
-            }}
+            className="search-input"
           />
           <button
             onClick={handleBackClick}
-            style={{
-              padding: "10px",
-              borderRadius: "4px",
-              border: "none",
-              backgroundColor: "#555555",
-              color: "white",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              width: "40px",
-              boxSizing: "border-box",
-            }}
+            className="back-button-small"
           >
             ←
           </button>
         </div>
 
         {/* List of Cards */}
-        <div
-          style={{
-            width: "100%",
-            height: "calc(100vh - 200px)",
-            overflowY: "scroll",
-            boxSizing: "border-box",
-          }}
-        >
+        <div className="cards-container">
           {filteredData.map((item, index) => (
             <div
               key={index}
               onClick={() => setSelectedPerson(item)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "#2a2a2a",
-                color: "white",
-                padding: "10px",
-                borderRadius: "8px",
-                marginBottom: "16px",
-                cursor: "pointer",
-                height: "100px",
-                width: "100%",
-                boxSizing: "border-box",
-              }}
+              className="person-card"
             >
               <img
                 src={item.photo}
                 alt={item.full_name || item.name}
-                style={{
-                  width: "70px",
-                  height: "70px",
-                  borderRadius: "50%",
-                  marginRight: "16px",
-                }}
+                className="person-photo"
               />
               {!collapsed && (
-                <div>
-                  <h3 style={{ margin: 0, fontSize: "16px" }}>{item.full_name || item.name}</h3>
-                  <p style={{ margin: 0, fontSize: "14px" }}>
+                <div className="person-info">
+                  <h3 className="person-name">{item.full_name || item.name}</h3>
+                  <p className="person-details">
                     {selectedItem === "Police" ? item.post : `Crime: ${item.crime}`}
                   </p>
                 </div>
@@ -175,44 +108,18 @@ const Sidebar = () => {
     if (!selectedPerson) return null;
 
     return (
-      <div
-        style={{
-          padding: "10px",
-          textAlign: "left",
-          width: "100%",
-          height: "calc(100vh - 60px)", // Adjust height to fit within the viewport
-          overflowY: "auto", // Enable vertical scrolling
-          boxSizing: "border-box", // Ensure padding is included in the width/height
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center", // Align items vertically
-            gap: "12px", // Reduce spacing between the photo and the name
-            marginBottom: "1px", // Reduce bottom margin
-          }}
-        >
+      <div className="person-details-container">
+        <div className="person-header">
           <img
             src={selectedPerson.photo}
             alt={selectedPerson.full_name || selectedPerson.name}
-            style={{
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
-            }}
+            className="person-header-photo"
           />
-          <h2 style={{ margin: 0 }}>
+          <h2 className="person-header-name">
             {selectedPerson.full_name || selectedPerson.name}
           </h2>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1px", // Reduce spacing between details
-          }}
-        >
+        <div className="person-details-list">
           {selectedItem === "Police" ? (
             <>
               <p><strong>Police ID:</strong> {selectedPerson.police_id}</p>
@@ -253,46 +160,14 @@ const Sidebar = () => {
   return (
     <div
       ref={sidebarRef}
-      style={{
-        height: "98vh",
-        backgroundColor: "#1a1a1a",
-        color: "white",
-        padding: "7px",
-        transition: "width 0.4s",
-        width: collapsed ? "60px" : "250px",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
+      className={`sidebar ${!collapsed ? 'expanded' : ''}`}
     >
       <div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "25px",
-            marginTop: "10px",
-            height: "40px",
-          }}
-        >
+        <div className="sidebar-header">
           {selectedPerson && (
             <button
               onClick={() => setSelectedPerson(null)}
-              style={{
-                background: collapsed ? "none" : "rgb(51, 51, 51)",
-                border: "none",
-                color: "white",
-                cursor: "pointer",
-                fontSize: "20px",
-                width: "40px",
-                height: "40px",
-                borderRadius: "10px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              className="back-button"
             >
               ←
             </button>
@@ -307,32 +182,13 @@ const Sidebar = () => {
                   setSelectedItem(null);   // Cancel the person details list page
                 }
               }}
-              style={{
-                background: collapsed ? "none" : "rgb(51, 51, 51)",
-                border: "none",
-                color: "white",
-                cursor: "pointer",
-                fontSize: "20px",
-                width: "40px",
-                height: "40px",
-                borderRadius: "10px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              className={`sidebar-toggle-button ${!collapsed ? 'expanded' : ''}`}
             >
               {collapsed ? "☰" : "✖"}
             </button>
           )}
         </div>
-        <nav
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-            alignItems: collapsed ? "center" : "normal",
-          }}
-        >
+        <nav className={`sidebar-nav ${!collapsed ? 'expanded' : ''}`}>
           <SidebarItem
             icon="👮‍♂️"
             label="Police"
@@ -363,30 +219,16 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          cursor: "pointer",
-          padding: "10px",
-          backgroundColor: "#333333",
-          borderRadius: "8px",
-        }}
-      >
+      <div className="user-profile">
         <img
           src={userData.photo}
           alt={userData.full_name}
-          style={{
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-          }}
+          className="user-photo"
         />
         {!collapsed && (
-          <div>
-            <p style={{ margin: 0, fontSize: "14px" }}>{userData.full_name}</p>
-            <p style={{ margin: 0, fontSize: "12px", color: "#ccc" }}>
+          <div className="user-info">
+            <p className="user-name">{userData.full_name}</p>
+            <p className="user-id">
               {userData.police_id}
             </p>
           </div>
@@ -400,25 +242,12 @@ const SidebarItem = ({ icon, label, collapsed, onClick }) => {
   return (
     <div
       onClick={onClick}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "16px",
-        padding: "8px",
-        borderRadius: "8px",
-        cursor: "pointer",
-        backgroundColor: "#333333",
-        transition: "opacity 0.4s",
-      }}
+      className="sidebar-item"
     >
-      <span style={{ fontSize: "20px" }}>{icon}</span>
+      <span className="sidebar-item-icon">{icon}</span>
       {!collapsed && (
         <span
-          style={{
-            fontSize: "16px",
-            opacity: collapsed ? 0 : 1,
-            transition: "opacity 0.4s",
-          }}
+          className={`sidebar-item-label ${!collapsed ? 'visible' : ''}`}
         >
           {label}
         </span>

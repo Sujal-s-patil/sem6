@@ -1,0 +1,50 @@
+.kanban-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.kanban-board {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  flex-grow: 1;
+}
+
+.column {
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border: 2px solid #ccc;
+  position: relative;
+}
+
+.column-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.drop-indicator {
+  height: 4px;
+  background-color: #3b82f6;
+  margin: 4px 0;
+  border-radius: 2px;
+}
+
+/* Status-specific column colors */
+.column-pending {
+  background-color: #fef3c7;
+}
+
+.column-in-progress {
+  background-color: #bfdbfe;
+}
+
+.column-resolved {
+  background-color: #bbf7d0;
+}
+
+.column-closed {
+  background-color: #fecaca;
+} 

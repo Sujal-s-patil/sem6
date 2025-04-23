@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from './Sidebar';
 import { TaskCard } from './TaskCard';
+import '../css/KanbanBoard.css';
 //comment
 const statuses = ["Pending", "In Progress", "Resolved", "Closed"];
 const statusColors = {
@@ -86,18 +87,12 @@ const KanbanBoard = () => {
   const sharedMinHeight = maxTaskCount * estimatedTaskHeight;
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div className="kanban-container">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Kanban container that scrolls if needed */}
-      <div style={{
-        padding: '16px',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '16px',
-        flexGrow: 1,
-      }}>
+      <div className="kanban-board">
         {statuses.map((status) => (
           <Column
             key={status}
@@ -146,32 +141,25 @@ const Column = ({ status, tasks, onTaskDrop, minHeight }) => {
     setDragOverIndex(-1);
   };
 
+  const getColumnClass = () => {
+    const statusClass = status.toLowerCase().replace(' ', '-');
+    return `column column-${statusClass}`;
+  };
+
   return (
     <div
       ref={columnRef}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      style={{
-        padding: "16px",
-        backgroundColor: statusColors[status],
-        borderRadius: "8px",
-        boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-        minHeight: `${minHeight}px`,
-        border: "2px solid #ccc",
-        position: "relative"
-      }}
+      className={getColumnClass()}
+      style={{ minHeight: `${minHeight}px` }}
     >
-      <h2 style={{ fontWeight: "bold", fontSize: "18px", marginBottom: "8px" }}>{status}</h2>
+      <h2 className="column-title">{status}</h2>
       {tasks.map((task, index) => (
         <React.Fragment key={task.id}>
           {dragOverIndex === index && (
-            <div style={{
-              height: "4px",
-              backgroundColor: "#3b82f6",
-              margin: "4px 0",
-              borderRadius: "2px"
-            }} />
+            <div className="drop-indicator" />
           )}
           <TaskCard task={task} isDraggingOver={dragOverIndex === index} />
         </React.Fragment>
