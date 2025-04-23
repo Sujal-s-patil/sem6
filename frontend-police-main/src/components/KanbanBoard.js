@@ -13,6 +13,7 @@ const statusColors = {
 
 const KanbanBoard = () => {
   const [tasks, setTasks] = useState([]);
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
   useEffect(() => {
     fetchTasks();
@@ -86,8 +87,22 @@ const KanbanBoard = () => {
   const estimatedTaskHeight = 80;
   const sharedMinHeight = maxTaskCount * estimatedTaskHeight;
 
+  // Listen for sidebar state changes
+  useEffect(() => {
+    const handleSidebarStateChange = (e) => {
+      if (e.detail && typeof e.detail.expanded === 'boolean') {
+        setSidebarExpanded(e.detail.expanded);
+      }
+    };
+
+    window.addEventListener('sidebarStateChange', handleSidebarStateChange);
+    return () => {
+      window.removeEventListener('sidebarStateChange', handleSidebarStateChange);
+    };
+  }, []);
+
   return (
-    <div className="kanban-container">
+    <div className={`kanban-container ${sidebarExpanded ? 'expanded' : ''}`}>
       {/* Sidebar */}
       <Sidebar />
 

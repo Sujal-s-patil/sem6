@@ -1,6 +1,12 @@
 .kanban-container {
   display: flex;
   min-height: 100vh;
+  padding-left: 60px; /* Add padding to account for the fixed sidebar */
+  transition: padding-left 0.4s;
+}
+
+.kanban-container.expanded {
+  padding-left: 250px; /* Adjust padding when sidebar is expanded */
 }
 
 .kanban-board {
@@ -9,6 +15,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   flex-grow: 1;
+  width: 100%;
 }
 
 .column {

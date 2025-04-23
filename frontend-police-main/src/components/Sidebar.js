@@ -47,6 +47,14 @@ const Sidebar = () => {
     }
   }, [collapsed]);
 
+  // Dispatch event when sidebar state changes
+  useEffect(() => {
+    const event = new CustomEvent('sidebarStateChange', {
+      detail: { expanded: !collapsed }
+    });
+    window.dispatchEvent(event);
+  }, [collapsed]);
+
   const handleBackClick = () => {
     setSelectedItem(null); // Reset the selected item
     setSearchQuery(""); // Clear the search query
