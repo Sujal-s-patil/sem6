@@ -13,17 +13,17 @@
 .kanban-board {
   padding: 24px;
   display: flex;
-  gap: 16px; /* Spacing between columns */
+  gap: 10px; /* Spacing between columns */
   flex-grow: 1;
   align-items: stretch;
   overflow-x: auto;
   height: calc(100vh - 48px); /* Adjust based on desired board height */
 }
-  
+
 .column {
   background: #f4f5f7;
   border-radius: 8px;
-  width: 280px;
+  width: 290px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@
 /* .task-count { ... } */
 
 .tasks-container {
-  padding: 16px;
+  padding: 8px;
   overflow-y: auto;
   flex-grow: 1;
   min-height: 50px;
