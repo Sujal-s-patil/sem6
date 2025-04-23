@@ -2,17 +2,29 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Ensure "uploads" directory exists
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+// Ensure "uploads/photo" and "uploads/evidence" directories exist
+const photoDir = path.join(__dirname, '../uploads/photo');
+const evidenceDir = path.join(__dirname, '../uploads/evidence');
+
+if (!fs.existsSync(photoDir)) {
+  fs.mkdirSync(photoDir, { recursive: true });
+}
+if (!fs.existsSync(evidenceDir)) {
+  fs.mkdirSync(evidenceDir, { recursive: true });
 }
 
-// Multer config
+// Multer config for single and multiple uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadDir);
+    if (req.originalUrl.includes('/upload-multiple')) {
+      cb(null, evidenceDir); // Multiple files upload
+    } else if (req.originalUrl.includes('/upload')) {
+      cb(null, photoDir); // Single photo upload
+    } else {
+      cb(new Error('Invalid upload route'), null);
+    }
   },
+  
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + '-' + file.originalname;
     cb(null, uniqueName);
@@ -26,7 +38,7 @@ const uploadSingleFile = (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
-  const fileUrl = `http://localhost:5555/uploads/${req.file.filename}`;
+  const fileUrl = `http://localhost:5555/uploads/photo/${req.file.filename}`;
   res.json({ url: fileUrl });
 };
 
@@ -38,7 +50,7 @@ const uploadMultipleFiles = (req, res) => {
 
   const fileUrls = req.files.map(file => ({
     originalName: file.originalname,
-    url: `http://localhost:5555/uploads/${file.filename}`
+    url: `http://localhost:5555/uploads/evidence/${file.filename}`
   }));
 
   res.json({ files: fileUrls });
