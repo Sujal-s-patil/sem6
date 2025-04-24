@@ -33,10 +33,31 @@ body {
   border-radius: 25px;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px 0 8px;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+.profile-photo {
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the left */
+  gap: 8px; /* Space between the image and text */
+  width: 100%; /* Ensure content spans the full width */
+}
+.profile-text {
+  flex-grow: 1; /* Allow the text to take up remaining space */
+  text-align: center; /* Center the text vertically */
+  font-size: 14px; /* Adjust font size as needed */
+  color: #333; /* Text color */
+}
+
 
 .profile-circle:hover {
   background-color: #e6f2ff; /* Light blue background on hover */
@@ -428,6 +449,8 @@ body {
   width: 60%;
   color: #333;
 }
+
+
 
 /* Logout Confirmation Popup */
 .logout-confirmation-overlay {

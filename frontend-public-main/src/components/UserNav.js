@@ -110,13 +110,14 @@ const UserNav = () => {
         <div className="user-profile">
           <div className="profile-circle" onClick={toggleProfilePopup}>
             <div className="profile-content">
-              <svg className="profile-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-              </svg>
+              <img
+                src={userData.photo}
+                alt={userData.full_name || userData.name}
+                className="profile-photo"
+              />
               <span className="profile-text">Profile</span>
             </div>
           </div>
-
           {showProfilePopup && (
             <div className="profile-popup-container" ref={profilePopupRef}>
               <div className="profile-popup-header">
@@ -124,17 +125,6 @@ const UserNav = () => {
                 <button className="profile-close-btn" onClick={closeProfilePopup}>✖</button>
               </div>
               <div className="profile-popup-content">
-                <div className="profile-info-item">
-                  <img src={userData.photo}
-                    alt={userData.full_name || userData.name} 
-                    style={{
-                      width: "80px",
-                      height: "80px",
-                      borderRadius: "50%",
-                    }}
-                  />
-
-                </div>
                 <div className="profile-info-item">
                   <span className="profile-info-label">Name:</span>
                   <span className="profile-info-value">{userData.fullName}</span>
