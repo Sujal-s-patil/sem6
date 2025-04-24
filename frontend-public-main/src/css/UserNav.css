@@ -1,0 +1,716 @@
+/* Page background styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    /* Light gradient background */
+    min-height: 100vh;
+    /* Ensure it covers the full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* Add position relative to body */
+}
+
+/* User profile container */
+.user-profile-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* User profile styling */
+.user-profile {
+    position: relative;
+}
+
+.profile-circle {
+    height: 40px;
+    background-color: white;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+   /*  padding: 0 20px; */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-circle:hover {
+    background-color: #e6f2ff;
+    /* Light blue background on hover */
+}
+
+.profile-circle:hover .profile-icon,
+.profile-circle:hover .profile-text {
+    color: #007bff;
+    /* Blue color for icon and text on hover */
+}
+
+.profile-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-icon {
+    width: 24px;
+    height: 24px;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-photo {
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin:0 0 0 8px;
+  }
+
+.profile-text {
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    margin:0 10px 0 0;
+}
+
+
+/* Logout button styling */
+.logout-button {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    position: relative;
+}
+
+.logout-button:hover {
+    background-color: #ffebee;
+}
+
+.logout-button:hover .logout-icon {
+    color: #dc3545;
+}
+
+.logout-icon {
+    color: #6c757d;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* General container styling */
+.dashboard-container {
+    max-width: 800px;
+    /* Increased width for better layout */
+    margin: 30px auto;
+    text-align: center;
+    font-family: 'Verdana', sans-serif;
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    /* Larger border radius for a smoother look */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-container:hover {
+    transform: translateY(-5px);
+    /* Slight lift effect */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    /* Stronger shadow on hover */
+}
+
+/* Heading styling */
+.dashboard-container h2 {
+    font-size: 32px;
+    /* Larger font size */
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Paragraph styling */
+.dashboard-container p {
+    font-size: 18px;
+    /* Slightly larger font size */
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Buttons styling */
+.dashboard-container button {
+    width: 100%;
+    padding: 15px;
+    /* Increased padding for larger buttons */
+    margin-bottom: 20px;
+    font-size: 18px;
+    /* Larger font size */
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    /* Slightly larger border radius */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add shadow for depth */
+}
+
+.dashboard-container button:hover {
+    transform: translateY(-3px);
+    /* Lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* Stronger shadow on hover */
+}
+
+.dashboard-container button:active {
+    transform: translateY(1px);
+    /* Press effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow on press */
+}
+
+.dashboard-container .check-complaint-btn {
+    background-color: #007BFF;
+    /* Blue */
+    color: white;
+}
+
+.dashboard-container .check-complaint-btn:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+.dashboard-container .file-complaint-btn {
+    background-color: #28A745;
+    /* Green */
+    color: white;
+}
+
+.dashboard-container .file-complaint-btn:hover {
+    background-color: #1e7e34;
+    /* Darker green on hover */
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-size: 16px;
+    /* Slightly larger font size */
+    margin-top: 15px;
+}
+
+/* Popup styling */
+.popup-container {
+    position: fixed;
+    /* Ensure the popup stays in the center of the viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    /* Ensure it appears above the overlay */
+    background: linear-gradient(135deg, #ffffff, #f9f9f9);
+    /* Subtle gradient background */
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    /* Smooth rounded corners */
+    padding: 30px;
+    /* Increased padding for better spacing */
+    width: 90%;
+    max-width: 800px;
+    /* Adjusted max width for better layout */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    /* Stronger shadow for depth */
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-in-out;
+    /* Add a fade-in animation */
+    position: relative;
+    /* Ensure the close button is positioned relative to the popup */
+}
+
+.popup-container h3 {
+    font-size: 24px;
+    /* Larger font size for the title */
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    /* Center-align the title */
+    font-weight: bold;
+}
+
+.popup-container .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    /* Position the close button on the right */
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    /* Larger font size for better visibility */
+    cursor: pointer;
+    color: #555;
+    transition: color 0.3s ease;
+    line-height: 1;
+    /* Prevent the button from taking extra space */
+}
+
+.popup-container .close-btn:hover {
+    color: #000;
+    /* Darker color on hover */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Table styling */
+.popup-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.popup-container th,
+.popup-container td {
+    padding: 12px;
+    /* Increased padding for better spacing */
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 16px;
+    /* Larger font size for readability */
+}
+
+.popup-container th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-align: center;
+    /* Center-align table headers */
+}
+
+.popup-container tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.popup-container tbody tr:hover {
+    background-color: #f1f1f1;
+    /* Highlight row on hover */
+}
+
+/* Scrollable table body */
+.popup-container .table-scrollable {
+    max-height: 300px;
+    /* Adjusted height for better usability */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    /* Add border around the scrollable area */
+    border-radius: 8px;
+    /* Smooth corners for the scrollable area */
+}
+
+/* Background overlay with blur effect */
+.popup-overlay {
+    position: fixed;
+    /* Ensure it covers the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(8px);
+    /* Apply blur effect to the entire page */
+    z-index: 999;
+    /* Ensure it appears above other elements */
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Light transparent background */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .dashboard-container h2 {
+        font-size: 24px;
+    }
+
+    .dashboard-container p {
+        font-size: 16px;
+    }
+
+    .popup-container {
+        padding: 20px;
+        width: 95%;
+    }
+
+    .popup-container h3 {
+        font-size: 20px;
+    }
+
+    .popup-container th,
+    .popup-container td {
+        font-size: 14px;
+    }
+}
+
+/* Profile Popup Styling */
+.profile-popup-container {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    animation: slideDown 0.3s ease forwards;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.profile-popup-container.closing {
+    animation: slideUp 0.3s ease forwards;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.profile-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #007BFF;
+    color: white;
+}
+
+.profile-popup-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.profile-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.profile-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.profile-popup-content {
+    padding: 20px;
+}
+
+.profile-info-item {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-info-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.profile-info-label {
+    font-weight: bold;
+    width: 40%;
+    color: #555;
+}
+
+.profile-info-value {
+    width: 60%;
+    color: #333;
+}
+
+/* Logout Confirmation Popup */
+.logout-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.logout-confirmation-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.8);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.logout-confirmation-header {
+    padding: 15px 20px;
+    background-color: #dc3545;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-confirmation-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.logout-confirmation-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.logout-confirmation-message {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 16px;
+}
+
+.logout-confirmation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.logout-confirm-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.logout-confirm-btn.cancel {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.logout-confirm-btn.cancel:hover {
+    background-color: #e9ecef;
+}
+
+.logout-confirm-btn.confirm {
+    background-color: #dc3545;
+    color: white;
+}
+
+.logout-confirm-btn.confirm:hover {
+    background-color: #c82333;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-icon {
+    width: 24px;
+    height: 24px;
+    color: #333;
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: #ffffff;
+}
+
+body.dark-theme .dashboard-container {
+    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .theme-toggle {
+    background-color: #333;
+}
+
+body.dark-theme .theme-icon {
+    color: #fff;
+}
+
+body.dark-theme h2 {
+    color: #fff;
+}
+
+body.dark-theme p {
+    color: #ccc;
+}
+
+body.dark-theme .profile-circle {
+    background-color: #333;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .profile-icon,
+body.dark-theme .profile-text {
+    color: #fff;
+}
+
+body.dark-theme .logout-button {
+    background-color: #333;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .logout-icon {
+    color: #fff;
+}
+
+body.dark-theme .profile-popup-container {
+    background: #2d2d2d;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .profile-popup-header {
+    color: white;
+}
+
+body.dark-theme .profile-info-label {
+    color: #ccc;
+}
+
+body.dark-theme .profile-info-value {
+    color: #fff;
+}
+
+body.dark-theme .profile-info-item {
+    border-bottom: 1px solid #444;
+}
+
+body.dark-theme .profile-info-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+body.dark-theme .logout-confirmation-popup {
+    background-color: #2d2d2d;
+}
+
+body.dark-theme .logout-confirmation-message {
+    color: #fff;
+}
+
+body.dark-theme .logout-confirm-btn.cancel {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+body.dark-theme .logout-confirm-btn.cancel:hover {
+    background-color: #555;
+}
+
+body.dark-theme .logout-confirmation-overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* All Set ✧ */

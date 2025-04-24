@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../css/UserNav.css'; // Import the CSS file for UserNav
 
 const UserNav = () => {
   const [showProfilePopup, setShowProfilePopup] = useState(false);
