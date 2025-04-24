@@ -127,7 +127,15 @@ const Complaints = () => {
             </div>
           </>
         ) : (
+          <>
           <p className="no-complaints">No complaints found.</p>
+          <div className="button-container">
+              <button className="back-btn" onClick={() => navigate('/home')}>
+                Back to Dashboard
+              </button>
+            </div>
+          </>
+          
         )}
 
         {/* Popup for complaint details */}
