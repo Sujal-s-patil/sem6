@@ -11,15 +11,20 @@
 }
 
 .complaints-container {
-  max-width: 1200px; /* Increased width for a larger container */
+  max-width: 1200px;
+  /* Increased width for a larger container */
   margin: 30px auto;
-  padding: 40px; /* Increased padding for better spacing */
+  padding: 40px;
+  /* Increased padding for better spacing */
   background-color: white;
   border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow for depth */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  /* Slightly stronger shadow for depth */
   font-family: 'Arial', sans-serif;
-  width: 95%; /* Ensure it adjusts to smaller screens */
-  position: relative; /* Add this to establish a positioning context */
+  width: 95%;
+  /* Ensure it adjusts to smaller screens */
+  position: relative;
+  /* Add this to establish a positioning context */
 }
 
 /* Header styling */
@@ -28,6 +33,18 @@ h2 {
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.complaints-container h2:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 3px;
+  background: linear-gradient(to right, #007bff, #00c6ff);
+  border-radius: 3px;
 }
 
 .complaints-header {
@@ -46,12 +63,16 @@ h2 {
 /* Modernized table styling */
 .table-scrollable {
   width: 100%;
-  margin: 0 auto; /* Center the table */
+  margin: 0 auto;
+  /* Center the table */
   overflow-y: auto;
   border: 1px solid #ddd;
-  border-radius: 10px; /* Rounded corners for the table container */
-  margin-bottom: 20px; /* Add spacing before the button */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-radius: 10px;
+  /* Rounded corners for the table container */
+  margin-bottom: 20px;
+  /* Add spacing before the button */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
 }
 
 .table-container {
@@ -62,45 +83,62 @@ h2 {
 /* Table styling */
 table {
   width: 100%;
-  border-collapse: separate; /* Use separate borders for a modern look */
-  border-spacing: 0; /* Remove spacing between cells */
+  border-collapse: separate;
+  /* Use separate borders for a modern look */
+  border-spacing: 0;
+  /* Remove spacing between cells */
   font-size: 16px;
-  background-color: #ffffff; /* White background for the table */
-  border-radius: 8px; /* Rounded corners for the table */
-  overflow: hidden; /* Ensure rounded corners apply to the entire table */
+  background-color: #ffffff;
+  /* White background for the table */
+  border-radius: 8px;
+  /* Rounded corners for the table */
+  overflow: hidden;
+  /* Ensure rounded corners apply to the entire table */
 }
 
-th, td {
+th,
+td {
   padding: 15px;
-  border-bottom: 1px solid #ddd; /* Add a bottom border for rows */
+  border-bottom: 1px solid #ddd;
+  /* Add a bottom border for rows */
   text-align: left;
 }
 
 th {
-  background-color: #007BFF; /* Blue header background */
-  color: white; /* White text for the header */
+  background-color: #007BFF;
+  /* Blue header background */
+  color: white;
+  /* White text for the header */
   font-weight: bold;
   text-align: center;
-  position: sticky; /* Keep the header fixed when scrolling */
+  position: sticky;
+  /* Keep the header fixed when scrolling */
   top: 0;
   z-index: 1;
 }
 
 tr:nth-child(even) {
-  background-color: #f9f9f9; /* Light gray background for even rows */
+  background-color: #f9f9f9;
+  /* Light gray background for even rows */
 }
 
 tr:hover {
-  background-color: #f1f1f1; /* Slightly darker gray on hover */
-  transition: background-color 0.3s ease; /* Smooth hover transition */
+  background-color: #f1f1f1;
+  /* Slightly darker gray on hover */
+  transition: background-color 0.3s ease;
+  /* Smooth hover transition */
 }
 
-td:first-child, th:first-child {
-  border-top-left-radius: 10px; /* Rounded corners for the first column */
+td:first-child,
+th:first-child {
+  border-top-left-radius: 10px;
+  /* Rounded corners for the first column */
 }
 
-td:last-child, th:last-child {
-  border-top-right-radius: 10px; /* Rounded corners for the last column */
+td:last-child,
+th:last-child {
+  border-top-right-radius: 10px;
+  /* Rounded corners for the last column */
 }
 
 /* Error message styling */
@@ -121,7 +159,8 @@ td:last-child, th:last-child {
 /* Back to Dashboard button styling */
 .back-btn {
   display: block;
-  margin: 20px auto 0; /* Add spacing above the button */
+  margin: 20px auto 0;
+  /* Add spacing above the button */
   padding: 10px 20px;
   font-size: 16px;
   color: white;
@@ -131,8 +170,10 @@ td:last-child, th:last-child {
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
-  width: auto; /* Ensure the width is minimal */
-  text-decoration: none; /* Remove underline from link */
+  width: auto;
+  /* Ensure the width is minimal */
+  text-decoration: none;
+  /* Remove underline from link */
 }
 
 .back-btn:hover {
@@ -151,53 +192,75 @@ td:last-child, th:last-child {
 
 /* Popup overlay */
 .popup-overlay {
-  position: fixed; /* Ensure the overlay covers the entire viewport */
+  position: fixed;
+  /* Ensure the overlay covers the entire viewport */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  backdrop-filter: blur(8px); /* Stronger blur for a modern look */
-  background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent dark overlay */
-  z-index: 9999; /* Increased z-index to ensure it's above all elements */
-  display: flex; /* Use flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
+  backdrop-filter: blur(8px);
+  /* Stronger blur for a modern look */
+  background-color: rgba(0, 0, 0, 0.2);
+  /* Semi-transparent dark overlay */
+  z-index: 9999;
+  /* Increased z-index to ensure it's above all elements */
+  display: flex;
+  /* Use flexbox for centering */
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
 }
 
 /* Popup container */
 .popup-container {
-  background: linear-gradient(135deg, #ffffff, #f9f9f9); /* Subtle gradient background */
-  border-radius: 16px; /* Larger rounded corners for a modern look */
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  /* Subtle gradient background */
+  border-radius: 16px;
+  /* Larger rounded corners for a modern look */
   padding: 30px;
   width: 90%;
-  max-width: 600px; /* Increased max width for better layout */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
-  z-index: 10000; /* Even higher z-index than overlay */
+  max-width: 600px;
+  /* Increased max width for better layout */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  /* Stronger shadow for depth */
+  z-index: 10000;
+  /* Even higher z-index than overlay */
   animation: fadeIn 0.3s ease-in-out;
   font-family: 'Arial', sans-serif;
   position: absolute;
-  margin: 0 auto; /* Center the container */
-  max-height: 90vh; /* Limit height to 90% of viewport height */
-  overflow-y: auto; /* Allow scrolling if content is too tall */
-  top: 50%; /* Position from top */
-  left: 50%; /* Position from left */
-  transform: translate(-50%, -50%); /* Center the element */
+  margin: 0 auto;
+  /* Center the container */
+  max-height: 90vh;
+  /* Limit height to 90% of viewport height */
+  overflow-y: auto;
+  /* Allow scrolling if content is too tall */
+  top: 50%;
+  /* Position from top */
+  left: 50%;
+  /* Position from left */
+  transform: translate(-50%, -50%);
+  /* Center the element */
 }
 
 /* Popup header */
 .popup-header {
   display: flex;
-  justify-content: space-between; /* Space between the heading and the close button */
-  align-items: center; /* Vertically align the heading and button */
+  justify-content: space-between;
+  /* Space between the heading and the close button */
+  align-items: center;
+  /* Vertically align the heading and button */
   margin-bottom: 20px;
-  border-bottom: 1px solid #ddd; /* Add a subtle divider */
+  border-bottom: 1px solid #ddd;
+  /* Add a subtle divider */
   padding-bottom: 10px;
 }
 
 /* Popup header title */
 .popup-header h3 {
   font-size: 24px;
-  margin: 0; /* Remove default margin for proper alignment */
+  margin: 0;
+  /* Remove default margin for proper alignment */
   color: #333;
   font-weight: bold;
 }
@@ -213,16 +276,20 @@ td:last-child, th:last-child {
 }
 
 .modern-close-btn:hover {
-  color: #ff4d4d; /* Red color on hover */
-  transform: scale(1.2); /* Slight zoom effect */
+  color: #ff4d4d;
+  /* Red color on hover */
+  transform: scale(1.2);
+  /* Slight zoom effect */
 }
 
 /* Popup content styling with grid layout */
 .popup-content {
   display: block;
-  grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
-  gap: 20px; /* Spacing between rows and columns */
-  max-height:170vh;
+  grid-template-columns: repeat(2, 1fr);
+  /* Two equal-width columns */
+  gap: 20px;
+  /* Spacing between rows and columns */
+  max-height: 170vh;
   overflow-y: auto;
   width: 100%;
   margin-top: 20px;
@@ -252,21 +319,25 @@ td:last-child, th:last-child {
 
 /* Full-width row for Crime Description */
 .full-width-row td {
-  grid-column: span 2; /* Make the last row span both columns */
+  grid-column: span 2;
+  /* Make the last row span both columns */
   text-align: left;
   padding-top: 15px;
-  border-top: 2px solid #eee; /* Add a top border for separation */
+  border-top: 2px solid #eee;
+  /* Add a top border for separation */
 }
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
   .popup-content {
-    grid-template-columns: 1fr; /* Single column layout for smaller screens */
+    grid-template-columns: 1fr;
+    /* Single column layout for smaller screens */
     gap: 10px;
   }
 
   .full-width-row td {
-    grid-column: span 1; /* Reset to single column */
+    grid-column: span 1;
+    /* Reset to single column */
   }
 }
 
@@ -359,15 +430,19 @@ td:last-child, th:last-child {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 @keyframes pending-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.5;
   }
+
   50% {
     opacity: 1;
   }
@@ -375,10 +450,13 @@ td:last-child, th:last-child {
 
 /* Pending animation keyframes */
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(0.8);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.2);
@@ -391,7 +469,8 @@ td:last-child, th:last-child {
   align-items: center;
   margin-left: 10px;
   font-size: 14px;
-  color: #28a745; /* Green color for resolved status */
+  color: #28a745;
+  /* Green color for resolved status */
 }
 
 /* Tick animation */
@@ -420,21 +499,28 @@ td:last-child, th:last-child {
 
 /* Tick circle icon */
 .tick-circle-icon {
-  width: 16px; /* Adjusted size */
-  height: 16px; /* Adjusted size */
+  width: 16px;
+  /* Adjusted size */
+  height: 16px;
+  /* Adjusted size */
   animation: circleAppear 0.5s ease-in-out;
 }
 
 .tick-circle-icon .circle {
-  stroke-dasharray: 63; /* Circumference of the circle */
-  stroke-dashoffset: 63; /* Start hidden */
+  stroke-dasharray: 63;
+  /* Circumference of the circle */
+  stroke-dashoffset: 63;
+  /* Start hidden */
   animation: drawCircle 0.5s ease-in-out forwards;
 }
 
 .tick-circle-icon .tick {
-  stroke-dasharray: 20; /* Length of the tick */
-  stroke-dashoffset: 20; /* Start hidden */
-  animation: drawTick 0.5s ease-in-out 0.5s forwards; /* Delay to sync with circle */
+  stroke-dasharray: 20;
+  /* Length of the tick */
+  stroke-dashoffset: 20;
+  /* Start hidden */
+  animation: drawTick 0.5s ease-in-out 0.5s forwards;
+  /* Delay to sync with circle */
 }
 
 /* Tick circle animation */
@@ -443,6 +529,7 @@ td:last-child, th:last-child {
     transform: scale(0);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -454,6 +541,7 @@ td:last-child, th:last-child {
   from {
     transform: rotate(45deg) scale(0);
   }
+
   to {
     transform: rotate(45deg) scale(1);
   }
@@ -465,7 +553,8 @@ td:last-child, th:last-child {
   align-items: center;
   margin-left: 10px;
   font-size: 14px;
-  color: #dc3545; /* Red color for closed status */
+  color: #dc3545;
+  /* Red color for closed status */
 }
 
 /* Cross animation */
@@ -504,6 +593,7 @@ td:last-child, th:last-child {
   from {
     transform: scale(0);
   }
+
   to {
     transform: scale(1);
   }
@@ -515,6 +605,7 @@ td:last-child, th:last-child {
     transform: scale(0);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -550,6 +641,7 @@ td:last-child, th:last-child {
     transform: scale(0);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -562,6 +654,7 @@ td:last-child, th:last-child {
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
   }
+
   to {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
@@ -574,6 +667,7 @@ td:last-child, th:last-child {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
@@ -590,15 +684,20 @@ td:last-child, th:last-child {
 .status-icon {
   display: inline-flex;
   align-items: center;
-  margin-left: 8px; /* Add spacing between the text and the icon */
-  font-size: 14px; /* Match the font size of the status text */
+  margin-left: 8px;
+  /* Add spacing between the text and the icon */
+  font-size: 14px;
+  /* Match the font size of the status text */
 }
 
 /* SVG-based tick icon */
 .tick-icon {
-  width: 16px; /* Adjusted size */
-  height: 16px; /* Adjusted size */
-  stroke: #28a745; /* Green color for the tick */
+  width: 16px;
+  /* Adjusted size */
+  height: 16px;
+  /* Adjusted size */
+  stroke: #28a745;
+  /* Green color for the tick */
   animation: tickAppear 0.5s ease-in-out;
 }
 
@@ -606,7 +705,8 @@ td:last-child, th:last-child {
 .table-icon {
   display: inline-flex;
   align-items: center;
-  margin-right: 8px; /* Add spacing between the icon and text */
+  margin-right: 8px;
+  /* Add spacing between the icon and text */
 }
 
 /* Standardized icon size */
@@ -619,8 +719,10 @@ td:last-child, th:last-child {
 /* Popup content styling with grid layout */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
-  gap: 20px; /* Spacing between rows and columns */
+  grid-template-columns: repeat(2, 1fr);
+  /* Two equal-width columns */
+  gap: 20px;
+  /* Spacing between rows and columns */
   max-height: 70vh;
   overflow-y: auto;
   width: 100%;
@@ -641,20 +743,24 @@ td:last-child, th:last-child {
 
 /* Full-width row for Crime Description */
 .grid-item.full-width {
-  grid-column: span 2; /* Make the last row span both columns */
-  border-top: 2px solid #eee; /* Add a top border for separation */
+  grid-column: span 2;
+  /* Make the last row span both columns */
+  border-top: 2px solid #eee;
+  /* Add a top border for separation */
   padding-top: 10px;
 }
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
   .grid-container {
-    grid-template-columns: 1fr; /* Single column layout for smaller screens */
+    grid-template-columns: 1fr;
+    /* Single column layout for smaller screens */
     gap: 10px;
   }
 
   .grid-item.full-width {
-    grid-column: span 1; /* Reset to single column */
+    grid-column: span 1;
+    /* Reset to single column */
   }
 }
 
@@ -673,7 +779,8 @@ td:last-child, th:last-child {
     font-size: 24px;
   }
 
-  th, td {
+  th,
+  td {
     padding: 10px;
     font-size: 14px;
   }
@@ -718,6 +825,7 @@ td:last-child, th:last-child {
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
+
   .popup-table th,
   .popup-table td {
     font-size: 14px;

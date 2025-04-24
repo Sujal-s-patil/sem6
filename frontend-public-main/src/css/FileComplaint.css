@@ -24,7 +24,7 @@ h2:after {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 150px;
+  width: 100px;
   height: 3px;
   background: linear-gradient(to right, #007bff, #00c6ff);
   border-radius: 3px;
