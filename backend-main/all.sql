@@ -72,6 +72,13 @@ CREATE TABLE ticket (
     comment TEXT DEFAULT NULL
 );
 
+CREATE TABLE links (
+    complaint_id INT NOT NULL,
+    link TEXT NOT NULL,
+    FOREIGN KEY (complaint_id) REFERENCES ticket(complaint_id) ON DELETE CASCADE
+);
+
+
 INSERT INTO criminal_records (
         photo,
         name,
