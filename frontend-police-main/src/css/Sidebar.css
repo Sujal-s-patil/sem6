@@ -148,7 +148,7 @@
   opacity: 0;
   transition: opacity 0.4s;
 }
-
+  
 .sidebar-item-label.visible {
   opacity: 1;
 }
