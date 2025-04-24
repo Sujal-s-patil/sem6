@@ -58,6 +58,24 @@
     background-color: #ffffff;
 }
 
+/* Custom styling for file input */
+.input-field input[type="file"] {
+    display: block; /* Ensure the file input is visible */
+    opacity: 1; /* Make it fully visible */
+    position: relative; /* Reset any absolute positioning */
+    z-index: auto; /* Reset z-index */
+    width: 100%; /* Match the width of the input-field */
+    height: 44px; /* Match the height of other input fields */
+    cursor: pointer; /* Show pointer cursor for better UX */
+    box-sizing: border-box; /* Ensure padding and border are included in size */
+    border: 1px solid #cccccc; /* Match the border style */
+    border-radius: 6px; /* Match the border radius */
+    padding: 12px; /* Match the padding of other input fields */
+    background-color: #ffffff; /* Match the background color */
+    font-size: 14px; /* Match the font size */
+    color: #333333; /* Match the text color */
+}
+
 /* Error Message */
 .error-message {
     color: red;
