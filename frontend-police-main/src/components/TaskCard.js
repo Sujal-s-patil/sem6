@@ -237,6 +237,32 @@ const TaskModal = ({ task, onClose }) => {
 };
 
 // TaskCard component
+function getDaysAgo(dateString) {
+  const now = new Date();
+  const created = new Date(dateString);
+  const diffTime = now - created;
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+}
+
+function getTagColorClass(days, status) {
+  if (status === 'Pending' || status === 'In Progress') {
+    if (days <= 1) return 'green';
+    if (days <= 4) return 'yellow';
+    return 'red';
+  } else if (status === 'Resolved') {
+    if (days <= 1) return 'red';
+    if (days <= 4) return 'yellow';
+    return 'green';
+  } else if (status === 'Closed') {
+    return 'green';
+  } else {
+    if (days <= 2) return 'green';
+    if (days <= 5) return 'yellow';
+    return 'red';
+  }
+}
+
+
 const TaskCard = ({ task }) => {
   const [showModal, setShowModal] = useState(false);
   const [assignedOfficers, setAssignedOfficers] = useState([]);
@@ -283,7 +309,8 @@ const TaskCard = ({ task }) => {
         data-task-id={task.id} // IMPORTANT: Add data attribute
       >
         <p className="task-card-title">{task.crime_type}</p>
-        <div className="task-card-location">{task.crime_location}</div>
+        <div className={`task-card-location${task.status === 'Closed' ? ' closed-address' : ''}`}>{task.crime_location}</div>
+        <span className={`ticket-age-tag ${getTagColorClass(getDaysAgo(task.date_filed), task.status)}`}>{getDaysAgo(task.date_filed)} days</span>
         <div className="task-card-footer">
           <div className="assigned-officers">
             {assignedOfficers.map((officer, index) => (

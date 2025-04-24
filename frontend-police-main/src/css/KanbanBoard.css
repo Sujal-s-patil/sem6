@@ -4,6 +4,7 @@
   padding-left: 60px; /* Account for fixed sidebar */
   transition: padding-left 0.4s;
   background-color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .kanban-container.expanded {
@@ -17,17 +18,19 @@
   flex-grow: 1;
   align-items: stretch;
   overflow-x: auto;
-  height: calc(100vh - 48px); /* Adjust based on desired board height */
+  min-height: calc(100vh - 35px); 
+  height: calc(100vh - 35px);
 }
 
 .column {
   background: #f4f5f7;
-  border-radius: 8px;
-  width: 290px;
+  border-radius: 3px;
+  width: 300px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100%; /* Ensure column stretches to board height */
+  min-height: 100%;
   margin: 4px;
   overflow-y: auto;
   box-sizing: border-box;
@@ -61,8 +64,28 @@
   font-weight: normal;
 }
 
-/* Remove separate task-count span style */
-/* .task-count { ... } */
+.ticket-age-tag {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  letter-spacing: 0.5px;
+}
+.ticket-age-tag.green {
+  background: #e3fcef;
+  color: #006644;
+}
+.ticket-age-tag.yellow {
+  background: #fff7e6;
+  color: #ff991f;
+}
+.ticket-age-tag.red {
+  background: #ffebe6;
+  color: #de350b;
+}
 
 .tasks-container {
   padding: 8px;
@@ -76,16 +99,28 @@
   background: white;
   padding: 16px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.12),
+    0 1.5px 6px rgba(0,0,0,0.10),
+    0 0.5px 1.5px rgba(0,0,0,0.08);
   margin-bottom: 12px;
-  min-height: 80px; /* Increased from 60px */
+  min-height: 80px;
   cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.closed-address {
+  text-decoration: line-through;
+  color: #6b778c;
 }
 
 .task-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.18),
+    0 3px 12px rgba(0,0,0,0.15),
+    0 1px 3px rgba(0,0,0,0.12);
+  background: #e6f0fa;
 }
 
 .drop-indicator {

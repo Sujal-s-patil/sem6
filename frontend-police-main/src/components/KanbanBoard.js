@@ -226,7 +226,7 @@ const KanbanBoard = () => {
               onClick={() => setAddingColumn(true)}
               className="add-column-button"
             >
-              + Add another column
+              + Add column
             </button>
           )}
         </div>
