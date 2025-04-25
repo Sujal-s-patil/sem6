@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/Registration.css';
+import '../css/PoliceRegistration.css';
 
 const PoliceRegistration = () => {
   const [formData, setFormData] = useState({
@@ -160,7 +160,7 @@ const PoliceRegistration = () => {
       <div className="registration-container">
         <h2>Police Registration</h2>
         <form onSubmit={handleSubmit}>
-          {[ 
+          {[  
             { label: 'Full Name', name: 'fullName', type: 'text' },
             { label: 'Police ID', name: 'police_id', type: 'text' },
             { label: 'Email', name: 'email', type: 'email' },

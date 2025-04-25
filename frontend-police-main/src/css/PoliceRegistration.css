@@ -1,18 +1,16 @@
 /* Registration Container */
 .registration-container {
-    width: 125%; /* Increased width for better use of screen space */
-    max-width: 800px; /* Increased maximum width for larger screens */
+    width: 100%;
+    max-width: 400px;
     margin: 50px auto;
     padding: 40px;
     text-align: center;
-    background: linear-gradient(135deg, #ffffff, #f8f9fa); /* Subtle gradient background */
+    background: #fff;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Ensure proper positioning */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
+    position: relative;
 }
 .registration-container:hover {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
@@ -77,7 +75,7 @@
 }
 
 .register-button,
-.back-button {
+.button-container .back-button {
     flex: 1;
     padding: 12px;
     border: none;
@@ -93,25 +91,37 @@
 }
 
 .register-button {
-    background-color: #28A745; /* Green to match dashboard */
+    background-color: #007BFF;
     color: white;
-    order: 2; /* Move to the right */
+    order: 2;
+    outline: none;
+}
+.register-button:focus {
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.4);
+    outline: 2px solid #007BFF;
 }
 
 .register-button:hover {
-    background-color: #1e7e34; /* Darker green on hover */
+    background-color: #0056b3; /* Match login page hover */
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.back-button {
-    background-color: #007BFF; /* Blue to match dashboard */
+.button-container .back-button {
+    background-color: #28A745;
     color: white;
-    order: 1; /* Keep on the left */
+    display: block;
+    order: 1;
+    outline: none;
+    flex: 1;
+}
+.button-container .back-button:focus {
+    box-shadow: 0 0 0 3px rgba(40,167,69,0.4);
+    outline: 2px solid #28A745;
 }
 
-.back-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+.button-container .back-button:hover {
+    background-color: #1e7e34; 
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -119,14 +129,18 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .registration-container {
-        padding: 20px;
-        margin: 20px auto;
+        padding: 10px;
+        margin: 10px auto;
     }
-
+    .button-container {
+        flex-direction: column;
+        gap: 10px;
+    }
     .register-button,
     .back-button {
         font-size: 14px;
         padding: 10px;
+        width: 100%;
     }
 }
 
@@ -268,14 +282,25 @@ body.dark-theme .registration-back-btn.cancel:hover {
 }
 
 /* Dark Theme Styles */
+body {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
 body.dark-theme {
     background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
     color: #ffffff;
 }
 
 body.dark-theme .registration-container {
-    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: #232323 !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
 }
 
 body.dark-theme .theme-toggle {
@@ -316,4 +341,31 @@ body.dark-theme .error-message {
     color: #ff6b6b;
 }
 
-/* No Errors*/
+body.dark-theme input[type="file"] {
+    background-color: #232323;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+body.dark-theme input[type="file"]::file-selector-button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+body.dark-theme input[type="file"]::file-selector-button:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
+html, html.dark-theme {
+    height: auto;
+    background-color: transparent;
+}
