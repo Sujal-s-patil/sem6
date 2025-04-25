@@ -1,0 +1,253 @@
+.kanban-container {
+  display: flex;
+  min-height: 100vh;
+  padding-left: 60px; /* Account for fixed sidebar */
+  transition: padding-left 0.4s;
+  background-color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.kanban-container.expanded {
+  padding-left: 250px;
+}
+
+.kanban-board {
+  padding: 24px;
+  display: flex;
+  gap: 10px; /* Spacing between columns */
+  flex-grow: 1;
+  align-items: stretch;
+  overflow-x: auto;
+  min-height: calc(100vh - 35px); 
+  height: calc(100vh - 35px);
+}
+
+.column {
+  background: #f4f5f7;
+  border-radius: 3px;
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure column stretches to board height */
+  min-height: 100%;
+  margin: 4px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.column-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.column-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  color: #172b4d;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.column-title span {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.ticket-age-tag {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  letter-spacing: 0.5px;
+}
+.ticket-age-tag.green {
+  background: #e3fcef;
+  color: #006644;
+}
+.ticket-age-tag.yellow {
+  background: #fff7e6;
+  color: #ff991f;
+}
+.ticket-age-tag.red {
+  background: #ffebe6;
+  color: #de350b;
+}
+
+.tasks-container {
+  padding: 8px;
+  overflow-y: auto;
+  flex-grow: 1;
+  min-height: 50px;
+  border-radius: 0 0 12px 12px;
+}
+
+.task-card {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.12),
+    0 1.5px 6px rgba(0,0,0,0.10),
+    0 0.5px 1.5px rgba(0,0,0,0.08);
+  margin-bottom: 12px;
+  min-height: 80px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.closed-address {
+  text-decoration: line-through;
+  color: #6b778c;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.18),
+    0 3px 12px rgba(0,0,0,0.15),
+    0 1px 3px rgba(0,0,0,0.12);
+  background: #e6f0fa;
+}
+
+.drop-indicator {
+  height: 2px;
+  background-color: #4f46e5; /* Jira blue */
+  margin: 4px 0;
+  border-radius: 1px;
+  /* Adjustments if needed based on padding */
+}
+
+/* Add Column styles adjustment */
+.add-column-container {
+  width: 280px; /* Match new column width */
+  flex-shrink: 0;
+  padding-top: 10px; /* Align with column header text */
+}
+
+.add-column-button {
+  background: none; /* No background */
+  border: none;
+  color: #5e6c84; /* Match header color */
+  padding: 6px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.add-column-button:hover {
+  background: rgba(0, 0, 0, 0.06); /* Subtle hover background */
+}
+
+.add-column-input-container {
+  background: #EBECF0; /* Slightly darker gray for input area */
+  border-radius: 3px;
+  padding: 8px;
+  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); */ /* Optional subtle shadow */
+}
+
+.add-column-input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 3px;
+  border: 1px solid #dfe1e6; /* Jira border color */
+  background-color: #fff; /* White input */
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.add-column-input:focus {
+  border-color: #4f46e5; /* Jira blue focus */
+  outline: none;
+  box-shadow: 0 0 0 1px #4f46e5;
+}
+
+.add-column-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-column-save {
+  background-color: #0052cc; /* Jira blue */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.add-column-save:hover {
+  background-color: #0065ff; /* Jira blue hover */
+}
+
+.add-column-cancel {
+  background: none;
+  border: none;
+  color: #6b778c; /* Jira icon gray */
+  padding: 0;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+}
+
+.add-column-cancel:hover {
+  background-color: rgba(0,0,0,0.06);
+  color: #172b4d;
+}
+
+/* Status-specific column background colors - using more subtle colors */
+.column-pending {
+  background-color: #ffffff;
+}
+
+.column-in-progress {
+  background-color: #ffffff;
+}
+
+.column-resolved {
+  background-color: #ffffff;
+}
+
+.column-closed {
+  background-color: #ffffff;
+}
+
+.task-title {
+  font-size: 16px; /* Increased from 14px */
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.task-description {
+  font-size: 14px; /* Increased from 12px */
+  color: #5e6c84;
+  line-height: 1.4;
+}
