@@ -9,6 +9,19 @@ const TaskModal = ({ task, onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [comment, setComment] = useState("");
+  const [attachment, setAttachment] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [loadingComments, setLoadingComments] = useState(false);
+
+  // Fetch comments dynamically
+  useEffect(() => {
+    if (task?.complaint_id) {
+      fetch(`${process.env.REACT_APP_API_URL}/ticket/comments?ticket_id=${task.complaint_id}`)
+        .then(res => res.json())
+        .then(data => setComments(data))
+        .catch(() => setComments([]));
+    }
+  }, [task, showCommentInput]);
 
   useEffect(() => {
     if (showAssignPopup) {
@@ -68,23 +81,44 @@ const TaskModal = ({ task, onClose }) => {
 
   const handleCommentSubmit = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/ticket/comment`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          complaint_id: task.complaint_id,
-          comment,
-        }),
-      });
-      const result = await response.json();
-      console.log(result);
+      let result;
+      if (attachment) {
+        const formData = new FormData();
+        formData.append('ticket_id', task.complaint_id);
+        formData.append('author_id', JSON.parse(sessionStorage.getItem('userData'))?.id || '');
+        formData.append('text', comment);
+        formData.append('file', attachment);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/ticket/comments`, {
+          method: "POST",
+          body: formData
+        });
+        result = await response.json();
+      } else {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/ticket/comments`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ticket_id: task.complaint_id,
+            author_id: JSON.parse(sessionStorage.getItem('userData'))?.id || '',
+            text: comment,
+          }),
+        });
+        result = await response.json();
+      }
       setComment("");
+      setAttachment(null);
       setShowCommentInput(false);
+      // Refresh comments
+      fetch(`${process.env.REACT_APP_API_URL}/ticket/comments?ticket_id=${task.complaint_id}`)
+        .then(res => res.json())
+        .then(data => setComments(data))
+        .catch(() => setComments([]));
     } catch (error) {
       console.error("Error submitting comment:", error);
       alert("Failed to submit comment");
     }
   };
+
 
   const filteredPoliceTeam = policeTeam.filter((officer) =>
     officer.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -162,7 +196,31 @@ const TaskModal = ({ task, onClose }) => {
 
         <div className="comment-section">
           {!showCommentInput ? (
-            <button onClick={() => setShowCommentInput(true)} className="btn-secondary">Add Comment</button>
+            <div className="comment-action-group">
+              <button
+                onClick={() => setShowCommentInput(true)}
+                className="btn-secondary comment-action-btn"
+              >
+                <span role="img" aria-label="comment">💬</span> Add Comment
+              </button>
+              <button
+                className="btn-secondary comment-action-btn"
+                onClick={() => document.getElementById('taskcard-attachment-input').click()}
+              >
+                <span role="img" aria-label="attach">📎</span> Add Attachment
+              </button>
+              <input
+                id="taskcard-attachment-input"
+                type="file"
+                style={{ display: 'none' }}
+                onChange={e => setAttachment(e.target.files[0])}
+              />
+              {attachment && (
+                <span className="attachment-filename">
+                  {attachment.name}
+                </span>
+              )}
+            </div>
           ) : (
             <div className="comment-input-container">
               <input
