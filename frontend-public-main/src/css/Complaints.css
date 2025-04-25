@@ -212,35 +212,24 @@ th:last-child {
   /* Center vertically */
 }
 
-/* Popup container */
+/* Popup container (shared for both complaint details and proof links) */
 .popup-container {
   background: linear-gradient(135deg, #ffffff, #f9f9f9);
-  /* Subtle gradient background */
   border-radius: 16px;
-  /* Larger rounded corners for a modern look */
   padding: 30px;
-  width: 90%;
-  max-width: 600px;
-  /* Increased max width for better layout */
+  width: 80vh;
+  max-width: 600px; /* Ensure both popups have the same max width */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  /* Stronger shadow for depth */
   z-index: 10000;
-  /* Even higher z-index than overlay */
   animation: fadeIn 0.3s ease-in-out;
   font-family: 'Arial', sans-serif;
   position: absolute;
   margin: 0 auto;
-  /* Center the container */
-  max-height: 90vh;
-  /* Limit height to 90% of viewport height */
-  overflow-y: auto;
-  /* Allow scrolling if content is too tall */
+  max-height: 70vh; /* Limit height to 90% of viewport height */
+  overflow-y: auto; /* Allow scrolling if content is too tall */
   top: 50%;
-  /* Position from top */
   left: 50%;
-  /* Position from left */
   transform: translate(-50%, -50%);
-  /* Center the element */
 }
 
 /* Popup header */
