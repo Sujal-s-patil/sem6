@@ -11,102 +11,6 @@ body {
   position: relative; /* Add position relative to body */
 }
 
-/* User profile container */
-.user-profile-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* User profile styling */
-.user-profile {
-  position: relative;
-}
-
-.profile-circle {
-  height: 40px;
-  background-color: white;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.profile-circle:hover {
-  background-color: #e6f2ff; /* Light blue background on hover */
-}
-
-.profile-circle:hover .profile-icon,
-.profile-circle:hover .profile-text {
-  color: #007bff; /* Blue color for icon and text on hover */
-}
-
-.profile-content {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.profile-icon {
-  width: 24px;
-  height: 24px;
-  color: #6c757d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.profile-text {
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-/* Logout button styling */
-.logout-button {
-  width: 40px;
-  height: 40px;
-  background-color: white;
-  border: none;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 0;
-  position: relative;
-}
-
-.logout-button:hover {
-  background-color: #ffebee;
-}
-
-.logout-button:hover .logout-icon {
-  color: #dc3545;
-}
-
-.logout-icon {
-  color: #6c757d;
-  font-size: 18px;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 /* General container styling */
 .dashboard-container {
   max-width: 800px; /* Increased width for better layout */
@@ -429,6 +333,8 @@ body {
   color: #333;
 }
 
+
+
 /* Logout Confirmation Popup */
 .logout-confirmation-overlay {
   position: fixed;
@@ -648,5 +554,3 @@ body.dark-theme .logout-confirm-btn.cancel:hover {
 body.dark-theme .logout-confirmation-overlay {
   background-color: rgba(0, 0, 0, 0.8);
 }
-
-/* All Set ✧ */

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Files With Complaint ID</title>
+</head>
+<body>
+  <h1>Upload Files & Attach to Complaint</h1>
+
+  <!-- Complaint ID -->
+  <div>
+    <label for="complaintId">Complaint ID:</label>
+    <input type="number" id="complaintId" placeholder="Enter Complaint ID" />
+  </div>
+
+  <!-- Upload Multiple Files -->
+  <div>
+    <h3>Upload Files</h3>
+    <input type="file" id="linkedFilesInput" multiple />
+    <button type="button" onclick="uploadFilesWithComplaintId()">Upload with Complaint ID</button>
+    <p id="uploadResult"></p>
+  </div>
+
+  <script>
+    const baseUrl = 'http://localhost:5555';
+
+    async function uploadFilesWithComplaintId() {
+      const complaintIdInput = document.getElementById('complaintId');
+      const filesInput = document.getElementById('linkedFilesInput');
+      const resultElement = document.getElementById('uploadResult');
+
+      const complaintId = complaintIdInput.value.trim();
+      const files = filesInput.files;
+
+      if (!complaintId) {
+        alert("Please enter a complaint ID.");
+        return;
+      }
+
+      if (!files.length) {
+        alert("Please select at least one file.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('complaint_id', complaintId);
+      for (const file of files) {
+        formData.append('files', file);
+      }
+
+      try {
+        const response = await fetch(`${baseUrl}/photo/upload-multiple`, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          resultElement.textContent = `Uploaded ${data.files.length} files. Complaint ID: ${data.complaint_id}`;
+          console.log(data);
+        } else {
+          resultElement.textContent = `Error: ${data.error || 'Something went wrong.'}`;
+        }
+      } catch (error) {
+        resultElement.textContent = 'Upload failed.';
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>

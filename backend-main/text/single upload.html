@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload & View Files</title>
+</head>
+<body>
+  <h1>Upload & View Files</h1>
+
+  <!-- Upload Section -->
+  <div>
+    <h3>Upload Single Photo</h3>
+    <input type="file" id="singlePhotoInput" />
+    <button type="button" onclick="uploadSinglePhoto()">Upload</button>
+    <button type="button" onclick="testSingleFileUpload()">Test</button>
+    <p id="singlePhotoResult"></p>
+  </div>
+
+  <hr />
+
+  <!-- Display Uploaded Result -->
+  <div id="uploadResultSection" style="margin-top: 20px;">
+    <h2>Uploaded Files</h2>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    const baseUrl = "http://localhost:5555/photo";
+
+    // Upload and show in result section
+    async function uploadSinglePhoto() {
+      const input = document.getElementById("singlePhotoInput");
+      const file = input.files[0];
+
+      if (!file) {
+        alert("Please select a file first.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      try {
+        const response = await fetch(`${baseUrl}/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        console.log("Uploaded photo URL:", data.url);
+        showUploadResult({ url: data.url });
+      } catch (error) {
+        alert("Upload failed. Please try again.");
+        console.error(error);
+      }
+    }
+
+    // Test without redirect
+    async function testSingleFileUpload() {
+      const input = document.getElementById("singlePhotoInput");
+      const file = input.files[0];
+      const resultElement = document.getElementById("singlePhotoResult");
+
+      if (!file) {
+        resultElement.textContent = "Please select a file first.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      try {
+        const response = await fetch(`${baseUrl}/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error("Failed to upload file.");
+
+        const data = await response.json();
+        resultElement.textContent = `Uploaded photo URL: ${data.url}`;
+        console.log("Single file upload response:", data);
+        showUploadResult({ url: data.url });
+      } catch (error) {
+        resultElement.textContent = "Upload failed. Please try again.";
+        console.error(error);
+      }
+    }
+
+    // Show upload result in the same page
+    function showUploadResult({ url, urls }) {
+      const output = document.getElementById("output");
+      output.innerHTML = "";
+
+      if (url) {
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.textContent = "View Uploaded File";
+        output.appendChild(link);
+      } else if (urls) {
+        const fileUrls = urls.split(',');
+        const list = document.createElement("ul");
+
+        fileUrls.forEach(fileUrl => {
+          const listItem = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = fileUrl;
+          link.target = "_blank";
+          link.textContent = fileUrl;
+          listItem.appendChild(link);
+          list.appendChild(listItem);
+        });
+
+        output.appendChild(list);
+      } else {
+        output.textContent = "No uploaded file URLs found.";
+      }
+    }
+  </script>
+</body>
+</html>
