@@ -1,0 +1,190 @@
+.police-login-container {
+  max-width: 300px;
+  width: 100%;
+  margin: 50px auto;
+  text-align: center;
+  background: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+.police-login-container:hover {
+  transform: translateY(-5px);
+  transition: transform 0.8s ease;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.police-login-container h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 25px;
+  font-family: 'Arial', sans-serif;
+}
+
+.police-login-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.police-login-container input {
+  width: 100%;
+  padding: 12px;
+  height: 45px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.police-login-container input[type="text"],
+.police-login-container input[type="password"] {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.police-login-container input:-webkit-autofill,
+.police-login-container input:-webkit-autofill:hover,
+.police-login-container input:-webkit-autofill:focus,
+.police-login-container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+  -webkit-text-fill-color: #333 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.police-login-container input[type="text"]:focus,
+.police-login-container input[type="password"]:focus {
+  border-color: #42a5f5;
+  outline: none;
+  box-shadow: 0 0 8px rgba(66, 165, 245, 0.5);
+  background-color: #ffffff;
+}
+
+body.dark-theme .police-login-container input[type="text"],
+body.dark-theme .police-login-container input[type="password"] {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-theme .police-login-container input:-webkit-autofill,
+body.dark-theme .police-login-container input:-webkit-autofill:hover,
+body.dark-theme .police-login-container input:-webkit-autofill:focus,
+body.dark-theme .police-login-container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+body.dark-theme .police-login-container input[type="text"]:focus,
+body.dark-theme .police-login-container input[type="password"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  background-color: #1a1a1a;
+}
+
+.police-login-container .error-message {
+  color: #d32f2f;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.police-login-container button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.police-login-container button[type="submit"] {
+  background-color: #007BFF;
+  color: white;
+}
+
+.police-login-container button[type="submit"]:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.police-login-container button[type="button"] {
+  background-color: #28A745;
+  color: white;
+  margin-top: 15px;
+}
+
+.police-login-container button[type="button"]:hover {
+  background-color: #1e7e34;
+  transform: translateY(-2px);
+}
+
+.police-login-container button:active {
+  transform: translateY(1px);
+}
+
+.police-login-container button:focus {
+  outline: none;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.theme-icon {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+body {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+body.dark-theme {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #ffffff;
+}
+
+body.dark-theme .police-login-container {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .police-login-container h2 {
+  color: #fff;
+}
+
+body.dark-theme .theme-toggle {
+  background-color: #333;
+}
+
+body.dark-theme .theme-icon {
+  color: #fff;
+}
+

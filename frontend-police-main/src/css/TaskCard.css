@@ -1,0 +1,329 @@
+.task-card {
+  background: #ffffff;
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+  transition: background 0.1s ease;
+  border: none;
+}
+
+.task-card:hover {
+  background: #f4f5f7;
+}
+
+.task-card.highlighted {
+  border: 2px solid #0052cc;
+  padding: 8px;
+}
+
+.task-card-title {
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0 0 4px 0;
+  color: #172b4d;
+  line-height: 1.4;
+}
+
+.task-card-tags {
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.task-card-tag {
+  font-size: 11px;
+  font-weight: bold;
+  color: #42526e;
+  background-color: #dfe1e6;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.task-card-tag.yellow {
+  background-color: #fff0b3;
+  color: #172b4d;
+}
+.task-card-tag.orange {
+  background-color: #ffece0;
+  color: #c25100;
+}
+.task-card-tag.purple {
+  background-color: #e9dffc;
+  color: #403294;
+}
+.task-card-tag.blue {
+  background-color: #deebff;
+  color: #0747a6;
+}
+.task-card-tag.green {
+  background-color: #e3fcef;
+  color: #006644;
+}
+
+.task-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.task-card-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  .task-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .priority-icon {
+  }
+  .story-points {
+    font-size: 12px;
+    color: #5e6c84;
+    background: #dfe1e6;
+    padding: 1px 5px;
+    border-radius: 3px;
+    min-width: 18px;
+    text-align: center;
+  }
+}
+
+.task-card-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.task-id {
+  font-size: 12px;
+  color: #5e6c84;
+  margin-right: 4px;
+}
+
+.assigned-officers {
+  display: flex;
+}
+
+.officer-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1001;
+  max-width: 500px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-title {
+  margin-bottom: 16px;
+}
+
+.modal-tables-container {
+  display: flex;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header {
+  padding: 10px;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  text-align: left;
+  width: 40%;
+}
+
+.table-cell {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.comment-section {
+  margin-top: 20px;
+}
+
+.comment-input-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 16px;
+}
+
+.police-team-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Button styles */
+.btn-primary {
+  padding: 8px 16px;
+  background-color: #10b981;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  padding: 8px 16px;
+  background-color: #6b7280;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-close {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Assignment popup styles */
+.assign-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.assign-popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1101;
+  max-width: 500px;
+  width: 90%;
+  max-height: 75vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.assign-popup-title {
+  margin-bottom: 12px;
+}
+
+.assign-search-input {
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 95%;
+}
+
+.officers-list {
+  overflow-y: auto;
+  flex: 1;
+  max-height: 60vh;
+  margin-bottom: 16px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.officer-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.officer-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.officer-info {
+  flex: 1;
+}
+
+.officer-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.officer-speciality {
+  margin: 0;
+  font-size: 12px;
+  color: gray;
+}
+
+.officer-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.assign-popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+} 

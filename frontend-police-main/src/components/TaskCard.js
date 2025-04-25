@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PoliceTeamCard from "./PoliceTeamCard"; // adjust path if needed
+import "../css/TaskCard.css";
 
 // TaskModal component
 const TaskModal = ({ task, onClose }) => {
@@ -94,172 +94,139 @@ const TaskModal = ({ task, onClose }) => {
   if (!task) return null;
 
   return (
-    <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+    <div className="modal-overlay">
       <div
-        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.5)" }}
+        className="modal-overlay-background"
         onClick={onClose}
       />
-      <div style={{
-        backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-        zIndex: 1001, maxWidth: "500px", width: "95%", maxHeight: "90vh", overflowY: "auto", position: "relative"
-      }}>
-        <h2 style={{ marginBottom: "16px" }}>Complaint Details</h2>
+      <div className="modal-content">
+        <h2 className="modal-title">Complaint Details</h2>
 
-        <div style={{ marginBottom: "20px" }}>
+        <div className="modal-tables-container">
+          {/* First Table */}
+          <table className="modal-table">
+            <tbody>
+              <tr>
+                <td className="table-header">Status</td>
+                <td className="table-cell">{task.status}</td>
+              </tr>
+              <tr>
+                <td className="table-header">Complainant Name</td>
+                <td className="table-cell">{task.complainant_name}</td>
+              </tr>
+              <tr>
+                <td className="table-header">Crime Type</td>
+                <td className="table-cell">{task.crime_type}</td>
+              </tr>
+              <tr>
+                <td className="table-header">Crime Location</td>
+                <td className="table-cell">{task.crime_location}</td>
+              </tr>
+              <tr>
+                <td className="table-header">Crime Description</td>
+                <td className="table-cell">{task.crime_description}</td>
+              </tr>
+            </tbody>
+          </table>
 
-          <div
-            style={{
-              display: "flex", // Use flexbox to align tables side by side
-              maxHeight: "400px", // Limit the height of the container
-              overflowY: "auto", // Make the container scrollable if content is too long
-            }}
-          >
-            {/* First Table */}
-
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-              }}
-            >
-              <tbody>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Status</td>
-                  <td style={verticalTableCellStyle}>{task.status}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Complainant Name</td>
-                  <td style={verticalTableCellStyle}>{task.complainant_name}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Crime Type</td>
-                  <td style={verticalTableCellStyle}>{task.crime_type}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Crime Location</td>
-                  <td style={verticalTableCellStyle}>{task.crime_location}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Crime Description</td>
-                  <td style={verticalTableCellStyle}>{task.crime_description}</td>
-                </tr>
-              </tbody>
-            </table>
-
-
-            {/* Second Table */}
-
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-              }}
-            >
-              <tbody>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>City</td>
-                  <td style={verticalTableCellStyle}>{task.city}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>State</td>
-                  <td style={verticalTableCellStyle}>{task.state}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Crime Date</td>
-                  <td style={verticalTableCellStyle}>{new Date(task.crime_date).toLocaleString()}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Date Filed</td>
-                  <td style={verticalTableCellStyle}>{new Date(task.date_filed).toLocaleString()}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Last Updated</td>
-                  <td style={verticalTableCellStyle}>{new Date(task.last_updated).toLocaleString()}</td>
-                </tr>
-                <tr>
-                  <td style={verticalTableHeaderStyle}>Comment</td>
-                  <td style={verticalTableCellStyle}>{task.comment || "No comment added yet"}</td>
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
+          {/* Second Table */}
+          <table className="modal-table">
+            <tbody>
+              <tr>
+                <td className="table-header">City</td>
+                <td className="table-cell">{task.city}</td>
+              </tr>
+              <tr>
+                <td className="table-header">State</td>
+                <td className="table-cell">{task.state}</td>
+              </tr>
+              <tr>
+                <td className="table-header">Crime Date</td>
+                <td className="table-cell">{new Date(task.crime_date).toLocaleString()}</td>
+              </tr>
+              <tr>
+                <td className="table-header">Date Filed</td>
+                <td className="table-cell">{new Date(task.date_filed).toLocaleString()}</td>
+              </tr>
+              <tr>
+                <td className="table-header">Last Updated</td>
+                <td className="table-cell">{new Date(task.last_updated).toLocaleString()}</td>
+              </tr>
+              <tr>
+                <td className="table-header">Comment</td>
+                <td className="table-cell">{task.comment || "No comment added yet"}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <div style={{ marginTop: "20px" }}>
+        <div className="comment-section">
           {!showCommentInput ? (
-            <button onClick={() => setShowCommentInput(true)} style={btnSecondary}>Add Comment</button>
+            <button onClick={() => setShowCommentInput(true)} className="btn-secondary">Add Comment</button>
           ) : (
-            <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
+            <div className="comment-input-container">
               <input
                 type="text"
                 placeholder="Enter your comment"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit()}
-                style={{ flex: 1, padding: "8px", border: "1px solid #ccc", borderRadius: "4px" }}
+                className="comment-input"
               />
-              <button onClick={handleCommentSubmit} style={btnPrimary}>Submit</button>
+              <button onClick={handleCommentSubmit} className="btn-primary">Submit</button>
             </div>
           )}
         </div>
 
         {/* Bottom Section: PoliceTeamCard on left, Buttons on right */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '16px' }}>
-          <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <PoliceTeamCard complaintId={task.complaint_id} />
+        <div className="modal-footer">
+          <div className="police-team-container">
+            {/* Placeholder for PoliceTeamCard */}
           </div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <button onClick={handleAssignClick} style={btnPrimary}>Assign</button>
-            <button onClick={onClose} style={btnClose}>Close</button>
+          <div className="modal-buttons">
+            <button onClick={handleAssignClick} className="btn-primary">Assign</button>
+            <button onClick={onClose} className="btn-close">Close</button>
           </div>
         </div>
 
-
         {showAssignPopup && (
-          <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1100, backgroundColor: "rgba(0,0,0,0.5)" }}
-            onClick={handleCloseAssignPopup}>
-            <div style={{
-              backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-              zIndex: 1101, maxWidth: "500px", width: "90%", maxHeight: "75vh", overflow: "hidden", display: "flex", flexDirection: "column"
-            }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3>Assign Task</h3>
+          <div className="assign-popup-overlay" onClick={handleCloseAssignPopup}>
+            <div className="assign-popup-content" onClick={(e) => e.stopPropagation()}>
+              <h3 className="assign-popup-title">Assign Task</h3>
               <input
                 type="text"
                 placeholder="Search by name or speciality"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ padding: "8px", marginBottom: "12px", border: "1px solid #ccc", borderRadius: "4px", width: "95%" }}
+                className="assign-search-input"
               />
-              <div style={{ overflowY: "auto", flex: 1, maxHeight: "60vh", marginBottom: "16px", border: "1px solid #eee", borderRadius: "5px" }}>
+              <div className="officers-list">
                 {filteredPoliceTeam.map((officer) => (
                   <label
                     key={officer.police_id}
-                    style={{ display: "flex", alignItems: "center", padding: "10px", borderBottom: "1px solid #ddd", cursor: "pointer", gap: "10px" }}
+                    className="officer-item"
                   >
                     <img
                       src={officer.photo || "placeholder.jpg"}
                       alt={officer.full_name}
-                      style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                      className="officer-photo"
                     />
-                    <div style={{ flex: 1 }}>
-                      <p style={{ fontWeight: "bold", margin: 0 }}>{officer.full_name}</p>
-                      <p style={{ margin: 0, fontSize: "12px", color: "gray" }}>{officer.speciality}</p>
+                    <div className="officer-info">
+                      <p className="officer-name">{officer.full_name}</p>
+                      <p className="officer-speciality">{officer.speciality}</p>
                     </div>
                     <input
                       type="checkbox"
                       checked={selectedOfficers.includes(officer.police_id)}
                       onChange={() => handleOfficerSelect(officer.police_id)}
-                      style={{ width: "20px", height: "20px" }}
+                      className="officer-checkbox"
                     />
                   </label>
                 ))}
               </div>
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
-                <button onClick={handleConfirmAssignment} style={btnPrimary}>Confirm Assignment</button>
-                <button onClick={handleCloseAssignPopup} style={btnClose}>Cancel</button>
+              <div className="assign-popup-buttons">
+                <button onClick={handleConfirmAssignment} className="btn-primary">Confirm Assignment</button>
+                <button onClick={handleCloseAssignPopup} className="btn-close">Cancel</button>
               </div>
             </div>
           </div>
@@ -269,25 +236,49 @@ const TaskModal = ({ task, onClose }) => {
   );
 };
 
-const verticalTableHeaderStyle = {
-  padding: "10px",
-  fontWeight: "bold",
-  backgroundColor: "#f2f2f2",
-  border: "1px solid #ddd",
-  textAlign: "left",
-  width: "40%", // Adjust width for readability
-};
-
-const verticalTableCellStyle = {
-  padding: "10px",
-  border: "1px solid #ddd",
-  textAlign: "left",
-};
-
 // TaskCard component
-const TaskCard = ({ task, isDraggingOver }) => {
+function getDaysAgo(dateString) {
+  const now = new Date();
+  const created = new Date(dateString);
+  const diffTime = now - created;
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+}
+
+function getTagColorClass(days, status) {
+  if (status === 'Pending' || status === 'In Progress') {
+    if (days <= 1) return 'green';
+    if (days <= 4) return 'yellow';
+    return 'red';
+  } else if (status === 'Resolved') {
+    if (days <= 1) return 'red';
+    if (days <= 4) return 'yellow';
+    return 'green';
+  } else if (status === 'Closed') {
+    return 'green';
+  } else {
+    if (days <= 2) return 'green';
+    if (days <= 5) return 'yellow';
+    return 'red';
+  }
+}
+
+
+const TaskCard = ({ task }) => {
   const [showModal, setShowModal] = useState(false);
+  const [assignedOfficers, setAssignedOfficers] = useState([]);
   const userData = JSON.parse(sessionStorage.getItem("userData"));
+
+  useEffect(() => {
+    // Fetch assigned officers when component mounts
+    fetch(`${process.env.REACT_APP_API_URL}/police/specific`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ complaint_id: task.complaint_id }),
+    })
+      .then((response) => response.json())
+      .then((data) => setAssignedOfficers(data || []))
+      .catch((error) => console.error("Error loading officers:", error));
+  }, [task.complaint_id]);
 
   const handleCardClick = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -299,40 +290,46 @@ const TaskCard = ({ task, isDraggingOver }) => {
       <div
         draggable
         onDragStart={(e) => {
-          e.dataTransfer.setData("application/json", JSON.stringify({ id: task.id }));
-          e.target.style.opacity = "0.5";
+          try {
+            // Ensure task.id is available and stringified
+            if (task && task.id !== undefined) {
+                 e.dataTransfer.setData("application/json", JSON.stringify({ id: task.id }));
+                 e.target.style.opacity = "0.5"; // Visual feedback for dragging
+            } else {
+                console.error("Task ID is undefined during drag start:", task);
+                 e.preventDefault(); // Prevent dragging if ID is missing
+            }
+          } catch (error) {
+            console.error("Error setting drag data:", error);
+          }
         }}
-        onDragEnd={(e) => (e.target.style.opacity = "1")}
+        onDragEnd={(e) => (e.target.style.opacity = "1")} // Restore opacity
         onClick={handleCardClick}
-        style={{
-          padding: "8px",
-          marginBottom: "8px",
-          cursor: "grab",
-          backgroundColor: isHighlighted ? "lightblue" : isDraggingOver ? "rgba(0, 0, 0, 0.1)" : "white",
-          boxShadow: isDraggingOver ? "0 4px 8px rgba(0,0,0,0.2)" : "0 2px 4px rgba(0,0,0,0.1)",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-          transition: "transform 0.2s, box-shadow 0.2s",
-          transform: isDraggingOver ? "scale(1.02)" : "none",
-        }}
+        className={`task-card ${isHighlighted ? 'highlighted' : ''}`} // Removed dragging-over class here
+        data-task-id={task.id} // IMPORTANT: Add data attribute
       >
-        <p><strong>{task.crime_type}</strong></p>
-        <p style={{ fontSize: "12px", color: "gray" }}>{task.complainant_name}</p>
+        <p className="task-card-title">{task.crime_type}</p>
+        <div className={`task-card-location${task.status === 'Closed' ? ' closed-address' : ''}`}>{task.crime_location}</div>
+        <span className={`ticket-age-tag ${getTagColorClass(getDaysAgo(task.date_filed), task.status)}`}>{getDaysAgo(task.date_filed)} days</span>
+        <div className="task-card-footer">
+          <div className="assigned-officers">
+            {assignedOfficers.map((officer, index) => (
+              <img
+                key={officer.police_id}
+                src={officer.photo}
+                alt={officer.full_name}
+                className="officer-avatar"
+                style={{ zIndex: assignedOfficers.length - index }}
+                title={officer.full_name} // Add tooltip
+              />
+            ))}
+          </div>
+          {/* You could add task ID or other icons here */}
+        </div>
       </div>
       {showModal && <TaskModal task={task} onClose={handleCloseModal} />}
     </>
   );
-};
-
-// Styles
-const btnPrimary = {
-  padding: "8px 16px", backgroundColor: "#10b981", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer"
-};
-const btnSecondary = {
-  padding: "8px 16px", backgroundColor: "#6b7280", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer"
-};
-const btnClose = {
-  padding: "8px 16px", backgroundColor: "#007bff", color: "white", borderRadius: "4px", border: "none", cursor: "pointer"
 };
 
 export { TaskCard, TaskModal };
