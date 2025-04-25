@@ -13,7 +13,7 @@ const Registration = () => {
     state: '',
     password: '',
     confirmPassword: '',
-    photo: null, // Photo field
+    photo: null,
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [showBackConfirmation, setShowBackConfirmation] = useState(false);
@@ -21,7 +21,6 @@ const Registration = () => {
   const backConfirmationRef = useRef(null);
   const navigate = useNavigate();
 
-  // Effect to handle theme changes
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
@@ -30,7 +29,6 @@ const Registration = () => {
     }
   }, []);
 
-  // Function to toggle theme
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     if (!isDarkMode) {
@@ -42,12 +40,10 @@ const Registration = () => {
     }
   };
 
-  // Ensure password and confirm password match
   useEffect(() => {
     setPasswordMatch(formData.password === formData.confirmPassword);
   }, [formData.password, formData.confirmPassword]);
 
-  // Effect to handle clicks outside the back confirmation popup
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (backConfirmationRef.current && !backConfirmationRef.current.contains(event.target) && 
@@ -65,46 +61,40 @@ const Registration = () => {
     };
   }, [showBackConfirmation]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
-    // Handle photo upload
     if (name === 'photo') {
       setFormData({ ...formData, photo: files?.[0] || null });
     } else if (name === 'aadharcardno' || name === 'phoneno') {
-      // Convert aadharcardno and phoneno to numbers
-      setFormData({ ...formData, [name]: value.replace(/\D/g, '') }); // Allow only numeric characters
+      setFormData({ ...formData, [name]: value.replace(/\D/g, '') });
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
-  // Convert file to Base64
-  const convertFileToBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result); // Base64 string
-      reader.onerror = (error) => reject(error);
-    });
-
-  // Show back confirmation popup
-  const showBackConfirmationPopup = () => {
-    setShowBackConfirmation(true);
+  const isFormEmpty = () => {
+    const { photo, ...fields } = formData;
+    return Object.values(fields).every(val => val === '') && photo === null;
   };
+  
+  const showBackConfirmationPopup = () => {
+    if (!isFormEmpty()) {
+      setShowBackConfirmation(true);
+    } else {
+      navigate('/');
+    }
+  };
+  
 
-  // Cancel going back
   const cancelBack = () => {
     setShowBackConfirmation(false);
   };
 
-  // Confirm going back to login
   const confirmBack = () => {
     navigate('/');
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -113,7 +103,6 @@ const Registration = () => {
       return;
     }
 
-    // Validate Aadhar Card and Phone Number length
     if (formData.aadharcardno.length !== 12) {
       alert('Aadhar Card Number must be exactly 12 digits.');
       return;
@@ -125,40 +114,51 @@ const Registration = () => {
     }
 
     try {
-      let photoBase64 = null;
+      let photoUrl = null;
 
-      // If photo is provided, convert it to Base64
       if (formData.photo) {
-        photoBase64 = await convertFileToBase64(formData.photo);
+        const uploadFormData = new FormData();
+        uploadFormData.append('photo', formData.photo);
+
+        const uploadResponse = await fetch(`${process.env.REACT_APP_API_URL}/photo/upload`, {
+          method: 'POST',
+          body: uploadFormData,
+        });
+
+        if (uploadResponse.ok) {
+          const uploadResult = await uploadResponse.json();
+          photoUrl = uploadResult.url;
+        } else {
+          alert('Photo upload failed. Please try again.');
+          return;
+        }
       }
 
-      // Prepare JSON data to send
       const dataToSend = {
         fullName: formData.fullName,
-        aadharcardno: Number(formData.aadharcardno), // Ensure number
+        aadharcardno: Number(formData.aadharcardno),
         email: formData.email,
-        phoneno: Number(formData.phoneno), // Ensure number
+        phoneno: Number(formData.phoneno),
         address: formData.address,
         city: formData.city,
         state: formData.state,
         password: formData.password,
-        photo: photoBase64, // Include Base64 photo if available
+        photo: photoUrl,
       };
 
-      // Send JSON data to the server
       const response = await fetch(`${process.env.REACT_APP_API_URL}/public/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(dataToSend), // Convert data to JSON string
+        body: JSON.stringify(dataToSend),
       });
 
       if (response.ok) {
         const result = await response.json();
         if (result.message === 'success') {
           alert('Registration successful!');
-          navigate('/'); // Redirect to login page after successful registration
+          navigate('/');
         } else {
           alert(result.message || 'Failed to register.');
         }
@@ -176,7 +176,7 @@ const Registration = () => {
       <button className="theme-toggle" onClick={toggleTheme}>
         {isDarkMode ? (
           <svg className="theme-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06z"/>
           </svg>
         ) : (
           <svg className="theme-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -187,7 +187,7 @@ const Registration = () => {
       <div className="registration-container">
         <h2>Registration</h2>
         <form onSubmit={handleSubmit}>
-          {[ 
+          {[
             { label: 'Full Name', name: 'fullName', type: 'text' },
             { label: 'Aadhar Card No', name: 'aadharcardno', type: 'text' },
             { label: 'Email', name: 'email', type: 'email' },
@@ -231,7 +231,6 @@ const Registration = () => {
           </div>
         </form>
 
-        {/* Back Confirmation Popup */}
         {showBackConfirmation && (
           <div className="registration-back-overlay">
             <div className="registration-back-popup" ref={backConfirmationRef}>
