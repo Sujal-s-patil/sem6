@@ -77,7 +77,6 @@
   .register-button,
   .back-button {
     flex: 1;
-    /* padding: 12px; */
     border: none;
     cursor: pointer;
     border-radius: 8px;
