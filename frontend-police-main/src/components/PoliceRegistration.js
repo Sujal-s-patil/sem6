@@ -13,7 +13,11 @@ const PoliceRegistration = () => {
     state: '',
     password: '',
     confirmPassword: '',
-    photo: null, // Photo field
+    photo: null,
+    blood_group: '',
+    post: '',
+    speciality: '',
+    description: '',
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [showBackConfirmation, setShowBackConfirmation] = useState(false);
@@ -66,23 +70,24 @@ const PoliceRegistration = () => {
 
     if (name === 'photo') {
       setFormData({ ...formData, photo: files?.[0] || null });
-    } else if (name === 'police_id' || name === 'phoneno') {
+    } else if (name === 'aadharcardno' || name === 'phoneno') {
       setFormData({ ...formData, [name]: value.replace(/\D/g, '') });
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
-  const convertFileToBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
+  const isFormEmpty = () => {
+    const { photo, ...fields } = formData;
+    return Object.values(fields).every(val => val === '') && photo === null;
+  };
 
   const showBackConfirmationPopup = () => {
-    setShowBackConfirmation(true);
+    if (!isFormEmpty()) {
+      setShowBackConfirmation(true);
+    } else {
+      navigate('/');
+    }
   };
 
   const cancelBack = () => {
@@ -101,40 +106,65 @@ const PoliceRegistration = () => {
       return;
     }
 
-    if (formData.police_id.length !== 6) {
-      alert('Police ID must be exactly 6 digits.');
-      return;
-    }
-
     if (formData.phoneno.length !== 10) {
       alert('Phone Number must be exactly 10 digits.');
       return;
     }
 
     try {
-      let photoBase64 = null;
+      let photoUrl = null;
+
       if (formData.photo) {
-        photoBase64 = await convertFileToBase64(formData.photo);
+        const uploadFormData = new FormData();
+        uploadFormData.append('photo', formData.photo);
+
+        const uploadResponse = await fetch(`${process.env.REACT_APP_API_URL}/photo/upload`, {
+          method: 'POST',
+          body: uploadFormData,
+        });
+
+        if (uploadResponse.ok) {
+          const uploadResult = await uploadResponse.json();
+          photoUrl = uploadResult.url;
+        } else {
+          alert('Photo upload failed. Please try again.');
+          return;
+        }
       }
+
       const dataToSend = {
-        fullName: formData.fullName,
         police_id: formData.police_id,
+        photo: photoUrl,
+        aadhar_card: Number(formData.aadharcardno),
+        password: formData.password,
+        full_name: formData.fullName,
+        phone_no: Number(formData.phoneno),
         email: formData.email,
-        phoneno: formData.phoneno,
         address: formData.address,
         city: formData.city,
         state: formData.state,
-        password: formData.password,
-        photo: photoBase64,
+        blood_group: formData.blood_group,
+        post: formData.post,
+        speciality: formData.speciality,
+        description: formData.description,
       };
+
       const response = await fetch(`${process.env.REACT_APP_API_URL}/police/register`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(dataToSend),
       });
+
       if (response.ok) {
-        alert('Registration successful!');
-        navigate('/');
+        const result = await response.json();
+        if (result.message === 'success') {
+          alert('Registration successful!');
+          navigate('/');
+        } else {
+          alert(result.message || 'Failed to register.');
+        }
       } else {
         alert('Failed to register. Please try again.');
       }
@@ -149,7 +179,7 @@ const PoliceRegistration = () => {
       <button className="theme-toggle" onClick={toggleTheme}>
         {isDarkMode ? (
           <svg className="theme-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06z"/>
           </svg>
         ) : (
           <svg className="theme-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -158,16 +188,21 @@ const PoliceRegistration = () => {
         )}
       </button>
       <div className="registration-container">
-        <h2>Police Registration</h2>
+        <h2>Registration</h2>
         <form onSubmit={handleSubmit}>
-          {[  
+          {[
             { label: 'Full Name', name: 'fullName', type: 'text' },
             { label: 'Police ID', name: 'police_id', type: 'text' },
+            { label: 'Aadhar Card No', name: 'aadharcardno', type: 'text' },
             { label: 'Email', name: 'email', type: 'email' },
             { label: 'Phone No', name: 'phoneno', type: 'text' },
             { label: 'Address', name: 'address', type: 'text' },
             { label: 'City', name: 'city', type: 'text' },
             { label: 'State', name: 'state', type: 'text' },
+            { label: 'Blood Group', name: 'blood_group', type: 'text' },
+            { label: 'Post', name: 'post', type: 'text' },
+            { label: 'Speciality', name: 'speciality', type: 'text' },
+            { label: 'Description', name: 'description', type: 'text' },
             { label: 'Password', name: 'password', type: 'password' },
             { label: 'Re-enter Password', name: 'confirmPassword', type: 'password' },
           ].map((input) => (
@@ -193,7 +228,6 @@ const PoliceRegistration = () => {
             />
           </div>
           <div className="button-container">
-            <button type="submit" className="register-button">Register</button>
             <button 
               type="button"
               onClick={showBackConfirmationPopup} 
@@ -201,10 +235,10 @@ const PoliceRegistration = () => {
             >
               Back to Login
             </button>
+            <button type="submit" className="register-button">Register</button>
           </div>
         </form>
 
-        {/* Back Confirmation Popup */}
         {showBackConfirmation && (
           <div className="registration-back-overlay">
             <div className="registration-back-popup" ref={backConfirmationRef}>
