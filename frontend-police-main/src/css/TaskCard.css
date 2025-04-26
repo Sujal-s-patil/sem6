@@ -48,18 +48,22 @@
   background-color: #fff0b3;
   color: #172b4d;
 }
+
 .task-card-tag.orange {
   background-color: #ffece0;
   color: #c25100;
 }
+
 .task-card-tag.purple {
   background-color: #e9dffc;
   color: #403294;
 }
+
 .task-card-tag.blue {
   background-color: #deebff;
   color: #0747a6;
 }
+
 .task-card-tag.green {
   background-color: #e3fcef;
   color: #006644;
@@ -76,12 +80,14 @@
   display: flex;
   align-items: center;
   gap: 6px;
+
   .task-icon {
     width: 16px;
     height: 16px;
   }
-  .priority-icon {
-  }
+
+  .priority-icon {}
+
   .story-points {
     font-size: 12px;
     color: #5e6c84;
@@ -134,7 +140,7 @@
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1001;
   max-width: 500px;
   width: 95%;
@@ -229,6 +235,8 @@
   cursor: pointer;
 }
 
+
+
 .btn-close {
   padding: 8px 16px;
   background-color: #007bff;
@@ -237,6 +245,22 @@
   border: none;
   cursor: pointer;
 }
+
+.vertical-table-header {
+  padding: 10px;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  text-align: left;
+  width: 40%; /* Adjust width for readability */
+}
+
+.vertical-table-cell {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
 
 /* Assignment popup styles */
 .assign-popup-overlay {
@@ -256,7 +280,7 @@
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1101;
   max-width: 500px;
   width: 90%;
@@ -326,4 +350,4 @@
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-} 
+}

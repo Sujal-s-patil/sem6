@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Proof from "./Proof"; // Assuming Proof is a component you have created
 import "../css/TaskCard.css";
 
 // TaskModal component
@@ -94,84 +95,110 @@ const TaskModal = ({ task, onClose }) => {
   if (!task) return null;
 
   return (
-    <div className="modal-overlay">
+    <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
       <div
-        className="modal-overlay-background"
+        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.5)" }}
         onClick={onClose}
       />
-      <div className="modal-content">
-        <h2 className="modal-title">Complaint Details</h2>
+      <div style={{
+        backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+        zIndex: 1001, maxWidth: "500px", width: "95%", maxHeight: "90vh", overflowY: "auto", position: "relative"
+      }}>
+        <h2 style={{ marginBottom: "16px" }}>Complaint Details</h2>
 
-        <div className="modal-tables-container">
-          {/* First Table */}
-          <table className="modal-table">
-            <tbody>
-              <tr>
-                <td className="table-header">Status</td>
-                <td className="table-cell">{task.status}</td>
-              </tr>
-              <tr>
-                <td className="table-header">Complainant Name</td>
-                <td className="table-cell">{task.complainant_name}</td>
-              </tr>
-              <tr>
-                <td className="table-header">Crime Type</td>
-                <td className="table-cell">{task.crime_type}</td>
-              </tr>
-              <tr>
-                <td className="table-header">Crime Location</td>
-                <td className="table-cell">{task.crime_location}</td>
-              </tr>
-              <tr>
-                <td className="table-header">Crime Description</td>
-                <td className="table-cell">{task.crime_description}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div style={{ marginBottom: "20px" }}>
 
-          {/* Second Table */}
-          <table className="modal-table">
-            <tbody>
-              <tr>
-                <td className="table-header">City</td>
-                <td className="table-cell">{task.city}</td>
-              </tr>
-              <tr>
-                <td className="table-header">State</td>
-                <td className="table-cell">{task.state}</td>
-              </tr>
-              <tr>
-                <td className="table-header">Crime Date</td>
-                <td className="table-cell">{new Date(task.crime_date).toLocaleString()}</td>
-              </tr>
-              <tr>
-                <td className="table-header">Date Filed</td>
-                <td className="table-cell">{new Date(task.date_filed).toLocaleString()}</td>
-              </tr>
-              <tr>
-                <td className="table-header">Last Updated</td>
-                <td className="table-cell">{new Date(task.last_updated).toLocaleString()}</td>
-              </tr>
-              <tr>
-                <td className="table-header">Comment</td>
-                <td className="table-cell">{task.comment || "No comment added yet"}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div
+            style={{
+              display: "flex", // Use flexbox to align tables side by side
+              maxHeight: "400px", // Limit the height of the container
+              overflowY: "auto", // Make the container scrollable if content is too long
+            }}
+          >
+            {/* First Table */}
+
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+              }}
+            >
+              <tbody>
+                <tr>
+                  <td className="vertical-table-header">Status</td>
+                  <td className="vertical-table-cell">{task.status}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">Complainant Name</td>
+                  <td className="vertical-table-cell">{task.complainant_name}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">Crime Type</td>
+                  <td className="vertical-table-cell">{task.crime_type}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">Crime Location</td>
+                  <td className="vertical-table-cell">{task.crime_location}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">Crime Description</td>
+                  <td className="vertical-table-cell">{task.crime_description}</td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            {/* Second Table */}
+
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+              }}
+            >
+              <tbody>
+                <tr>
+                  <td className="vertical-table-header">City</td>
+                  <td className="vertical-table-cell">{task.city}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">State</td>
+                  <td className="vertical-table-cell">{task.state}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">Crime Date</td>
+                  <td className="vertical-table-cell">{new Date(task.crime_date).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">Date Filed</td>
+                  <td className="vertical-table-cell">{new Date(task.date_filed).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">Last Updated</td>
+                  <td className="vertical-table-cell">{new Date(task.last_updated).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td className="vertical-table-header">Comment</td>
+                  <td className="vertical-table-cell">{task.comment || "No comment added yet"}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
         </div>
 
-        <div className="comment-section">
+        <div style={{ marginTop: "20px" }}>
           {!showCommentInput ? (
-            <button onClick={() => setShowCommentInput(true)} className="btn-secondary">Add Comment</button>
+            <button onClick={() => setShowCommentInput(true)} className="btn-secondary ">Add Comment</button>
           ) : (
-            <div className="comment-input-container">
+            <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
               <input
                 type="text"
                 placeholder="Enter your comment"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleCommentSubmit()}
-                className="comment-input"
+                style={{ flex: 1, padding: "8px", border: "1px solid #ccc", borderRadius: "4px" }}
               />
               <button onClick={handleCommentSubmit} className="btn-primary">Submit</button>
             </div>
@@ -179,52 +206,59 @@ const TaskModal = ({ task, onClose }) => {
         </div>
 
         {/* Bottom Section: PoliceTeamCard on left, Buttons on right */}
-        <div className="modal-footer">
-          <div className="police-team-container">
-            {/* Placeholder for PoliceTeamCard */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '16px' }}>
+          <div style={{ flex: 1, display: "flex", justifyContent: "left", alignItems: "center" }}>
+            <Proof  complaintId={task.complaint_id}/>
           </div>
-          <div className="modal-buttons">
-            <button onClick={handleAssignClick} className="btn-primary">Assign</button>
-            <button onClick={onClose} className="btn-close">Close</button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button onClick={handleAssignClick}  className="btn-primary">Assign</button>
+            <button onClick={onClose}  className="btn-close">Close</button>
           </div>
         </div>
 
+
         {showAssignPopup && (
-          <div className="assign-popup-overlay" onClick={handleCloseAssignPopup}>
-            <div className="assign-popup-content" onClick={(e) => e.stopPropagation()}>
-              <h3 className="assign-popup-title">Assign Task</h3>
+          <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1100, backgroundColor: "rgba(0,0,0,0.5)" }}
+            onClick={handleCloseAssignPopup}>
+            <div style={{
+              backgroundColor: "white", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              zIndex: 1101, maxWidth: "500px", width: "90%", maxHeight: "75vh", overflow: "hidden", display: "flex", flexDirection: "column"
+            }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3>Assign Task</h3>
               <input
                 type="text"
                 placeholder="Search by name or speciality"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="assign-search-input"
+                style={{ padding: "8px", marginBottom: "12px", border: "1px solid #ccc", borderRadius: "4px", width: "95%" }}
               />
-              <div className="officers-list">
+              <div style={{ overflowY: "auto", flex: 1, maxHeight: "60vh", marginBottom: "16px", border: "1px solid #eee", borderRadius: "5px" }}>
                 {filteredPoliceTeam.map((officer) => (
                   <label
                     key={officer.police_id}
-                    className="officer-item"
+                    style={{ display: "flex", alignItems: "center", padding: "10px", borderBottom: "1px solid #ddd", cursor: "pointer", gap: "10px" }}
                   >
                     <img
                       src={officer.photo || "placeholder.jpg"}
                       alt={officer.full_name}
-                      className="officer-photo"
+                      style={{ width: "50px", height: "50px", borderRadius: "50%" }}
                     />
-                    <div className="officer-info">
-                      <p className="officer-name">{officer.full_name}</p>
-                      <p className="officer-speciality">{officer.speciality}</p>
+                    <div style={{ flex: 1 }}>
+                      <p style={{ fontWeight: "bold", margin: 0 }}>{officer.full_name}</p>
+                      <p style={{ margin: 0, fontSize: "12px", color: "gray" }}>{officer.speciality}</p>
                     </div>
                     <input
                       type="checkbox"
                       checked={selectedOfficers.includes(officer.police_id)}
                       onChange={() => handleOfficerSelect(officer.police_id)}
-                      className="officer-checkbox"
+                      style={{ width: "20px", height: "20px" }}
                     />
                   </label>
                 ))}
               </div>
-              <div className="assign-popup-buttons">
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
                 <button onClick={handleConfirmAssignment} className="btn-primary">Confirm Assignment</button>
                 <button onClick={handleCloseAssignPopup} className="btn-close">Cancel</button>
               </div>
