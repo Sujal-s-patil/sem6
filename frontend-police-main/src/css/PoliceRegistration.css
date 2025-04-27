@@ -95,12 +95,12 @@
     transform: translateY(-2px);
   }
   
-  .back-button {
-    background-color: #007bff;
+  button.back-button {
+    background-color: #007bff ;
     color: white;
   }
   
-  .back-button:hover {
+  button.back-button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
   }
