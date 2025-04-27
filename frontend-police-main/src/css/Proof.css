@@ -1,139 +1,146 @@
 /* Proof button styling */
 .download-link {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #007BFF;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    margin-top: 10px;
-    transition: all 0.3s ease;
-  }
-  
-  .download-link:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-  }
-  
-  /* Popup overlay */
-  .popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    backdrop-filter: blur(8px);
-    background-color: rgba(0, 0, 0, 0.2);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Popup container */
-  .popup-container {
-    background: linear-gradient(135deg, #ffffff, #f9f9f9);
-    border-radius: 16px;
-    padding: 30px;
-    width: 80vh;
-    max-width: 600px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    z-index: 10000;
-    animation: fadeIn 0.3s ease-in-out;
-    font-family: 'Arial', sans-serif;
-    position: absolute;
-    margin: 0 auto;
-    max-height: 70vh;
-    overflow-y: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* Popup header */
-  .popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-  }
-  
-  .popup-header h3 {
-    font-size: 24px;
-    margin: 0;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .modern-close-btn {
-    background-color: transparent;
-    border: none;
-    font-size: 20px;
-    color: #333;
-    cursor: pointer;
-    transition: color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .modern-close-btn:hover {
-    color: #ff4d4d;
-    transform: scale(1.2);
-  }
-  
-  /* Proof grid layout */
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.download-link:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Popup container */
+.popup-container {
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  border-radius: 16px;
+  padding: 30px;
+  width: 80vh;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-in-out;
+  font-family: 'Arial', sans-serif;
+  position: absolute;
+  margin: 0 auto;
+  max-height: 70vh;
+  overflow-y: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Popup header */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.popup-header h3 {
+  font-size: 24px;
+  margin: 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.modern-close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.modern-close-btn:hover {
+  color: #ff4d4d;
+  transform: scale(1.2);
+}
+
+/* Proof grid layout */
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Proof item styling */
+.proof-item {
+  position: relative;
+  overflow: hidden;
+  /* Ensure the image stays within the container */
+  cursor: pointer;
+  border-radius: 8px;
+  /* Apply border-radius to the parent container */
+  transition: transform 0.3s ease;
+}
+
+/* Image styling */
+.proof-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px;
+  /* Ensure the image itself has border-radius */
+}
+
+.proof-item:hover .proof-image {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  /* Maintain border-radius during hover */
+}
+
+/* Video styling */
+.proof-video {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .proof-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
-  
-  /* Proof item styling */
-  .proof-item {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
   }
-  
-  /* Image styling */
-  .proof-image {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
-  
-  .proof-item:hover .proof-image {
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Video styling */
-  .proof-video {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .proof-grid {
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
-  }
-  
-  /* Fade-in animation */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-  }
+}
