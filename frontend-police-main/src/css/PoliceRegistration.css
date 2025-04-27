@@ -1,6 +1,6 @@
 /* Registration Container */
 .registration-container {
-    max-width: 600px;
+    max-width: 450px;
     width: 100%;
     margin: 50px auto;
     padding: 40px;
@@ -224,4 +224,8 @@
   
   body.dark-theme .registration-back-btn.confirm:hover {
     background-color: #c82333;
+  }
+  
+  html {
+    height: auto;
   }
