@@ -47,38 +47,67 @@ const Proof = ({ complaintId }) => {
             <div className="popup-content">
               {proofLinks.length > 0 ? (
                 <div className="proof-grid">
-                  {proofLinks.map((file, index) => {
-                    const fileExtension = file.link.split('.').pop().toLowerCase();
-                    if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
-                      return (
-                        <div key={index} className="proof-item">
-                          <img
-                            src={file.link}
-                            alt={`Proof ${index + 1}`}
-                            className="proof-image"
-                            onClick={() => window.open(file.link, '_blank')}
-                          />
-                        </div>
-                      );
-                    } else if (['mp4', 'webm', 'ogg', 'mov', 'mkv'].includes(fileExtension)) {
-                      return (
-                        <div key={index} className="proof-item">
-                          <video controls className="proof-video">
-                            <source src={file.link} type={`video/${fileExtension}`} />
-                            Your browser does not support the video tag.
-                          </video>
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div key={index} className="proof-item">
-                          <a href={file.link} target="_blank" rel="noopener noreferrer" download>
-                            {`Download ${fileExtension.toUpperCase()} File`}
-                          </a>
-                        </div>
-                      );
-                    }
-                  })}
+                  {proofLinks
+                    .sort((a, b) => {
+                      const getTypePriority = (file) => {
+                        const extension = file.link.split('.').pop().toLowerCase();
+                        if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(extension)) return 1; // Images
+                        if (['mp4', 'webm', 'ogg', 'mov', 'mkv'].includes(extension)) return 2; // Videos
+                        return 3; // Other files
+                      };
+                      return getTypePriority(a) - getTypePriority(b);
+                    })
+                    .reduce((acc, file) => {
+                      const fileExtension = file.link.split('.').pop().toLowerCase();
+                      let type = '';
+                      if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
+                        type = 'Image File';
+                      } else if (['mp4', 'webm', 'ogg', 'mov', 'mkv'].includes(fileExtension)) {
+                        type = 'Video File';
+                      } else if (fileExtension === 'pdf') {
+                        type = 'PDF File';
+                      } else if (['doc', 'docx'].includes(fileExtension)) {
+                        type = 'Word File';
+                      } else {
+                        type = `${fileExtension.toUpperCase()} File`; // Generic fallback for other file types
+                      }
+                      acc.push({ ...file, type });
+                      return acc;
+                    }, [])
+                    .map((file, index, array) => {
+                      const typeCount = array.filter((f) => f.type === file.type).indexOf(file) + 1;
+                      if (file.type === 'Image File') {
+                        // Render image without count
+                        return (
+                          <div key={index} className="proof-item">
+                            <img
+                              src={file.link}
+                              alt={`Proof ${index + 1}`}
+                              className="proof-image"
+                              onClick={() => window.open(file.link, '_blank')}
+                            />
+                          </div>
+                        );
+                      } else if (file.type === 'Video File') {
+                        // Render video with count
+                        return (
+                          <div key={index} className="proof-item">
+                            <a href={file.link} target="_blank" rel="noopener noreferrer" download>
+                              {`${file.type} ${typeCount}`}
+                            </a>
+                          </div>
+                        );
+                      } else {
+                        // Render as a downloadable link with count for other files
+                        return (
+                          <div key={index} className="proof-item">
+                            <a href={file.link} target="_blank" rel="noopener noreferrer" download>
+                              {`${file.type} ${typeCount}`}
+                            </a>
+                          </div>
+                        );
+                      }
+                    })}
                 </div>
               ) : (
                 <p>No proof files available.</p>
